@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.4,1.5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin%20vlcrcV2%2C1.4%2C1.5&In-Reply-To=%3C200604171522.k3HFMYt20524%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000020.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.4,1.5</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin%20vlcrcV2%2C1.4%2C1.5&In-Reply-To=%3C200604171522.k3HFMYt20524%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.4,1.5">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Mon Apr 17 17:22:34 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000020.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.Designer.cs,1.4,1.5
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin
+In directory sheep:/tmp/cvs-serv27665/FreeXplorer/bin
+
+Modified Files:
+	vlcrcV2 
+Log Message:
+sout-ffmpeg-strict-rc=1 car sinon VLC encode les s&#233;quences agit&#233;s (typiquement pluie ou surface de l'eau) &#224; des d&#233;bits de folie sans respecter le d&#233;bit max impos&#233;
+et par d&#233;faut, d&#233;bit max = 8000 car &#224; partir de l&#224;, la Freebox n'arrive parfois pas &#224; suivre
+
+
+Index: vlcrcV2
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/vlcrcV2,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** vlcrcV2	16 Apr 2006 00:06:21 -0000	1.4
+--- vlcrcV2	17 Apr 2006 15:22:58 -0000	1.5
+***************
+*** 466,470 ****
+  #sout-ffmpeg-pre-me=0
+  # Active le contr&#195;&#180;le strict du d&#195;&#169;bit (Bool&#195;&#169;en)
+! #sout-ffmpeg-strict-rc=0
+  # Taille du buffer de contr&#195;&#180;le de d&#195;&#169;bit (Entier)
+  #sout-ffmpeg-rc-buffer-size=1835008
+--- 466,470 ----
+  #sout-ffmpeg-pre-me=0
+  # Active le contr&#195;&#180;le strict du d&#195;&#169;bit (Bool&#195;&#169;en)
+! sout-ffmpeg-strict-rc=1
+  # Taille du buffer de contr&#195;&#180;le de d&#195;&#169;bit (Entier)
+  #sout-ffmpeg-rc-buffer-size=1835008
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000020.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.Designer.cs,1.4,1.5
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#21">[ date ]</a>
+              <a href="thread.html#21">[ thread ]</a>
+              <a href="subject.html#21">[ subject ]</a>
+              <a href="author.html#21">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

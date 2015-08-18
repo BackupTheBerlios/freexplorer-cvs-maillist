@@ -1,0 +1,449 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.17,1.18 MainForm.cs,1.7,1.8 MainForm.Designer.cs,1.3,1.4 MainForm.resx,1.2,1.3 Program.cs,1.4,1.5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.17%2C1.18%20MainForm.cs%2C1.7%2C1.8%20MainForm.Designer.cs%2C1.3%2C1.4%20MainForm.resx%2C1.2%2C1.3%20Program.cs%2C1.4%2C1.5&In-Reply-To=%3C200604142218.k3EMIMt02772%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000008.html">
+   <LINK REL="Next"  HREF="000009.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.17,1.18 MainForm.cs,1.7,1.8 MainForm.Designer.cs,1.3,1.4 MainForm.resx,1.2,1.3 Program.cs,1.4,1.5</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.17%2C1.18%20MainForm.cs%2C1.7%2C1.8%20MainForm.Designer.cs%2C1.3%2C1.4%20MainForm.resx%2C1.2%2C1.3%20Program.cs%2C1.4%2C1.5&In-Reply-To=%3C200604142218.k3EMIMt02772%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.17,1.18 MainForm.cs,1.7,1.8 MainForm.Designer.cs,1.3,1.4 MainForm.resx,1.2,1.3 Program.cs,1.4,1.5">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Sat Apr 15 00:18:23 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000008.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties AssemblyInfo.cs,1.9,1.10
+</A></li>
+        <LI>Next message: <A HREF="000009.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,NONE,1.1 Favorites.cs,1.3,1.4 FreeXplorer.csproj,1.5,1.6 Freebox.cs,1.18,1.19 MainForm.cs,1.8,1.9 Recents.cs,1.1,1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv9623
+
+Modified Files:
+	Freebox.cs MainForm.cs MainForm.Designer.cs MainForm.resx 
+	Program.cs 
+Log Message:
+arrangement de la fen&#234;tre avec le Framework.NET 2.0 final
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.17
+retrieving revision 1.18
+diff -C2 -d -r1.17 -r1.18
+*** Freebox.cs	13 Apr 2006 21:51:56 -0000	1.17
+--- Freebox.cs	14 Apr 2006 22:18:47 -0000	1.18
+***************
+*** 772,776 ****
+                      html = Encoding.UTF8.GetString(Encoding.Default.GetBytes(html));
+                  }
+!                 catch (Exception e)
+                  {
+  #if DEBUG
+--- 772,776 ----
+                      html = Encoding.UTF8.GetString(Encoding.Default.GetBytes(html));
+                  }
+!                 catch (Exception)
+                  {
+  #if DEBUG
+***************
+*** 1153,1154 ****
+--- 1153,1173 ----
+      }
+  }
++ /* notes diverses
++ 
++ Webcam sur TV:
++  input: <A HREF="dshow://">dshow://</A>
++  output: sout=#transcode{vcodec=mp2v,vb=3072,scale=1,acodec=mpga,ab=256,channels=2} :duplicate{dst=std{access=udp,mux=ts,url=212.27.38.253:1234}}
++ ========================================================================
++ Forcer le son &#224; sortir par la carte son du PC
++     * Effacez les lignes contenant sout-transcode-ab et sout-transcode-acodec
++     * Ajouter la ligne #EXTVLCOPT:sout=#duplicate{dst=transcode:std,select=video,dst=display,select=audio} 
++ ========================================================================
++ 
++ manuel:
++ start vlc\vlc.exe --extraintf http --no-playlist-autostart --http-src=./http-fbx --http-host :8080 --sout=&quot;#transcode:std&quot; --sout-standard-access=udp --sout-standard-mux=ts --sout-standard-url=212.27.38.253:1234 --sout-transcode-vcodec=mp2v --sout-transcode-vb=900 --sout-transcode-acodec=mpga --sout-transcode-ab=384 --sout-transcode-channels=2 --file-caching=1000 --sout-ts-pid-video=68 --sout-ts-pid-audio=69 --sout-ts-pcr=80 --sout-ts-dts-delay=400 --play-and-stop --open=
++ 
++ sout=#transcode{vcodec=mp2v,vb=9000,scale=1,acodec=mpga,ab=384,channels=2} :duplicate{dst=std{access=udp,mux=ts,url=212.27.38.253:1234}}
++ 
++ Note: Pour ceux qui sont en Wi-Fi, remplacez vb=9000 par vb=2000 pour ainsi &#233;viter les freezes.
++ 
++ */
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.7
+retrieving revision 1.8
+diff -C2 -d -r1.7 -r1.8
+*** MainForm.cs	17 Sep 2005 13:35:06 -0000	1.7
+--- MainForm.cs	14 Apr 2006 22:18:47 -0000	1.8
+***************
+*** 1,5 ****
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+--- 1,5 ----
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005-2006 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+
+Index: MainForm.Designer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.Designer.cs,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** MainForm.Designer.cs	11 Sep 2005 02:34:12 -0000	1.3
+--- MainForm.Designer.cs	14 Apr 2006 22:18:47 -0000	1.4
+***************
+*** 271,275 ****
+              this.ShowVLC.Location = new System.Drawing.Point(41, 297);
+              this.ShowVLC.Name = &quot;ShowVLC&quot;;
+!             this.ShowVLC.Size = new System.Drawing.Size(235, 14);
+              this.ShowVLC.TabIndex = 25;
+              this.ShowVLC.Text = &quot;Afficher la fen&#234;tre de VLC&quot;;
+--- 271,275 ----
+              this.ShowVLC.Location = new System.Drawing.Point(41, 297);
+              this.ShowVLC.Name = &quot;ShowVLC&quot;;
+!             this.ShowVLC.Size = new System.Drawing.Size(235, 17);
+              this.ShowVLC.TabIndex = 25;
+              this.ShowVLC.Text = &quot;Afficher la fen&#234;tre de VLC&quot;;
+***************
+*** 313,319 ****
+              this.TranscodePC.Location = new System.Drawing.Point(258, 1);
+              this.TranscodePC.Name = &quot;TranscodePC&quot;;
+!             this.TranscodePC.Size = new System.Drawing.Size(82, 17);
+              this.TranscodePC.TabIndex = 3;
+-             this.TranscodePC.TabStop = false;
+              this.TranscodePC.Text = &quot;Audio sur PC&quot;;
+              // 
+--- 313,318 ----
+              this.TranscodePC.Location = new System.Drawing.Point(258, 1);
+              this.TranscodePC.Name = &quot;TranscodePC&quot;;
+!             this.TranscodePC.Size = new System.Drawing.Size(86, 17);
+              this.TranscodePC.TabIndex = 3;
+              this.TranscodePC.Text = &quot;Audio sur PC&quot;;
+              // 
+***************
+*** 323,329 ****
+              this.TranscodeA52.Location = new System.Drawing.Point(159, 1);
+              this.TranscodeA52.Name = &quot;TranscodeA52&quot;;
+!             this.TranscodeA52.Size = new System.Drawing.Size(93, 17);
+              this.TranscodeA52.TabIndex = 2;
+-             this.TranscodeA52.TabStop = false;
+              this.TranscodeA52.Text = &quot;A/52 Dolby 5.1&quot;;
+              // 
+--- 322,327 ----
+              this.TranscodeA52.Location = new System.Drawing.Point(159, 1);
+              this.TranscodeA52.Name = &quot;TranscodeA52&quot;;
+!             this.TranscodeA52.Size = new System.Drawing.Size(97, 17);
+              this.TranscodeA52.TabIndex = 2;
+              this.TranscodeA52.Text = &quot;A/52 Dolby 5.1&quot;;
+              // 
+***************
+*** 334,339 ****
+              this.TranscodeMPGA.Location = new System.Drawing.Point(58, 1);
+              this.TranscodeMPGA.Name = &quot;TranscodeMPGA&quot;;
+!             this.TranscodeMPGA.Size = new System.Drawing.Size(95, 17);
+              this.TranscodeMPGA.TabIndex = 1;
+              this.TranscodeMPGA.Text = &quot;MPEG-II St&#233;r&#233;o&quot;;
+              // 
+--- 332,338 ----
+              this.TranscodeMPGA.Location = new System.Drawing.Point(58, 1);
+              this.TranscodeMPGA.Name = &quot;TranscodeMPGA&quot;;
+!             this.TranscodeMPGA.Size = new System.Drawing.Size(99, 17);
+              this.TranscodeMPGA.TabIndex = 1;
++             this.TranscodeMPGA.TabStop = true;
+              this.TranscodeMPGA.Text = &quot;MPEG-II St&#233;r&#233;o&quot;;
+              // 
+***************
+*** 343,349 ****
+              this.TranscodeNone.Location = new System.Drawing.Point(0, 1);
+              this.TranscodeNone.Name = &quot;TranscodeNone&quot;;
+!             this.TranscodeNone.Size = new System.Drawing.Size(52, 17);
+              this.TranscodeNone.TabIndex = 0;
+-             this.TranscodeNone.TabStop = false;
+              this.TranscodeNone.Text = &quot;Aucun&quot;;
+              // 
+--- 342,347 ----
+              this.TranscodeNone.Location = new System.Drawing.Point(0, 1);
+              this.TranscodeNone.Name = &quot;TranscodeNone&quot;;
+!             this.TranscodeNone.Size = new System.Drawing.Size(56, 17);
+              this.TranscodeNone.TabIndex = 0;
+              this.TranscodeNone.Text = &quot;Aucun&quot;;
+              // 
+***************
+*** 354,358 ****
+              this.StartMinimized.Location = new System.Drawing.Point(41, 277);
+              this.StartMinimized.Name = &quot;StartMinimized&quot;;
+!             this.StartMinimized.Size = new System.Drawing.Size(235, 14);
+              this.StartMinimized.TabIndex = 23;
+              this.StartMinimized.Text = &quot;Minimiser au lancement&quot;;
+--- 352,356 ----
+              this.StartMinimized.Location = new System.Drawing.Point(41, 277);
+              this.StartMinimized.Name = &quot;StartMinimized&quot;;
+!             this.StartMinimized.Size = new System.Drawing.Size(235, 17);
+              this.StartMinimized.TabIndex = 23;
+              this.StartMinimized.Text = &quot;Minimiser au lancement&quot;;
+***************
+*** 364,368 ****
+              this.StartAtBoot.Location = new System.Drawing.Point(283, 297);
+              this.StartAtBoot.Name = &quot;StartAtBoot&quot;;
+!             this.StartAtBoot.Size = new System.Drawing.Size(247, 14);
+              this.StartAtBoot.TabIndex = 26;
+              this.StartAtBoot.Text = &quot;Lancer FreeXplorer au d&#233;marrage de Windows&quot;;
+--- 362,366 ----
+              this.StartAtBoot.Location = new System.Drawing.Point(283, 297);
+              this.StartAtBoot.Name = &quot;StartAtBoot&quot;;
+!             this.StartAtBoot.Size = new System.Drawing.Size(247, 17);
+              this.StartAtBoot.TabIndex = 26;
+              this.StartAtBoot.Text = &quot;Lancer FreeXplorer au d&#233;marrage de Windows&quot;;
+***************
+*** 377,381 ****
+              this.MinimizeToTray.Location = new System.Drawing.Point(283, 277);
+              this.MinimizeToTray.Name = &quot;MinimizeToTray&quot;;
+!             this.MinimizeToTray.Size = new System.Drawing.Size(247, 14);
+              this.MinimizeToTray.TabIndex = 24;
+              this.MinimizeToTray.Text = &quot;Mini-icone pr&#232;s de l\'horloge lorsque minimis&#233;&quot;;
+--- 375,379 ----
+              this.MinimizeToTray.Location = new System.Drawing.Point(283, 277);
+              this.MinimizeToTray.Name = &quot;MinimizeToTray&quot;;
+!             this.MinimizeToTray.Size = new System.Drawing.Size(247, 17);
+              this.MinimizeToTray.TabIndex = 24;
+              this.MinimizeToTray.Text = &quot;Mini-icone pr&#232;s de l\'horloge lorsque minimis&#233;&quot;;
+***************
+*** 387,391 ****
+              this.FFMpegInterlace.Location = new System.Drawing.Point(41, 347);
+              this.FFMpegInterlace.Name = &quot;FFMpegInterlace&quot;;
+!             this.FFMpegInterlace.Size = new System.Drawing.Size(489, 14);
+              this.FFMpegInterlace.TabIndex = 29;
+              this.FFMpegInterlace.Text = &quot;Suppression du scintillement vid&#233;o (plus agr&#233;able pour les yeux mais consomme du &quot; +
+--- 385,389 ----
+              this.FFMpegInterlace.Location = new System.Drawing.Point(41, 347);
+              this.FFMpegInterlace.Name = &quot;FFMpegInterlace&quot;;
+!             this.FFMpegInterlace.Size = new System.Drawing.Size(489, 17);
+              this.FFMpegInterlace.TabIndex = 29;
+              this.FFMpegInterlace.Text = &quot;Suppression du scintillement vid&#233;o (plus agr&#233;able pour les yeux mais consomme du &quot; +
+***************
+*** 398,402 ****
+              this.HalfScale.Location = new System.Drawing.Point(41, 367);
+              this.HalfScale.Name = &quot;HalfScale&quot;;
+!             this.HalfScale.Size = new System.Drawing.Size(489, 14);
+              this.HalfScale.TabIndex = 30;
+              this.HalfScale.Text = &quot;Mode d\'&#233;conomie de CPU sans baisse de qualit&#233; visible (traitement sur moins de pi&quot; +
+--- 396,400 ----
+              this.HalfScale.Location = new System.Drawing.Point(41, 367);
+              this.HalfScale.Name = &quot;HalfScale&quot;;
+!             this.HalfScale.Size = new System.Drawing.Size(489, 17);
+              this.HalfScale.TabIndex = 30;
+              this.HalfScale.Text = &quot;Mode d\'&#233;conomie de CPU sans baisse de qualit&#233; visible (traitement sur moins de pi&quot; +
+***************
+*** 409,413 ****
+              this.LIRCActive.Location = new System.Drawing.Point(283, 317);
+              this.LIRCActive.Name = &quot;LIRCActive&quot;;
+!             this.LIRCActive.Size = new System.Drawing.Size(247, 14);
+              this.LIRCActive.TabIndex = 28;
+              this.LIRCActive.Text = &quot;Activer le serveur LIRC&quot;;
+--- 407,411 ----
+              this.LIRCActive.Location = new System.Drawing.Point(283, 317);
+              this.LIRCActive.Name = &quot;LIRCActive&quot;;
+!             this.LIRCActive.Size = new System.Drawing.Size(247, 17);
+              this.LIRCActive.TabIndex = 28;
+              this.LIRCActive.Text = &quot;Activer le serveur LIRC&quot;;
+***************
+*** 447,451 ****
+              this.PCControlAllowed.Location = new System.Drawing.Point(41, 317);
+              this.PCControlAllowed.Name = &quot;PCControlAllowed&quot;;
+!             this.PCControlAllowed.Size = new System.Drawing.Size(235, 14);
+              this.PCControlAllowed.TabIndex = 27;
+              this.PCControlAllowed.Text = &quot;Autoriser le contr&#244;le du PC par la Freebox&quot;;
+--- 445,449 ----
+              this.PCControlAllowed.Location = new System.Drawing.Point(41, 317);
+              this.PCControlAllowed.Name = &quot;PCControlAllowed&quot;;
+!             this.PCControlAllowed.Size = new System.Drawing.Size(235, 17);
+              this.PCControlAllowed.TabIndex = 27;
+              this.PCControlAllowed.Text = &quot;Autoriser le contr&#244;le du PC par la Freebox&quot;;
+***************
+*** 458,462 ****
+              this.LessIconsInExplorer.Location = new System.Drawing.Point(41, 387);
+              this.LessIconsInExplorer.Name = &quot;LessIconsInExplorer&quot;;
+!             this.LessIconsInExplorer.Size = new System.Drawing.Size(489, 14);
+              this.LessIconsInExplorer.TabIndex = 31;
+              this.LessIconsInExplorer.Text = &quot;Afficher moins d\'ic&#244;nes dans l\'explorateur (acc&#233;l&#232;re l\'affichage des pages)&quot;;
+--- 456,460 ----
+              this.LessIconsInExplorer.Location = new System.Drawing.Point(41, 387);
+              this.LessIconsInExplorer.Name = &quot;LessIconsInExplorer&quot;;
+!             this.LessIconsInExplorer.Size = new System.Drawing.Size(489, 17);
+              this.LessIconsInExplorer.TabIndex = 31;
+              this.LessIconsInExplorer.Text = &quot;Afficher moins d\'ic&#244;nes dans l\'explorateur (acc&#233;l&#232;re l\'affichage des pages)&quot;;
+***************
+*** 476,488 ****
+              // TrayContextMenu
+              // 
+-             this.TrayContextMenu.Enabled = true;
+-             this.TrayContextMenu.GripMargin = new System.Windows.Forms.Padding(2);
+              this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+              this.TrayConfig,
+              this.TrayQuit});
+-             this.TrayContextMenu.Location = new System.Drawing.Point(24, 65);
+              this.TrayContextMenu.Name = &quot;TrayContextMenu&quot;;
+!             this.TrayContextMenu.RightToLeft = System.Windows.Forms.RightToLeft.No;
+!             this.TrayContextMenu.Size = new System.Drawing.Size(158, 48);
+              // 
+              // TrayConfig
+--- 474,482 ----
+              // TrayContextMenu
+              // 
+              this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+              this.TrayConfig,
+              this.TrayQuit});
+              this.TrayContextMenu.Name = &quot;TrayContextMenu&quot;;
+!             this.TrayContextMenu.Size = new System.Drawing.Size(180, 48);
+              // 
+              // TrayConfig
+***************
+*** 490,493 ****
+--- 484,488 ----
+              this.TrayConfig.Font = new System.Drawing.Font(&quot;Tahoma&quot;, 8.25F, System.Drawing.FontStyle.Bold);
+              this.TrayConfig.Name = &quot;TrayConfig&quot;;
++             this.TrayConfig.Size = new System.Drawing.Size(179, 22);
+              this.TrayConfig.Text = &quot;Configuration&quot;;
+              this.TrayConfig.Click += new System.EventHandler(this.TrayConfig_Click);
+***************
+*** 496,499 ****
+--- 491,495 ----
+              // 
+              this.TrayQuit.Name = &quot;TrayQuit&quot;;
++             this.TrayQuit.Size = new System.Drawing.Size(179, 22);
+              this.TrayQuit.Text = &quot;Arr&#234;ter FreeXplorer&quot;;
+              this.TrayQuit.Click += new System.EventHandler(this.QuitBtn_Click);
+***************
+*** 556,562 ****
+              this.Name = &quot;MainForm&quot;;
+              this.Text = &quot;Configuration de FreeXplorer {0}&quot;;
+-             this.Shown += new System.EventHandler(this.MainForm_Shown);
+-             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+              this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+              this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+              this.panel1.ResumeLayout(false);
+--- 552,558 ----
+              this.Name = &quot;MainForm&quot;;
+              this.Text = &quot;Configuration de FreeXplorer {0}&quot;;
+              this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
++             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
++             this.Shown += new System.EventHandler(this.MainForm_Shown);
+              this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+              this.panel1.ResumeLayout(false);
+
+Index: MainForm.resx
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.resx,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** MainForm.resx	28 Aug 2005 21:43:49 -0000	1.2
+--- MainForm.resx	14 Apr 2006 22:18:47 -0000	1.3
+***************
+*** 61,64 ****
+--- 61,65 ----
+      --&gt;
+    &lt;xsd:schema id=&quot;root&quot; xmlns=&quot;&quot; xmlns:xsd=&quot;<A HREF="http://www.w3.org/2001/XMLSchema">http://www.w3.org/2001/XMLSchema</A>&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;
++     &lt;xsd:import namespace=&quot;<A HREF="http://www.w3.org/XML/1998/namespace">http://www.w3.org/XML/1998/namespace</A>&quot; /&gt;
+      &lt;xsd:element name=&quot;root&quot; msdata:IsDataSet=&quot;true&quot;&gt;
+        &lt;xsd:complexType&gt;
+***************
+*** 72,75 ****
+--- 73,77 ----
+                &lt;xsd:attribute name=&quot;type&quot; type=&quot;xsd:string&quot; /&gt;
+                &lt;xsd:attribute name=&quot;mimetype&quot; type=&quot;xsd:string&quot; /&gt;
++               &lt;xsd:attribute ref=&quot;xml:space&quot; /&gt;
+              &lt;/xsd:complexType&gt;
+            &lt;/xsd:element&gt;
+***************
+*** 89,92 ****
+--- 91,95 ----
+                &lt;xsd:attribute name=&quot;type&quot; type=&quot;xsd:string&quot; msdata:Ordinal=&quot;3&quot; /&gt;
+                &lt;xsd:attribute name=&quot;mimetype&quot; type=&quot;xsd:string&quot; msdata:Ordinal=&quot;4&quot; /&gt;
++               &lt;xsd:attribute ref=&quot;xml:space&quot; /&gt;
+              &lt;/xsd:complexType&gt;
+            &lt;/xsd:element&gt;
+
+Index: Program.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Program.cs,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** Program.cs	17 Sep 2005 13:35:06 -0000	1.4
+--- Program.cs	14 Apr 2006 22:18:47 -0000	1.5
+***************
+*** 1,5 ****
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+--- 1,5 ----
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005-2006 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+***************
+*** 33,36 ****
+--- 33,37 ----
+          {
+              Application.EnableVisualStyles();
++             Application.SetCompatibleTextRenderingDefault(false);
+              Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+              appVersionText = appVersion.ToString(appVersion.Build == 0 ? 2 : 3);
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000008.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties AssemblyInfo.cs,1.9,1.10
+</A></li>
+	<LI>Next message: <A HREF="000009.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,NONE,1.1 Favorites.cs,1.3,1.4 FreeXplorer.csproj,1.5,1.6 Freebox.cs,1.18,1.19 MainForm.cs,1.8,1.9 Recents.cs,1.1,1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#7">[ date ]</a>
+              <a href="thread.html#7">[ thread ]</a>
+              <a href="subject.html#7">[ subject ]</a>
+              <a href="author.html#7">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

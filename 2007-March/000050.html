@@ -1,0 +1,316 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/VLC%20AudioTranscode.cs%2C%201.1%2C%0A%091.2%20VLCApp.cs%2C%201.1%2C%201.2&In-Reply-To=%3C20070320184743.249B3DF89F%40mail.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000055.html">
+   <LINK REL="Next"  HREF="000051.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/VLC%20AudioTranscode.cs%2C%201.1%2C%0A%091.2%20VLCApp.cs%2C%201.1%2C%201.2&In-Reply-To=%3C20070320184743.249B3DF89F%40mail.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Tue Mar 20 19:47:43 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000055.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4
+</A></li>
+        <LI>Next message: <A HREF="000051.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages $$back.html, 1.1,	1.2 play.html, 1.2, 1.3 settings.html, 1.3, 1.4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC
+In directory sheep:/tmp/cvs-serv25825/FreeXplorer/VLC
+
+Modified Files:
+	AudioTranscode.cs VLCApp.cs 
+Log Message:
+FreeXplorer 1.6
+
+    * Support de la Freebox HD
+    * Choix de non-transcodage vid&#233;o pour la Freebox HD
+    * Correction du doublonnage des &quot;fichiers r&#233;cents&quot;
+    * Inclusion de vlc-0.8.6 en standard
+    * Mise &#224; jour de l'installeur 
+
+Index: AudioTranscode.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC/AudioTranscode.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** AudioTranscode.cs	30 Jun 2006 19:55:37 -0000	1.1
+--- AudioTranscode.cs	20 Mar 2007 18:45:58 -0000	1.2
+***************
+*** 26,28 ****
+--- 26,33 ----
+          PC
+      };
++     public enum VideoTranscode
++     {
++         None,
++         MPG2
++     };
+  }
+
+Index: VLCApp.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC/VLCApp.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** VLCApp.cs	30 Jun 2006 19:55:37 -0000	1.1
+--- VLCApp.cs	20 Mar 2007 18:45:58 -0000	1.2
+***************
+*** 44,56 ****
+          private char dvdLetter;// = 'D';
+          private AudioTranscode audioTranscode;// = AudioTranscode.MPGA;
+!         private enum VlcMode
+!         {
+!             FreeplayerV1,
+!             FreeplayerV2,
+!         }
+!         private VlcMode vlcMode;
+          private Encoding vlcEncoding;
+!         private byte vlcNewlineChar1;
+!         private byte vlcNewlineChar2;
+          
+          private static string AudioTranscode2Options(AudioTranscode audioTranscode)
+--- 44,52 ----
+          private char dvdLetter;// = 'D';
+          private AudioTranscode audioTranscode;// = AudioTranscode.MPGA;
+!         private VideoTranscode videoTranscode;// = VideoTranscode.MPG2;
+          private Encoding vlcEncoding;
+!         private byte vlcRNewlineChar1;
+!         private byte vlcRNewlineChar2;
+!         private byte[] vlcSNewlineChar;
+          
+          private static string AudioTranscode2Options(AudioTranscode audioTranscode)
+***************
+*** 58,97 ****
+              switch (audioTranscode)
+              {
+!                 case AudioTranscode.MPGA: return &quot; --sout-transcode-acodec=mpga --sout-transcode-ab=192 --sout-transcode-channels=2&quot;;
+!                 case AudioTranscode.A52: return &quot; --sout-transcode-acodec=a52 --sout-transcode-ab=448 --sout-transcode-channels=6&quot;;
+!                 case AudioTranscode.PC: return &quot; --sout=#duplicate{dst=transcode:std,select=video,dst=display,select=audio} --audio-desync=850&quot;;
+!                 default: return &quot; --sout-transcode-acodec= --sout-transcode-ab= --sout-transcode-channels=&quot;;
+              }
+          }
+  
+!         public void SetConfig(string exeFilename, string audioLanguage, string subLanguage, bool ffmpeg_interlace, double transform_scale, int transcode_vb)
+          {
+!             switch (FileVersionInfo.GetVersionInfo(exeFilename).FileVersion)
+              {
+!                 case &quot;0.8.4-svn&quot;: vlcMode = VlcMode.FreeplayerV1; break;
+!                 case &quot;0.8.4-fbx-2&quot;: vlcMode = VlcMode.FreeplayerV2; break;
+                  default:
+!                     MessageBox.Show(&quot;FreeXplorer &quot;+Wizou.FreeXplorer.Program.appVersionText+&quot;n'est peut-&#234;tre pas compatible avec cette version de vlc.exe\r\n\r\n&quot; +
+!                                 &quot;Cliquez sur Oui pour activer le mode de compatibilit&#233; Freeplayer V1\r\n&quot;+
+!                                 &quot;Cliquez sur Non pour activer le mode de compatibilit&#233; Freeplayer V2&quot;,
+!                                 &quot;Compatibilit&#233; VLC&quot;,
+!                             MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+!                     break;
+!             }
+!             switch (vlcMode)
+!             {
+!                 case VlcMode.FreeplayerV1:
+!                     vlcEncoding = Encoding.Default;
+!                     vlcNewlineChar1 = 0x0A;
+!                     vlcNewlineChar2 = 0x0D;
+!                     break;
+!                 case VlcMode.FreeplayerV2:
+!                     vlcEncoding = Encoding.UTF8;
+!                     vlcNewlineChar1 = 0x0D;
+!                     vlcNewlineChar2 = 0x0A;
+!                     break;
+              }
+              startInfo = new ProcessStartInfo(exeFilename,
+!                 &quot; --config .&quot; + Path.DirectorySeparatorChar + (vlcMode == VlcMode.FreeplayerV1 ? &quot;vlcrcV1&quot; : &quot;vlcrcV2&quot;) +
+                  &quot; --rc-host 127.0.0.1:&quot; + rc_host_port +
+                  &quot; --audio-language=&quot; + audioLanguage +
+--- 54,87 ----
+              switch (audioTranscode)
+              {
+!                 case AudioTranscode.MPGA: // 192 sinon les videos en mono ne passent pas
+!                     return &quot; --sout-transcode-acodec=mpga --sout-transcode-ab=192 --sout-transcode-channels=2&quot;;
+!                 case AudioTranscode.A52: 
+!                     return &quot; --sout-transcode-acodec=a52 --sout-transcode-ab=448 --sout-transcode-channels=6&quot;;
+!                 case AudioTranscode.PC: 
+!                     return &quot; --sout=#duplicate{dst=transcode:std,select=video,dst=display,select=audio} --audio-desync=850&quot;;
+!                 default: 
+!                     return &quot; --sout-transcode-acodec= --sout-transcode-ab= --sout-transcode-channels=&quot;;
+              }
+          }
+  
+!         private static string VideoTranscode2Options(VideoTranscode videoTranscode)
+          {
+!             switch (videoTranscode)
+              {
+!                 case VideoTranscode.MPG2: 
+!                     return &quot; --sout-transcode-vcodec=mp2v&quot;;
+                  default:
+!                     return &quot; --sout-transcode-vcodec=&quot;;
+              }
++         }
++ 
++         public void SetConfig(string exeFilename, string audioLanguage, string subLanguage, bool ffmpeg_interlace, double transform_scale, int transcode_vb)
++         {
++             vlcEncoding = Encoding.UTF8;
++             vlcRNewlineChar1 = 0x0D;
++             vlcRNewlineChar2 = 0x0A;
++             vlcSNewlineChar = new byte[] { 0x0D, 0x0A };
+              startInfo = new ProcessStartInfo(exeFilename,
+!                 &quot; --config .&quot; + Path.DirectorySeparatorChar + &quot;vlcrc&quot; +
+                  &quot; --rc-host 127.0.0.1:&quot; + rc_host_port +
+                  &quot; --audio-language=&quot; + audioLanguage +
+***************
+*** 101,104 ****
+--- 91,95 ----
+                  &quot; --sout-transcode-scale=&quot; + transform_scale.ToString(System.Globalization.NumberFormatInfo.InvariantInfo) +
+                  AudioTranscode2Options(audioTranscode)+
++                 VideoTranscode2Options(videoTranscode) +
+                  &quot; --sout-transcode-vb=&quot; + transcode_vb.ToString() +
+                  &quot; --wxwin-config-last=(-1,0,0,1280,1024)(0,650,21,363,141)&quot;);
+***************
+*** 144,147 ****
+--- 135,140 ----
+              Thread.Sleep(200);
+              networkStream.Read(RC_buffer, 0, 1024);*/
++             //networkStream.Write(vlcEncoding.GetBytes(&quot;stop\x0D\x0A&quot;),0,5);
++             //networkStream.ReadByte();
+              RC_buffer_count = 0;
+              itemAddedCounter = 0;
+***************
+*** 221,225 ****
+              try
+              {
+!                 networkStream.WriteByte(0x0A);
+              }
+              catch (IOException)
+--- 214,218 ----
+              try
+              {
+!                 networkStream.Write(vlcSNewlineChar, 0, vlcSNewlineChar.Length);
+              }
+              catch (IOException)
+***************
+*** 239,244 ****
+              while (index+1 &lt; RC_buffer_count)
+              {
+!                 if (RC_buffer[index] == vlcNewlineChar1)
+!                     if (RC_buffer[index + 1] == vlcNewlineChar2)
+                      {
+                          string result = vlcEncoding.GetString(RC_buffer, 0, index);
+--- 232,237 ----
+              while (index+1 &lt; RC_buffer_count)
+              {
+!                 if (RC_buffer[index] == vlcRNewlineChar1)
+!                     if (RC_buffer[index + 1] == vlcRNewlineChar2)
+                      {
+                          string result = vlcEncoding.GetString(RC_buffer, 0, index);
+***************
+*** 268,273 ****
+                  while (index+1 &lt; RC_buffer_count)
+                  {
+!                     if (RC_buffer[index] == vlcNewlineChar1) 
+!                         if (RC_buffer[index + 1] == vlcNewlineChar2)
+                          {
+                              string result = vlcEncoding.GetString(RC_buffer, 0, index);
+--- 261,266 ----
+                  while (index+1 &lt; RC_buffer_count)
+                  {
+!                     if (RC_buffer[index] == vlcRNewlineChar1) 
+!                         if (RC_buffer[index + 1] == vlcRNewlineChar2)
+                          {
+                              string result = vlcEncoding.GetString(RC_buffer, 0, index);
+***************
+*** 350,356 ****
+              MakeSureReadEmpty();
+              WriteLine(&quot;chapter&quot;);
+!             string line = ReadLine();
+!             if (line == &quot;press menu select or pause to continue&quot;)
+                  line = ReadLine();
+              if (line == &quot;chapter: returned 0 (no error)&quot;)
+              {
+--- 343,350 ----
+              MakeSureReadEmpty();
+              WriteLine(&quot;chapter&quot;);
+!             string line;
+!             do
+                  line = ReadLine();
++             while (line.StartsWith(&quot;status change: &quot;) || (line==&quot;press menu select or pause to continue&quot;));
+              if (line == &quot;chapter: returned 0 (no error)&quot;)
+              {
+***************
+*** 456,460 ****
+                  line = ReadLine();
+              while (line.StartsWith(&quot;status change: &quot;));
+!             if (!line.StartsWith(&quot;trying to add &quot;))
+                  throw new VLCException(&quot;R&#233;ponse inattendue pour 'add'&quot;);
+              ReadCheckNoError(&quot;add&quot;);
+--- 450,454 ----
+                  line = ReadLine();
+              while (line.StartsWith(&quot;status change: &quot;));
+!             if (!line.StartsWith(&quot;trying to add &quot;) &amp;&amp; !line.StartsWith(&quot;Trying to add &quot;) &amp;&amp; (line != &quot;press menu select or pause to continue&quot;))
+                  throw new VLCException(&quot;R&#233;ponse inattendue pour 'add'&quot;);
+              ReadCheckNoError(&quot;add&quot;);
+***************
+*** 526,529 ****
+--- 520,535 ----
+                  MustBeStopped();
+                  audioTranscode = value;
++             }
++         }
++         public VideoTranscode VideoTranscode
++         {
++             get
++             {
++                 return videoTranscode;
++             }
++             set
++             {
++                 MustBeStopped();
++                 videoTranscode = value;
+              }
+          }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000055.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4
+</A></li>
+	<LI>Next message: <A HREF="000051.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages $$back.html, 1.1,	1.2 play.html, 1.2, 1.3 settings.html, 1.3, 1.4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#50">[ date ]</a>
+              <a href="thread.html#50">[ thread ]</a>
+              <a href="subject.html#50">[ subject ]</a>
+              <a href="author.html#50">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

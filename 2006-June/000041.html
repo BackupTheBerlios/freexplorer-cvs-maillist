@@ -1,0 +1,260 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.4,1.5
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20FreeXplorer.cs%2C1.4%2C1.5&In-Reply-To=%3C200606301957.k5UJvLe24274%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000039.html">
+   <LINK REL="Next"  HREF="000042.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.4,1.5</H1>
+    <B>blackfox</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20FreeXplorer.cs%2C1.4%2C1.5&In-Reply-To=%3C200606301957.k5UJvLe24274%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.4,1.5">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Jun 30 21:57:21 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000039.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.23,1.24
+</A></li>
+        <LI>Next message: <A HREF="000042.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Program.cs,1.6,1.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14634/FreeXplorer
+
+Modified Files:
+	FreeXplorer.cs 
+Log Message:
+
+
+Index: FreeXplorer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.cs,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** FreeXplorer.cs	12 Jun 2006 18:05:36 -0000	1.4
+--- FreeXplorer.cs	30 Jun 2006 19:57:19 -0000	1.5
+***************
+*** 2,19 ****
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
+   * Copyright (C) 2006 Roncaglia Julien &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at virtualblackfox.net</A>&gt;
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+!  * termes de la Licence Publique G&#195;&#169;n&#195;&#169;rale GNU publi&#195;&#169;e par la Free Software 
+!  * Foundation (version 2 ou bien toute autre version ult&#195;&#169;rieure choisie par vous).
+   * 
+!  * Ce programme est distribu&#195;&#169; car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+   * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+!  * dans un but sp&#195;&#169;cifique. Reportez-vous &#195;&#160; la Licence Publique G&#195;&#169;n&#195;&#169;rale GNU pour 
+!  * plus de d&#195;&#169;tails.
+   * 
+!  * Vous devez avoir re&#195;&#167;u une copie de la Licence Publique G&#195;&#169;n&#195;&#169;rale GNU en m&#195;&#170;me 
+!  * temps que ce programme ; si ce n'est pas le cas, &#195;&#169;crivez &#195;&#160; la Free Software 
+!  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, &#195;&#137;tats-Unis. 
+   */
+  
+--- 2,20 ----
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
++  * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>) 
+   * Copyright (C) 2006 Roncaglia Julien &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at virtualblackfox.net</A>&gt;
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+!  * termes de la Licence Publique G&#233;n&#233;rale GNU publi&#233;e par la Free Software 
+!  * Foundation (version 2 ou bien toute autre version ult&#233;rieure choisie par vous).
+   * 
+!  * Ce programme est distribu&#233; car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+   * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+!  * dans un but sp&#233;cifique. Reportez-vous &#224; la Licence Publique G&#233;n&#233;rale GNU pour 
+!  * plus de d&#233;tails.
+   * 
+!  * Vous devez avoir re&#231;u une copie de la Licence Publique G&#233;n&#233;rale GNU en m&#234;me 
+!  * temps que ce programme ; si ce n'est pas le cas, &#233;crivez &#224; la Free Software 
+!  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, &#201;tats-Unis. 
+   */
+  
+***************
+*** 22,29 ****
+  using System.Text;
+  using System.IO;
+  
+  namespace Wizou.FreeXplorer
+  {
+!     static class FreeXplorer
+      {
+          public static string ConfigurationFolder
+--- 23,40 ----
+  using System.Text;
+  using System.IO;
++ using System.Net;
++ using System.Net.Sockets;
++ using Wizou.VLC;
++ using System.Reflection;
+  
+  namespace Wizou.FreeXplorer
+  {
+!     class VLCLaunchException : ApplicationException
+!     {
+!         public VLCLaunchException(string msg) : base(msg) { }
+!     }
+! 
+! 
+!     class FreeXplorer : IDisposable
+      {
+          public static string ConfigurationFolder
+***************
+*** 42,45 ****
+--- 53,162 ----
+                              Environment.SpecialFolder.Personal), &quot;.freexplorer&quot;);
+                  }
++             }
++         }
++ 
++         public bool VLCVisible
++         {
++             get { return m_vlcApp.ShowWindow; }
++             set { m_vlcApp.ShowWindow = value; }
++         }
++ 
++         Configuration m_config = new Configuration();
++         public Configuration Configuration { get { return m_config; } }
++ 
++         VLCApp m_vlcApp = new VLCApp();
++         FreeboxServer m_freeboxServer = new FreeboxServer(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), &quot;pages&quot;));
++         public FreeboxServer FreeboxServer { get { return m_freeboxServer; } }
++         LIRC.LIRCServer m_lircServer = new LIRC.LIRCServer();
++ 
++         IPHostEntry FreeBoxIP
++         {
++             get
++             {
++                 
++                 try
++                 {
++                     return Dns.GetHostEntry(&quot;freeplayer.freebox.fr&quot;);
++                 }
++                 catch (SocketException)
++                 {
++                     return new IPHostEntry();
++                 }
++             }
++         }
++ 
++         public FreeXplorer()
++         {
++             IPHostEntry freeboxIP = FreeBoxIP;
++ 
++             if (freeboxIP.AddressList != null)
++                 m_freeboxServer.Init(freeboxIP.AddressList[0], m_vlcApp, m_lircServer);
++ 
++             m_config.Load();
++             ApplyConfig(true);
++ 
++             if (freeboxIP.AddressList == null)
++             {
++                 throw new Exception(&quot;Impossible de r&#233;soudre l'adresse IP de la Freebox\r\n&quot; +
++                                 &quot;Verifiez la configuration&quot;);
++             }            
++         }
++ 
++         public void Dispose()
++         {
++             m_config.Save();
++             m_freeboxServer.Stop();
++             m_lircServer.Stop();
++             m_vlcApp.Stop();
++         }
++ 
++         public void ApplyConfig(bool restartVLC)
++         {
++             // arrets des serveurs TCP
++             m_freeboxServer.Stop();
++             m_lircServer.Stop();
++ 
++             if (restartVLC) m_vlcApp.Stop();
++ 
++             // application des param&#232;tres
++             VLC.Utility.SoundExts = m_config.SoundExts;
++             VLC.Utility.PictureExts = m_config.PictureExts;
++             VLC.Utility.VideoExts = m_config.VideoExts;
++ 
++             if (restartVLC)
++             {
++                 try
++                 {
++                     m_vlcApp.RC_host_port = Convert.ToInt32(m_config.VlcPort);
++                     m_vlcApp.DVDLetter = m_config.DVDLetter[0];
++                     m_vlcApp.AudioTranscode = m_config.Transcode;
++                     m_vlcApp.SetConfig(m_config.VLCPath, m_config.AudioLanguage, m_config.SubLanguage, m_config.FFMpegInterlace, m_config.HalfScale ? 0.1 : 1.0, Convert.ToInt32(m_config.TranscodeVB));
++                     m_vlcApp.Start();
++                 }
++                 catch (System.ComponentModel.Win32Exception ex)
++                 {
++                     throw new VLCLaunchException(&quot;Impossible de lancer l'executable vlc.exe\r\n\r\n&quot; +
++                         ex.Message + &quot;\r\n\r\nVerifiez la configuration&quot;);
++                 }
++                 catch (VLCException ex)
++                 {
++                     throw new VLCLaunchException(&quot;Probl&#232;me au lancement de vlc.exe :\r\n\r\n&quot; +
++                         ex.Message + &quot;\r\n\r\nR&#233;essayez de lancer FreeXplorer&quot;);
++                 }
++             }
++ 
++             // activation eventuelle des serveurs TCP
++             m_lircServer.Active = m_config.LIRCActive;
++             m_freeboxServer.PCControlAllowed = m_config.PCControlAllowed;
++             m_freeboxServer.BlackBkgnds = m_config.BlackBkgnds;
++ 
++             try
++             {
++                 m_freeboxServer.Start();
++             }
++             catch (SocketException)
++             {
++                 throw new Exception(&quot;Le port 8080 de cette machine est d&#233;j&#224; occup&#233; !\r\n&quot; +
++                                 &quot;V&#233;rifiez que FreeXplorer, VLC, un autre Freeplayer ou un serveur proxy n'est pas d&#233;j&#224; actif&quot;);
+              }
+          }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000039.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.23,1.24
+</A></li>
+	<LI>Next message: <A HREF="000042.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Program.cs,1.6,1.7
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#41">[ date ]</a>
+              <a href="thread.html#41">[ thread ]</a>
+              <a href="subject.html#41">[ subject ]</a>
+              <a href="author.html#41">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

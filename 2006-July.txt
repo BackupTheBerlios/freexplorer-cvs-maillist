@@ -1,0 +1,68 @@
+From nobody at sheep.berlios.de  Thu Jul 13 01:11:16 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Thu, 13 Jul 2006 01:11:16 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.5,1.6 lirc_blank.html,1.1,1.2
+Message-ID: <200607122311.k6CNBGY10957@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv6682
+
+Modified Files:
+	lirc.html lirc_blank.html 
+Log Message:
+Retrait de -- superflus
+
+Index: lirc.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/lirc.html,v
+retrieving revision 1.5
+retrieving revision 1.6
+diff -C2 -d -r1.5 -r1.6
+*** lirc.html	13 May 2006 22:29:19 -0000	1.5
+--- lirc.html	12 Jul 2006 23:11:10 -0000	1.6
+***************
+*** 16,22 ****
+  	<link rel="info"       href=   "lirc.html?action=lirc&key=info">
+  	<link rel="options"    href=   "lirc.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc.html?action=lirc&key=red"-->
+! 	<link rel="green"      href=   "lirc.html?action=lirc&key=green"-->
+! 	<link rel="blue"       href=   "lirc.html?action=lirc&key=blue"-->
+  	<link rel="left"       href=   "lirc.html?action=lirc&key=left">
+  	<link rel="right"      href=   "lirc.html?action=lirc&key=right">
+--- 16,22 ----
+  	<link rel="info"       href=   "lirc.html?action=lirc&key=info">
+  	<link rel="options"    href=   "lirc.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc.html?action=lirc&key=red">
+! 	<link rel="green"      href=   "lirc.html?action=lirc&key=green">
+! 	<link rel="blue"       href=   "lirc.html?action=lirc&key=blue">
+  	<link rel="left"       href=   "lirc.html?action=lirc&key=left">
+  	<link rel="right"      href=   "lirc.html?action=lirc&key=right">
+
+Index: lirc_blank.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/lirc_blank.html,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** lirc_blank.html	16 Apr 2006 01:07:47 -0000	1.1
+--- lirc_blank.html	12 Jul 2006 23:11:10 -0000	1.2
+***************
+*** 16,22 ****
+  	<link rel="info"       href=   "lirc_blank.html?action=lirc&key=info">
+  	<link rel="options"    href=   "lirc_blank.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc_blank.html?action=lirc&key=red"-->
+! 	<link rel="green"      href=   "lirc_blank.html?action=lirc&key=green"-->
+! 	<link rel="blue"       href=   "lirc_blank.html?action=lirc&key=blue"-->
+  	<link rel="left"       href=   "lirc_blank.html?action=lirc&key=left">
+  	<link rel="right"      href=   "lirc_blank.html?action=lirc&key=right">
+--- 16,22 ----
+  	<link rel="info"       href=   "lirc_blank.html?action=lirc&key=info">
+  	<link rel="options"    href=   "lirc_blank.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc_blank.html?action=lirc&key=red">
+! 	<link rel="green"      href=   "lirc_blank.html?action=lirc&key=green">
+! 	<link rel="blue"       href=   "lirc_blank.html?action=lirc&key=blue">
+  	<link rel="left"       href=   "lirc_blank.html?action=lirc&key=left">
+  	<link rel="right"      href=   "lirc_blank.html?action=lirc&key=right">
+
+
+

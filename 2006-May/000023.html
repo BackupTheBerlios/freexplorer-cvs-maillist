@@ -1,0 +1,174 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.19,1.20 HTTP.cs,1.5,1.6
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.19%2C1.20%20HTTP.cs%2C1.5%2C1.6&In-Reply-To=%3C200605042335.k44NZVt00173%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000022.html">
+   <LINK REL="Next"  HREF="000024.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.19,1.20 HTTP.cs,1.5,1.6</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.19%2C1.20%20HTTP.cs%2C1.5%2C1.6&In-Reply-To=%3C200605042335.k44NZVt00173%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.19,1.20 HTTP.cs,1.5,1.6">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri May  5 01:35:31 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000022.html">[Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.14,1.15
+</A></li>
+        <LI>Next message: <A HREF="000024.html">[Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.15,1.16
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv4001/FreeXplorer
+
+Modified Files:
+	Freebox.cs HTTP.cs 
+Log Message:
+Protection contre les scanners d'adresses IP
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.19
+retrieving revision 1.20
+diff -C2 -d -r1.19 -r1.20
+*** Freebox.cs	14 Apr 2006 22:44:46 -0000	1.19
+--- Freebox.cs	4 May 2006 23:36:34 -0000	1.20
+***************
+*** 85,89 ****
+          }
+  
+!         override protected HttpStatusCode HandleRequest()
+          {
+              // verification de l'adresse IP du client :
+--- 85,89 ----
+          }
+  
+!         override protected bool ValidateRemoteAddr(IPAddress remoteAddr)
+          {
+              // verification de l'adresse IP du client :
+***************
+*** 92,105 ****
+              //  127.0.0.1 (localhost) : Pour tests en local
+              //  192.168.xx.xx : Freebox en mode Routeur (pas trop de probleme de s&#233;curit&#233; &#224; ce niveau puisque ce sont des adresses LAN locales, pas Internet)
+-             IPAddress remoteAddr = (Socket.RemoteEndPoint as IPEndPoint).Address;
+              if (!remoteAddr.Equals(FreeboxAddress) &amp;&amp; !IPAddress.IsLoopback(remoteAddr))
+              {
+                  byte[] remoteAddrBytes = remoteAddr.GetAddressBytes();
+                  if ((remoteAddrBytes[0] != 192) || (remoteAddrBytes[1] != 168))
+!                 {
+!                     throw new ApplicationException(string.Format(&quot;Adresse IP {0} non autoris&#233;e&quot;, ((IPEndPoint)Socket.RemoteEndPoint).Address));
+!                 }
+              }
+  
+              if (Url[0] != '/') throw new Exception(&quot;L'URL doit commencer par un /&quot;);
+  
+--- 92,106 ----
+              //  127.0.0.1 (localhost) : Pour tests en local
+              //  192.168.xx.xx : Freebox en mode Routeur (pas trop de probleme de s&#233;curit&#233; &#224; ce niveau puisque ce sont des adresses LAN locales, pas Internet)
+              if (!remoteAddr.Equals(FreeboxAddress) &amp;&amp; !IPAddress.IsLoopback(remoteAddr))
+              {
+                  byte[] remoteAddrBytes = remoteAddr.GetAddressBytes();
+                  if ((remoteAddrBytes[0] != 192) || (remoteAddrBytes[1] != 168))
+!                     return false; // non-accept&#233;e
+              }
++             return base.ValidateRemoteAddr(remoteAddr);
++         }
+  
++         override protected HttpStatusCode HandleRequest()
++         {
+              if (Url[0] != '/') throw new Exception(&quot;L'URL doit commencer par un /&quot;);
+  
+
+Index: HTTP.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/HTTP.cs,v
+retrieving revision 1.5
+retrieving revision 1.6
+diff -C2 -d -r1.5 -r1.6
+*** HTTP.cs	21 Sep 2005 23:32:23 -0000	1.5
+--- HTTP.cs	4 May 2006 23:36:34 -0000	1.6
+***************
+*** 94,101 ****
+--- 94,108 ----
+          }
+  
++         // standard validation (usually overriden)
++         virtual protected bool ValidateRemoteAddr(IPAddress remoteAddr)
++         {
++             return true; // any address is accepted
++         }
++ 
+          private void ThreadLoop()
+          {
+              while (true)
+              {
++                 if (Socket != null) Socket.Close(); // securit&#233;: on ferme l'eventuelle Socket pr&#233;c&#233;dente
+                  try
+                  {
+***************
+*** 108,111 ****
+--- 115,119 ----
+                      throw;
+                  }
++                 if (ValidateRemoteAddr((Socket.RemoteEndPoint as IPEndPoint).Address))
+                  try
+                  {
+***************
+*** 136,139 ****
+--- 144,148 ----
+                              }
+                              Console.WriteLine(&quot;HTTP&lt; &quot; + line);
++                             if (line == null) continue;
+                              index = line.IndexOf(' ');
+                              HttpMethod = line.Substring(0, index);
+***************
+*** 349,352 ****
+--- 358,362 ----
+          }
+          
++         // standard handling (usually overriden)
+          virtual protected HttpStatusCode HandleRequest()
+          {
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000022.html">[Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.14,1.15
+</A></li>
+	<LI>Next message: <A HREF="000024.html">[Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.15,1.16
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#23">[ date ]</a>
+              <a href="thread.html#23">[ thread ]</a>
+              <a href="subject.html#23">[ subject ]</a>
+              <a href="author.html#23">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

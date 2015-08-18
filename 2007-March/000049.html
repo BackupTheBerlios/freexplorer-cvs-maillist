@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties	AssemblyInfo.cs, 1.10, 1.11 app.manifest, 1.1, 1.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/Properties%0A%09AssemblyInfo.cs%2C%201.10%2C%201.11%20app.manifest%2C%201.1%2C%201.2&In-Reply-To=%3C20070320184742.CB24CDF71A%40mail.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000048.html">
+   <LINK REL="Next"  HREF="000055.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties	AssemblyInfo.cs, 1.10, 1.11 app.manifest, 1.1, 1.2</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/Properties%0A%09AssemblyInfo.cs%2C%201.10%2C%201.11%20app.manifest%2C%201.1%2C%201.2&In-Reply-To=%3C20070320184742.CB24CDF71A%40mail.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties	AssemblyInfo.cs, 1.10, 1.11 app.manifest, 1.1, 1.2">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Tue Mar 20 19:47:42 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000048.html">[Freexplorer-cvs] FreeXplorer .cvsignore, 1.1, 1.2 InetLoad.dll, 1.1,	NONE InetLoad_Readme.txt, 1.1, NONE Lisez-Moi.html, 1.17,	NONE Setup.nsh, 1.12, NONE Setup.nsi, 1.13, NONE ZipDLL.dll,	1.1.1.1, NONE ioVLC.ini, 1.4, NONE nsisXML.dll, 1.1.1.1,	NONE nsisXML_license.txt, 1.1.1.1, NONE zipdll.nsh, 1.1.1.1,	NONE zipdll_license.txt, 1.1.1.1, NONE
+</A></li>
+        <LI>Next message: <A HREF="000055.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#49">[ date ]</a>
+              <a href="thread.html#49">[ thread ]</a>
+              <a href="subject.html#49">[ subject ]</a>
+              <a href="author.html#49">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Properties
+In directory sheep:/tmp/cvs-serv25825/FreeXplorer/Properties
+
+Modified Files:
+	AssemblyInfo.cs app.manifest 
+Log Message:
+FreeXplorer 1.6
+
+    * Support de la Freebox HD
+    * Choix de non-transcodage vid&#233;o pour la Freebox HD
+    * Correction du doublonnage des &quot;fichiers r&#233;cents&quot;
+    * Inclusion de vlc-0.8.6 en standard
+    * Mise &#224; jour de l'installeur 
+
+Index: AssemblyInfo.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Properties/AssemblyInfo.cs,v
+retrieving revision 1.10
+retrieving revision 1.11
+diff -C2 -d -r1.10 -r1.11
+*** AssemblyInfo.cs	14 Apr 2006 22:18:47 -0000	1.10
+--- AssemblyInfo.cs	20 Mar 2007 18:45:58 -0000	1.11
+***************
+*** 11,15 ****
+  [assembly: AssemblyCompany(&quot;Olivier Marcoux&quot;)]
+  [assembly: AssemblyProduct(&quot;FreeXplorer&quot;)]
+! [assembly: AssemblyCopyright(&quot;Copyright &#169; Olivier Marcoux 2005-2006&quot;)]
+  [assembly: AssemblyTrademark(&quot;&quot;)]
+  [assembly: AssemblyCulture(&quot;&quot;)]
+--- 11,15 ----
+  [assembly: AssemblyCompany(&quot;Olivier Marcoux&quot;)]
+  [assembly: AssemblyProduct(&quot;FreeXplorer&quot;)]
+! [assembly: AssemblyCopyright(&quot;Copyright &#169; Olivier Marcoux 2005-2007&quot;)]
+  [assembly: AssemblyTrademark(&quot;&quot;)]
+  [assembly: AssemblyCulture(&quot;&quot;)]
+***************
+*** 30,33 ****
+  //      Revision
+  //
+! [assembly: AssemblyVersion(&quot;1.5.6&quot;)]
+! [assembly: AssemblyFileVersion(&quot;1.5.6&quot;)]
+--- 30,33 ----
+  //      Revision
+  //
+! [assembly: AssemblyVersion(&quot;1.6&quot;)]
+! [assembly: AssemblyFileVersion(&quot;1.6&quot;)]
+
+Index: app.manifest
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Properties/app.manifest,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** app.manifest	16 Apr 2006 01:07:48 -0000	1.1
+--- app.manifest	20 Mar 2007 18:45:58 -0000	1.2
+***************
+*** 4,9 ****
+      &lt;security&gt;
+        &lt;applicationRequestMinimum&gt;
+-         &lt;PermissionSet class=&quot;System.Security.PermissionSet&quot; version=&quot;1&quot; Unrestricted=&quot;true&quot; ID=&quot;Custom&quot; SameSite=&quot;site&quot; /&gt;
+          &lt;defaultAssemblyRequest permissionSetReference=&quot;Custom&quot; /&gt;
+        &lt;/applicationRequestMinimum&gt;
+      &lt;/security&gt;
+--- 4,9 ----
+      &lt;security&gt;
+        &lt;applicationRequestMinimum&gt;
+          &lt;defaultAssemblyRequest permissionSetReference=&quot;Custom&quot; /&gt;
++         &lt;PermissionSet class=&quot;System.Security.PermissionSet&quot; version=&quot;1&quot; Unrestricted=&quot;true&quot; ID=&quot;Custom&quot; SameSite=&quot;site&quot; /&gt;
+        &lt;/applicationRequestMinimum&gt;
+      &lt;/security&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000048.html">[Freexplorer-cvs] FreeXplorer .cvsignore, 1.1, 1.2 InetLoad.dll, 1.1,	NONE InetLoad_Readme.txt, 1.1, NONE Lisez-Moi.html, 1.17,	NONE Setup.nsh, 1.12, NONE Setup.nsi, 1.13, NONE ZipDLL.dll,	1.1.1.1, NONE ioVLC.ini, 1.4, NONE nsisXML.dll, 1.1.1.1,	NONE nsisXML_license.txt, 1.1.1.1, NONE zipdll.nsh, 1.1.1.1,	NONE zipdll_license.txt, 1.1.1.1, NONE
+</A></li>
+	<LI>Next message: <A HREF="000055.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#49">[ date ]</a>
+              <a href="thread.html#49">[ thread ]</a>
+              <a href="subject.html#49">[ subject ]</a>
+              <a href="author.html#49">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

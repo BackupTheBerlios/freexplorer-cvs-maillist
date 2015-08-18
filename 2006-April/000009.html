@@ -1,0 +1,357 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,NONE,1.1 Favorites.cs,1.3,1.4 FreeXplorer.csproj,1.5,1.6 Freebox.cs,1.18,1.19 MainForm.cs,1.8,1.9 Recents.cs,1.1,1.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20FreeXplorer.cs%2CNONE%2C1.1%20Favorites.cs%2C1.3%2C1.4%20FreeXplorer.csproj%2C1.5%2C1.6%20Freebox.cs%2C1.18%2C1.19%20MainForm.cs%2C1.8%2C1.9%20Recents.cs%2C1.1%2C1.2&In-Reply-To=%3C200604142244.k3EMiNt03465%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000007.html">
+   <LINK REL="Next"  HREF="000010.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,NONE,1.1 Favorites.cs,1.3,1.4 FreeXplorer.csproj,1.5,1.6 Freebox.cs,1.18,1.19 MainForm.cs,1.8,1.9 Recents.cs,1.1,1.2</H1>
+    <B>blackfox</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20FreeXplorer.cs%2CNONE%2C1.1%20Favorites.cs%2C1.3%2C1.4%20FreeXplorer.csproj%2C1.5%2C1.6%20Freebox.cs%2C1.18%2C1.19%20MainForm.cs%2C1.8%2C1.9%20Recents.cs%2C1.1%2C1.2&In-Reply-To=%3C200604142244.k3EMiNt03465%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,NONE,1.1 Favorites.cs,1.3,1.4 FreeXplorer.csproj,1.5,1.6 Freebox.cs,1.18,1.19 MainForm.cs,1.8,1.9 Recents.cs,1.1,1.2">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Sat Apr 15 00:44:23 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000007.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.17,1.18 MainForm.cs,1.7,1.8 MainForm.Designer.cs,1.3,1.4 MainForm.resx,1.2,1.3 Program.cs,1.4,1.5
+</A></li>
+        <LI>Next message: <A HREF="000010.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.1,1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv15709/FreeXplorer
+
+Modified Files:
+	Favorites.cs FreeXplorer.csproj Freebox.cs MainForm.cs 
+	Recents.cs 
+Added Files:
+	FreeXplorer.cs 
+Log Message:
+Chemin du dossier contenant les fichiers de configuration recherch&#233; &#224; un seul endroit.
+
+--- NEW FILE: FreeXplorer.cs ---
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+
+namespace Wizou.FreeXplorer
+{
+    static class FreeXplorer
+    {
+        public static string ConfigurationFolder
+        {
+            get
+            {
+                return Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer&quot;);
+            }
+        }
+    }
+}
+
+Index: Favorites.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Favorites.cs,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** Favorites.cs	6 Apr 2006 22:08:27 -0000	1.3
+--- Favorites.cs	14 Apr 2006 22:44:46 -0000	1.4
+***************
+*** 28,35 ****
+      static class Favorites
+      {
+          public static void Add(string file, string kind, string title)
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/favorites.xml&quot;));
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode(&quot;MRL[.='&quot; + file + &quot;']&quot;) as XmlElement;
+--- 28,43 ----
+      static class Favorites
+      {
++         static string FilePath
++         {
++             get
++             {
++                 return Path.Combine(FreeXplorer.ConfigurationFolder, &quot;favorites.xml&quot;);
++             }
++         }
++ 
+          public static void Add(string file, string kind, string title)
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(FilePath);
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode(&quot;MRL[.='&quot; + file + &quot;']&quot;) as XmlElement;
+***************
+*** 42,47 ****
+              node.SetAttribute(&quot;kind&quot;, kind);
+              node.SetAttribute(&quot;title&quot;, title);
+!             doc.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/favorites.xml&quot;));
+! 
+          }
+  
+--- 50,54 ----
+              node.SetAttribute(&quot;kind&quot;, kind);
+              node.SetAttribute(&quot;title&quot;, title);
+!             doc.Save(FilePath);
+          }
+  
+***************
+*** 49,58 ****
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/favorites.xml&quot;));
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode(&quot;MRL[.='&quot; + file + &quot;']&quot;) as XmlElement;
+              if (node != null) root.RemoveChild(node);
+!             doc.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/favorites.xml&quot;));
+! 
+          }
+      }
+--- 56,64 ----
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(FilePath);
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode(&quot;MRL[.='&quot; + file + &quot;']&quot;) as XmlElement;
+              if (node != null) root.RemoveChild(node);
+!             doc.Save(FilePath);
+          }
+      }
+
+Index: FreeXplorer.csproj
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.csproj,v
+retrieving revision 1.5
+retrieving revision 1.6
+diff -C2 -d -r1.5 -r1.6
+*** FreeXplorer.csproj	6 Apr 2006 22:08:58 -0000	1.5
+--- FreeXplorer.csproj	14 Apr 2006 22:44:46 -0000	1.6
+***************
+*** 56,59 ****
+--- 56,60 ----
+    &lt;ItemGroup&gt;
+      &lt;Compile Include=&quot;Favorites.cs&quot; /&gt;
++     &lt;Compile Include=&quot;FreeXplorer.cs&quot; /&gt;
+      &lt;Compile Include=&quot;MainForm.cs&quot;&gt;
+        &lt;SubType&gt;Form&lt;/SubType&gt;
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.18
+retrieving revision 1.19
+diff -C2 -d -r1.18 -r1.19
+*** Freebox.cs	14 Apr 2006 22:18:47 -0000	1.18
+--- Freebox.cs	14 Apr 2006 22:44:46 -0000	1.19
+***************
+*** 65,69 ****
+              try
+              {
+!                 Stream stream = File.Open(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/cookies.dat&quot;), FileMode.Open);
+                  BinaryFormatter formatter = new BinaryFormatter();
+                  webCookieContainer = (CookieContainer)formatter.Deserialize(stream);
+--- 65,69 ----
+              try
+              {
+!                 Stream stream = File.Open(Path.Combine(FreeXplorer.ConfigurationFolder, &quot;cookies.dat&quot;), FileMode.Open);
+                  BinaryFormatter formatter = new BinaryFormatter();
+                  webCookieContainer = (CookieContainer)formatter.Deserialize(stream);
+***************
+*** 194,198 ****
+          private HttpStatusCode ReplyXSLT(string xslPath, string xmlName)
+          {
+!             string xmlPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/&quot; + xmlName);
+              if (!File.Exists(xslPath))
+              {
+--- 194,198 ----
+          private HttpStatusCode ReplyXSLT(string xslPath, string xmlName)
+          {
+!             string xmlPath = Path.Combine(FreeXplorer.ConfigurationFolder, xmlName);
+              if (!File.Exists(xslPath))
+              {
+***************
+*** 595,599 ****
+  #endif
+              //Opens &quot;cookies.dat&quot; and serializes the CookieContainer into it in Soap/XML format.
+!             Stream stream = File.Open(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/cookies.dat&quot;), FileMode.Create);
+              BinaryFormatter formatter = new BinaryFormatter();
+              formatter.Serialize(stream, webCookieContainer);
+--- 595,599 ----
+  #endif
+              //Opens &quot;cookies.dat&quot; and serializes the CookieContainer into it in Soap/XML format.
+!             Stream stream = File.Open(Path.Combine(FreeXplorer.ConfigurationFolder, &quot;cookies.dat&quot;), FileMode.Create);
+              BinaryFormatter formatter = new BinaryFormatter();
+              formatter.Serialize(stream, webCookieContainer);
+***************
+*** 982,985 ****
+--- 982,1003 ----
+          }
+  
++         static string PathCombine(params string[] elems)
++         {
++             string result = &quot;&quot;;
++             foreach (string elem in elems)
++             {
++                 result = Path.Combine(result, elem);
++             }
++             return result;
++         }
++ 
++         internal static string GetIconForMediaType(VLC.Utility.MediaType type, string defaultIcon)
++         {
++             //FIXME: Path relatif au CurrentDirectory mais devrait &#234;tre relatif au BaseDir du serveur
++             FileInfo iconFile = new FileInfo(PathCombine(&quot;pages&quot;, &quot;img&quot;, &quot;media&quot;, type.ToString() + &quot;.gif&quot;));
++             return iconFile.Exists ? &quot;img/media/&quot; + iconFile.Name : defaultIcon;
++ 
++         }
++ 
+          internal static string ExploreFiles(string dir, string deffile)
+          {
+***************
+*** 1020,1030 ****
+              else
+                  return html.ToString();
+-         }
+- 
+-         internal static string GetIconForMediaType(VLC.Utility.MediaType type, string defaultIcon)
+-         {
+-             FileInfo iconFile = new FileInfo(&quot;pages/img/media/&quot; + type.ToString() + &quot;.gif&quot;);
+-             return iconFile.Exists ? &quot;img/media/&quot; + iconFile.Name : defaultIcon;
+- 
+          }
+  
+--- 1038,1041 ----
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.8
+retrieving revision 1.9
+diff -C2 -d -r1.8 -r1.9
+*** MainForm.cs	14 Apr 2006 22:18:47 -0000	1.8
+--- MainForm.cs	14 Apr 2006 22:44:46 -0000	1.9
+***************
+*** 117,121 ****
+  
+              // chargement des valeurs des options depuis le fichier Config.xml
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/config.xml&quot;));
+              reader.ReadStartElement(&quot;Config&quot;);
+              do
+--- 117,121 ----
+  
+              // chargement des valeurs des options depuis le fichier Config.xml
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(FreeXplorer.ConfigurationFolder, &quot;config.xml&quot;));
+              reader.ReadStartElement(&quot;Config&quot;);
+              do
+***************
+*** 163,167 ****
+          public void SaveConfig()
+          {
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/config.xml&quot;), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement(&quot;Config&quot;);
+--- 163,167 ----
+          public void SaveConfig()
+          {
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(FreeXplorer.ConfigurationFolder, &quot;config.xml&quot;), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement(&quot;Config&quot;);
+
+Index: Recents.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Recents.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** Recents.cs	6 Apr 2006 22:08:58 -0000	1.1
+--- Recents.cs	14 Apr 2006 22:44:46 -0000	1.2
+***************
+*** 28,36 ****
+      static class Recents
+      {
+          public static void Add(string file)
+          {
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/recents.xml&quot;));
+              reader.ReadStartElement(&quot;Recents&quot;);
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/recents.new&quot;), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement(&quot;Recents&quot;);
+--- 28,44 ----
+      static class Recents
+      {
++         static string FilePath
++         {
++             get
++             {
++                 return Path.Combine(FreeXplorer.ConfigurationFolder, &quot;recents.xml&quot;);
++             }
++         }
++ 
+          public static void Add(string file)
+          {
+!             XmlTextReader reader = new XmlTextReader(FilePath);
+              reader.ReadStartElement(&quot;Recents&quot;);
+!             XmlTextWriter writer = new XmlTextWriter(Path.ChangeExtension(FilePath, &quot;.new&quot;), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement(&quot;Recents&quot;);
+***************
+*** 51,56 ****
+              writer.Close();
+              reader.Close();
+!             File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/recents.xml&quot;));
+!             File.Move(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/recents.new&quot;), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), &quot;FreeXplorer/recents.xml&quot;));
+          }
+      }
+--- 59,64 ----
+              writer.Close();
+              reader.Close();
+!             File.Delete(FilePath);
+!             File.Move(Path.ChangeExtension(FilePath, &quot;.new&quot;), FilePath);
+          }
+      }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000007.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.17,1.18 MainForm.cs,1.7,1.8 MainForm.Designer.cs,1.3,1.4 MainForm.resx,1.2,1.3 Program.cs,1.4,1.5
+</A></li>
+	<LI>Next message: <A HREF="000010.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.1,1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#9">[ date ]</a>
+              <a href="thread.html#9">[ thread ]</a>
+              <a href="subject.html#9">[ subject ]</a>
+              <a href="author.html#9">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.3,1.4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin%20vlcrcV2%2C1.3%2C1.4&In-Reply-To=%3C200604160006.k3G060t28546%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000010.html">
+   <LINK REL="Next"  HREF="000012.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.3,1.4</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin%20vlcrcV2%2C1.3%2C1.4&In-Reply-To=%3C200604160006.k3G060t28546%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.3,1.4">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Sun Apr 16 02:06:00 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000010.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.1,1.2
+</A></li>
+        <LI>Next message: <A HREF="000012.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj.user,1.1.1.1,1.2 MainForm.cs,1.9,1.10 Program.cs,1.5,1.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin
+In directory sheep:/tmp/cvs-serv7269/bin
+
+Modified Files:
+	vlcrcV2 
+Log Message:
+tentative d'am&#233;lioration des param&#232;tres VLC
+
+Index: vlcrcV2
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/vlcrcV2,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** vlcrcV2	21 Sep 2005 23:31:02 -0000	1.3
+--- vlcrcV2	16 Apr 2006 00:06:21 -0000	1.4
+***************
+*** 410,416 ****
+  #sout-ts-dts-delay=400
+  # Cryptage audio (Bool&#195;&#169;en)
+! #sout-ts-crypt-audio=1
+  # Crypt video (Bool&#195;&#169;en)
+! #sout-ts-crypt-video=1
+  # Cl&#195;&#169; CSA (Cha&#195;&#174;ne)
+  #sout-ts-csa-ck=
+--- 410,416 ----
+  #sout-ts-dts-delay=400
+  # Cryptage audio (Bool&#195;&#169;en)
+! sout-ts-crypt-audio=0
+  # Crypt video (Bool&#195;&#169;en)
+! sout-ts-crypt-video=0
+  # Cl&#195;&#169; CSA (Cha&#195;&#174;ne)
+  #sout-ts-csa-ck=
+***************
+*** 458,462 ****
+  #sout-ffmpeg-hurry-up=0
+  # Active l&#226;&#128;&#153;encodage entrelac&#195;&#169; (Bool&#195;&#169;en)
+! sout-ffmpeg-interlace=1
+  # Enable interlaced motion estimation (Bool&#195;&#169;en)
+  sout-ffmpeg-interlace-me=0
+--- 458,462 ----
+  #sout-ffmpeg-hurry-up=0
+  # Active l&#226;&#128;&#153;encodage entrelac&#195;&#169; (Bool&#195;&#169;en)
+! #sout-ffmpeg-interlace=0
+  # Enable interlaced motion estimation (Bool&#195;&#169;en)
+  sout-ffmpeg-interlace-me=0
+***************
+*** 797,805 ****
+  #freetype-font=
+  # Taille de la police en pixels (Entier)
+! #freetype-fontsize=0
+  # Opacit&#195;&#169;, 0 &#195;&#160; 255 (Entier)
+  #freetype-opacity=255
+  # Couleur par d&#195;&#169;faut du texte (Entier)
+! #freetype-color=16777215
+  # Taille (Entier)
+  #freetype-rel-fontsize=16
+--- 797,805 ----
+  #freetype-font=
+  # Taille de la police en pixels (Entier)
+! freetype-fontsize=22
+  # Opacit&#195;&#169;, 0 &#195;&#160; 255 (Entier)
+  #freetype-opacity=255
+  # Couleur par d&#195;&#169;faut du texte (Entier)
+! freetype-color=8421376
+  # Taille (Entier)
+  #freetype-rel-fontsize=16
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000010.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.1,1.2
+</A></li>
+	<LI>Next message: <A HREF="000012.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj.user,1.1.1.1,1.2 MainForm.cs,1.9,1.10 Program.cs,1.5,1.6
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#11">[ date ]</a>
+              <a href="thread.html#11">[ thread ]</a>
+              <a href="subject.html#11">[ subject ]</a>
+              <a href="author.html#11">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

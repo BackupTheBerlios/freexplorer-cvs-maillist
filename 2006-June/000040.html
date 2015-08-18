@@ -1,0 +1,918 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs,NONE,1.1 Utility.cs,NONE,1.1 VLCApp.cs,NONE,1.1
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/VLC%20AudioTranscode.cs%2CNONE%2C1.1%20Utility.cs%2CNONE%2C1.1%20VLCApp.cs%2CNONE%2C1.1&In-Reply-To=%3C200606301955.k5UJtee24160%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000038.html">
+   <LINK REL="Next"  HREF="000039.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs,NONE,1.1 Utility.cs,NONE,1.1 VLCApp.cs,NONE,1.1</H1>
+    <B>blackfox</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/VLC%20AudioTranscode.cs%2CNONE%2C1.1%20Utility.cs%2CNONE%2C1.1%20VLCApp.cs%2CNONE%2C1.1&In-Reply-To=%3C200606301955.k5UJtee24160%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs,NONE,1.1 Utility.cs,NONE,1.1 VLCApp.cs,NONE,1.1">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Jun 30 21:55:40 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000038.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC - New directory
+</A></li>
+        <LI>Next message: <A HREF="000039.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.23,1.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC
+In directory sheep:/tmp/cvs-serv14222/FreeXplorer/VLC
+
+Added Files:
+	AudioTranscode.cs Utility.cs VLCApp.cs 
+Log Message:
+J'essaye de commiter en morceaux car CVS plante...
+
+--- NEW FILE: AudioTranscode.cs ---
+/*
+ * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+ * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+ * 
+ * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+ * termes de la Licence Publique G&#233;n&#233;rale GNU publi&#233;e par la Free Software 
+ * Foundation (version 2 ou bien toute autre version ult&#233;rieure choisie par vous).
+ * 
+ * Ce programme est distribu&#233; car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+ * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+ * dans un but sp&#233;cifique. Reportez-vous &#224; la Licence Publique G&#233;n&#233;rale GNU pour 
+ * plus de d&#233;tails.
+ * 
+ * Vous devez avoir re&#231;u une copie de la Licence Publique G&#233;n&#233;rale GNU en m&#234;me 
+ * temps que ce programme ; si ce n'est pas le cas, &#233;crivez &#224; la Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, &#201;tats-Unis. 
+ */
+
+namespace Wizou.VLC
+{
+    public enum AudioTranscode
+    {
+        None,
+        MPGA,
+        A52,
+        PC
+    };
+}
+--- NEW FILE: Utility.cs ---
+/*
+ * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+ * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+ * 
+ * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+ * termes de la Licence Publique G&#233;n&#233;rale GNU publi&#233;e par la Free Software 
+ * Foundation (version 2 ou bien toute autre version ult&#233;rieure choisie par vous).
+ * 
+ * Ce programme est distribu&#233; car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+ * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+ * dans un but sp&#233;cifique. Reportez-vous &#224; la Licence Publique G&#233;n&#233;rale GNU pour 
+ * plus de d&#233;tails.
+ * 
+ * Vous devez avoir re&#231;u une copie de la Licence Publique G&#233;n&#233;rale GNU en m&#234;me 
+ * temps que ce programme ; si ce n'est pas le cas, &#233;crivez &#224; la Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, &#201;tats-Unis. 
+ */
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+
+namespace Wizou.VLC
+{
+    static class Utility
+    {
+        public static string VideoExts = &quot;.mpg.ts.mp2.mpeg.vob.avi.ogm.mkv.mp4.mov.mjpeg.asf.wmv.wma.divx&quot;;
+        public static string SoundExts = &quot;.mp3.aac.au.aif.aiff.wav.ogg&quot;;
+        public static string PictureExts = &quot;.jpg.jpeg.png.tiff.gif&quot;;
+
+        public enum MediaType
+        {
+            Unknown,
+            DVD,
+            Playlist,
+            Video,
+            Sound,
+            Picture,
+        }
+
+        public static MediaType GetMediaType(string media)
+        {
+            if (media.StartsWith(&quot;<A HREF="dvdsimple://">dvdsimple://</A>&quot;))
+                return MediaType.DVD;
+            string value;
+            try
+            {
+                value = Path.GetExtension(media).ToLower();
+            }
+            catch (ArgumentException)
+            {
+                return MediaType.Unknown;
+            }
+            if (value.Length != 0)
+            {
+                if (value == &quot;.m3u&quot;)
+                    return MediaType.Playlist;
+                else if (SoundExts.Contains(value))
+                    return MediaType.Sound;
+                else if (VideoExts.Contains(value))
+                    return MediaType.Video;
+                else if (PictureExts.Contains(value))
+                    return MediaType.Picture;
+            }
+            return MediaType.Unknown;
+        }
+
+        /// &lt;remarks&gt;
+        /// can return null if no options !
+        /// &lt;/remarks&gt;
+        public static string[] GetMediaMRLOptions(string media)
+        {
+            switch (GetMediaType(media))
+            {
+                case MediaType.Picture:
+                    return new string[]
+                    {
+                        &quot;fake-file=&quot; + media,
+                        &quot;sout-transcode-vfilter=deinterlace&quot;,
+                        &quot;sout-deinterlace-mode=blend&quot;,
+                        &quot;sout-ffmpeg-keyint=8&quot;,
+                    };
+                case MediaType.Video:
+                    if (File.Exists(Path.ChangeExtension(media, &quot;.srt&quot;)))
+                        return new string[] { &quot;sub-track=0&quot; };
+                    else
+                        return null;
+                default:
+                    return null;
+            }
+        }
+
+        public static string GetMediaMRL(string media)
+        {
+            if (GetMediaType(media) == MediaType.Picture)
+                return &quot;fake:&quot;;
+            else
+                return media;
+        }
+
+    }
+}
+
+--- NEW FILE: VLCApp.cs ---
+/*
+ * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+ * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+ * 
+ * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+ * termes de la Licence Publique G&#233;n&#233;rale GNU publi&#233;e par la Free Software 
+ * Foundation (version 2 ou bien toute autre version ult&#233;rieure choisie par vous).
+ * 
+ * Ce programme est distribu&#233; car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+ * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+ * dans un but sp&#233;cifique. Reportez-vous &#224; la Licence Publique G&#233;n&#233;rale GNU pour 
+ * plus de d&#233;tails.
+ * 
+ * Vous devez avoir re&#231;u une copie de la Licence Publique G&#233;n&#233;rale GNU en m&#234;me 
+ * temps que ce programme ; si ce n'est pas le cas, &#233;crivez &#224; la Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, &#201;tats-Unis. 
+ */
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Diagnostics;
+using System.Net.Sockets;
+using System.Threading;
+using System.Text.RegularExpressions;
+using System.Collections.Specialized;
+using System.Windows.Forms;
+using System.Net;
+
+namespace Wizou.VLC
+{
+    public class VLCApp
+    {
+        private bool active = false;
+        private bool showWindow = false;
+        private Process process = null;
+        private TcpClient tcpClient;
+        private NetworkStream networkStream;
+        private int playlistSize;
+        private int itemAddedCounter;
+
+        private ProcessStartInfo startInfo;
+        private int rc_host_port;// = 31186;
+        private char dvdLetter;// = 'D';
+        private AudioTranscode audioTranscode;// = AudioTranscode.MPGA;
+        private enum VlcMode
+        {
+            FreeplayerV1,
+            FreeplayerV2,
+        }
+        private VlcMode vlcMode;
+        private Encoding vlcEncoding;
+        private byte vlcNewlineChar1;
+        private byte vlcNewlineChar2;
+        
+        private static string AudioTranscode2Options(AudioTranscode audioTranscode)
+        {
+            switch (audioTranscode)
+            {
+                case AudioTranscode.MPGA: return &quot; --sout-transcode-acodec=mpga --sout-transcode-ab=192 --sout-transcode-channels=2&quot;;
+                case AudioTranscode.A52: return &quot; --sout-transcode-acodec=a52 --sout-transcode-ab=448 --sout-transcode-channels=6&quot;;
+                case AudioTranscode.PC: return &quot; --sout=#duplicate{dst=transcode:std,select=video,dst=display,select=audio} --audio-desync=850&quot;;
+                default: return &quot; --sout-transcode-acodec= --sout-transcode-ab= --sout-transcode-channels=&quot;;
+            }
+        }
+
+        public void SetConfig(string exeFilename, string audioLanguage, string subLanguage, bool ffmpeg_interlace, double transform_scale, int transcode_vb)
+        {
+            switch (FileVersionInfo.GetVersionInfo(exeFilename).FileVersion)
+            {
+                case &quot;0.8.4-svn&quot;: vlcMode = VlcMode.FreeplayerV1; break;
+                case &quot;0.8.4-fbx-2&quot;: vlcMode = VlcMode.FreeplayerV2; break;
+                default:
+                    MessageBox.Show(&quot;FreeXplorer &quot;+Wizou.FreeXplorer.Program.appVersionText+&quot;n'est peut-&#234;tre pas compatible avec cette version de vlc.exe\r\n\r\n&quot; +
+                                &quot;Cliquez sur Oui pour activer le mode de compatibilit&#233; Freeplayer V1\r\n&quot;+
+                                &quot;Cliquez sur Non pour activer le mode de compatibilit&#233; Freeplayer V2&quot;,
+                                &quot;Compatibilit&#233; VLC&quot;,
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    break;
+            }
+            switch (vlcMode)
+            {
+                case VlcMode.FreeplayerV1:
+                    vlcEncoding = Encoding.Default;
+                    vlcNewlineChar1 = 0x0A;
+                    vlcNewlineChar2 = 0x0D;
+                    break;
+                case VlcMode.FreeplayerV2:
+                    vlcEncoding = Encoding.UTF8;
+                    vlcNewlineChar1 = 0x0D;
+                    vlcNewlineChar2 = 0x0A;
+                    break;
+            }
+            startInfo = new ProcessStartInfo(exeFilename,
+                &quot; --config .&quot; + Path.DirectorySeparatorChar + (vlcMode == VlcMode.FreeplayerV1 ? &quot;vlcrcV1&quot; : &quot;vlcrcV2&quot;) +
+                &quot; --rc-host 127.0.0.1:&quot; + rc_host_port +
+                &quot; --audio-language=&quot; + audioLanguage +
+                &quot; --sub-language=&quot; + subLanguage +
+                &quot; --dvd=&quot; + dvdLetter + &quot;:&quot; +
+                &quot; --&quot; + (ffmpeg_interlace ? &quot;sout-ffmpeg-interlace&quot; : &quot;no-sout-ffmpeg-interlace&quot;) +
+                &quot; --sout-transcode-scale=&quot; + transform_scale.ToString(System.Globalization.NumberFormatInfo.InvariantInfo) +
+                AudioTranscode2Options(audioTranscode)+
+                &quot; --sout-transcode-vb=&quot; + transcode_vb.ToString() +
+                &quot; --wxwin-config-last=(-1,0,0,1280,1024)(0,650,21,363,141)&quot;);
+            startInfo.UseShellExecute = true;
+        }
+
+        public void Start()
+        {
+            if (active) return;
+            // la ligne suivante n'a pas l'air de marcher avec VLC
+            //if (!showWindow) startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process = Process.Start(startInfo);
+            if ((process == null) || (!process.WaitForInputIdle(15000)) ||
+                process.HasExited || (process.MainWindowHandle == IntPtr.Zero))
+            {
+                if ((process != null) &amp;&amp; !process.HasExited) process.Kill();
+                throw new VLCException(&quot;Le processus n'a pas d&#233;marr&#233; normalement&quot;);
+            }
+            if (!showWindow) SysWin32.ShowWindow(process.MainWindowHandle, SysWin32.SW_HIDE);
+            Console.WriteLine(&quot;VLC started&quot;);
+            tcpClient = null;
+            for (int retries = 0; retries &lt; 5; retries++)
+            {
+                try
+                {
+                    tcpClient = new TcpClient(new IPEndPoint(IPAddress.Loopback, 0));
+                    tcpClient.Connect(IPAddress.Loopback, Convert.ToInt32(rc_host_port));
+                    break;
+                }
+                catch (SocketException)
+                {
+                    if (retries == 4)
+                    {
+                        process.Kill();
+                        throw new VLCException(&quot;L'interface RC de VLC ne r&#233;pond pas&quot;);
+                    }
+                    Thread.Sleep(500);
+                }
+            }
+            networkStream = tcpClient.GetStream();
+            networkStream.ReadTimeout = 1000;
+            /*WriteLine(&quot;get_length&quot;);
+            Thread.Sleep(200);
+            networkStream.Read(RC_buffer, 0, 1024);*/
+            RC_buffer_count = 0;
+            itemAddedCounter = 0;
+            active = true;
+        }
+
+        public void Stop()
+        {
+            if (!active) return;
+            if (!Crashed())
+            {
+                // on essaye de terminer proprement VLC
+                try
+                {
+                    Command(&quot;quit&quot;);
+                }
+                catch (VLCException)
+                {
+                }
+            }
+            networkStream.Close();
+            // si vlc n'est pas mort apres 2 sec, on le tue
+            if (!process.WaitForExit(2000))
+                try
+                {
+                    process.Kill();
+                }
+                catch (InvalidOperationException)
+                {
+                }
+            active = false;
+            Console.WriteLine(&quot;VLC stopped&quot;);
+        }
+
+        private void MustBeStopped()
+        {
+            if (active) throw new VLCException(&quot;VLC doit &#234;tre arret&#233; pour changer le reglage&quot;);
+        }
+
+        private void MustBeActive()
+        {
+            if (!active) throw new VLCException(&quot;VLC n'est pas lanc&#233;&quot;);
+        }
+
+        public bool Crashed()
+        {
+            return (process.HasExited || !tcpClient.Connected);
+        }
+
+        public string PathFromMRL(string param)
+        {
+            if (!param.Contains(&quot;://&quot;)) // si ce n'est pas une MRL, c'est directement un chemin d'acc&#232;s de fichier
+                return param;
+            else if (param.StartsWith(&quot;<A HREF="dvdsimple://">dvdsimple://</A>&quot;))
+            {
+                if (param.Length == 12)
+                    return dvdLetter + &quot;:\\&quot;;
+                else
+                    return param.Substring(12);
+            }
+            else // c'est une MRL inconnue
+                return &quot;&quot;;
+        }
+       
+        #region Socket Buffer
+
+        byte[] RC_buffer = new byte[1024];
+        int RC_buffer_count = 0;
+
+        private void WriteLine(string value)
+        {
+            if (Crashed())
+                throw new VLCException(&quot;VLC vient (encore!) de planter...\r\nJe vais le relancer mais la lecture en cours est abandonn&#233;e&quot;);
+            Console.WriteLine(&quot;VLC&gt; &quot; + value);
+            byte[] buffer = vlcEncoding.GetBytes(value);
+            networkStream.Write(buffer, 0, buffer.Length);
+            try
+            {
+                networkStream.WriteByte(0x0A);
+            }
+            catch (IOException)
+            {
+                if (Crashed())
+                    throw new VLCException(&quot;VLC vient (encore!) de planter...\r\nJe vais le relancer mais la lecture en cours est abandonn&#233;e&quot;);
+                throw;
+            }
+        }
+
+        private string ReadLine()
+        {
+#if DEBUG
+            Array.Clear(RC_buffer, RC_buffer_count, 1024 - RC_buffer_count);
+#endif
+            int index = 0;
+            while (index+1 &lt; RC_buffer_count)
+            {
+                if (RC_buffer[index] == vlcNewlineChar1)
+                    if (RC_buffer[index + 1] == vlcNewlineChar2)
+                    {
+                        string result = vlcEncoding.GetString(RC_buffer, 0, index);
+                        RC_buffer_count -= index + 2;
+                        Array.Copy(RC_buffer, index + 2, RC_buffer, 0, RC_buffer_count);
+                        Console.WriteLine(&quot;VLC&lt;   &quot; + result);
+                        return result;
+                    }
+                    else
+                        throw new VLCException(&quot;R&#233;ponse inattendue&quot;);
+                index++;
+            }
+            while (RC_buffer_count &lt; 1024)
+            {
+                bool test = process.HasExited;
+                try
+                {
+                    RC_buffer_count += networkStream.Read(RC_buffer, RC_buffer_count, 1024 - RC_buffer_count); // on donne 1 sec pour lire plus
+                    //Console.Write(&quot;Received from VLC: &quot;); for (int scan = 0; scan &lt; RC_buffer_count; scan++) Console.Write(&quot;{0:X2} &quot;, RC_buffer[scan]); Console.WriteLine();
+                }
+                catch (IOException)
+                {
+                    if (Crashed())
+                        throw new VLCException(&quot;VLC vient (encore!) de planter...\r\nJe vais le relancer mais la lecture en cours est abandonn&#233;e&quot;);
+                    throw;
+                }
+                while (index+1 &lt; RC_buffer_count)
+                {
+                    if (RC_buffer[index] == vlcNewlineChar1) 
+                        if (RC_buffer[index + 1] == vlcNewlineChar2)
+                        {
+                            string result = vlcEncoding.GetString(RC_buffer, 0, index);
+                            RC_buffer_count -= index + 2;
+                            Array.Copy(RC_buffer, index + 2, RC_buffer, 0, RC_buffer_count);
+                            Console.WriteLine(&quot;VLC&lt;   &quot; + result);
+                            return result;
+                        }
+                        else
+                            throw new VLCException(&quot;R&#233;ponse inattendue&quot;);
+                    index++;
+                }
+            }
+            throw new VLCException(&quot;Buffer plein&quot;);
+        }
+
+        private void MakeSureReadEmpty()
+        {
+            if ((RC_buffer_count != 0) || networkStream.DataAvailable)
+            {
+#if DEBUG
+                string temp = vlcEncoding.GetString(RC_buffer, 0, RC_buffer_count);
+                //Debugger.Break();
+#endif
+                while (networkStream.DataAvailable)
+                    networkStream.Read(RC_buffer, 0, 1024);
+                RC_buffer_count = 0;
+                //throw new VLCException(&quot;Lignes inattendues dans la reponse precedente&quot;);
+            }
+        }
+
+        #endregion ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        #region RC commands
+        private void ReadCheckNoError(string command)
+        {
+            string line;
+            do
+                line = ReadLine();
+            while (line.StartsWith(&quot;status change: &quot;) || (line==&quot;press menu select or pause to continue&quot;));
+            if (line != command + &quot;: returned 0 (no error)&quot;)
+                throw new VLCException(&quot;La commande RC a renvoy&#233;e une erreur&quot;);
+        }
+
+        public void Command(string command)
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(command);
+            ReadCheckNoError(command.Substring(0,(command+' ').IndexOf(' ')));
+        }
+
+        public string GetCurrentCaption()
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(&quot;get_title&quot;);
+            return ReadLine();
+        }
+
+        public int GetDurationTime()
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(&quot;get_length&quot;);
+            return Convert.ToInt32(ReadLine());
+        }
+
+        public int GetElapsedTime()
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(&quot;get_time&quot;);
+            return Convert.ToInt32(ReadLine());
+        }
+
+        public int GetChapterInfo(ref int max)
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(&quot;chapter&quot;);
+            string line = ReadLine();
+            if (line == &quot;press menu select or pause to continue&quot;)
+                line = ReadLine();
+            if (line == &quot;chapter: returned 0 (no error)&quot;)
+            {
+                max = 0;
+                return -1;
+            }
+            Match m = (new Regex(&quot;Currently playing chapter (\\d+)/(\\d+)&quot;)).Match(line);
+            if (!m.Success)
+                throw new VLCException(&quot;R&#233;ponse inattendue pour 'chapter'&quot;);
+            ReadCheckNoError(&quot;chapter&quot;);
+            max = Convert.ToInt32(m.Groups[2].Value);
+            return Convert.ToInt32(m.Groups[1].Value);
+        }
+
+        public int GetTitleInfo(ref int max)
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(&quot;title&quot;);
+            string line = ReadLine();
+            if (line == &quot;press menu select or pause to continue&quot;)
+                line = ReadLine();
+            if (line == &quot;title: returned 0 (no error)&quot;)
+            {
+                max = 0;
+                return -1;
+            }
+            Match m = (new Regex(&quot;Currently playing title (\\d+)/(\\d+)&quot;)).Match(line);
+            if (!m.Success)
+                throw new VLCException(&quot;R&#233;ponse inattendue pour 'title'&quot;);
+            ReadCheckNoError(&quot;title&quot;);
+            max = Convert.ToInt32(m.Groups[2].Value);
+            return Convert.ToInt32(m.Groups[1].Value);
+        }
+
+        // renvoit un nombre negatif: indiquant l'indice negatif de l'item en train d'etre jou&#233;, relatif aux derniers ajouts
+        // -1 repr&#233;sente le dernier de la liste, -2 l'avant-dernier
+        public int GetPlayingIndex()
+        {
+            MustBeActive();
+            WriteLine(&quot;playlist&quot;);
+            string line;
+            int result = 0, count = 0;
+            do
+            {
+                line = ReadLine();
+                if ((line[0] == '|') &amp;&amp; (line != &quot;| no entries&quot;))
+                {
+                    count++;
+                    if (line[1] == '*')
+                        result = -1;
+                    else if (result != 0)
+                        result--;
+                }
+            } while (line != &quot;playlist: returned 0 (no error)&quot;);
+            itemAddedCounter = count;
+            return result;
+        }
+
+        // index doit etre un indice negatif de l'item &#224; jouer
+        // -1 repr&#233;sente le dernier de la liste, -2 l'avant-dernier
+        public void SetPlayingIndex(int index)
+        {
+            Debugger.Break(); // fonction jamais test&#233;e
+            MustBeActive();
+            WriteLine(&quot;goto &quot; + (itemAddedCounter+index));
+            ReadCheckNoError(&quot;goto&quot;);
+        }
+
+        // mettre playlistLength &#224; 0 pour calculer automatiquement le nombre d'element &#224; jouer
+        //  (quand on ne sait pas s'il s'agit d'une playlist ou non)
+        public void Play(string media, int playlistLength)
+        {
+            MustBeActive();
+            // compose la MRL qui sera pars&#233; par VLC [dans rc.c : parse_MRL()]
+            string MRL;
+            if ((media[0] == '&quot;') || (media[0] == '\''))
+                MRL = media;
+            else
+            {
+                MRL = '&quot;' + Utility.GetMediaMRL(media) + '&quot;';
+                string[] MRLOptions = Utility.GetMediaMRLOptions(media);
+                if (MRLOptions != null)
+                    foreach (string MRLOption in MRLOptions)
+                        if (MRLOption.Contains(&quot; &quot;))
+                            MRL += &quot; \&quot;:&quot; + MRLOption + '&quot;';
+                        else
+                            MRL += &quot; :&quot; + MRLOption;
+            }
+            MakeSureReadEmpty();
+            if (playlistLength != 0)
+                playlistSize = playlistLength;
+            else if (Utility.GetMediaType(media) != Utility.MediaType.Playlist)
+                playlistSize = 1;
+            else
+            {
+                playlistSize = -1; // obtenir de VLC la taille de la playlist
+                itemAddedCounter = 0;
+            }
+            WriteLine(&quot;add &quot; + MRL);
+            string line;
+            do
+                line = ReadLine();
+            while (line.StartsWith(&quot;status change: &quot;));
+            if (!line.StartsWith(&quot;trying to add &quot;))
+                throw new VLCException(&quot;R&#233;ponse inattendue pour 'add'&quot;);
+            ReadCheckNoError(&quot;add&quot;);
+            itemAddedCounter += playlistSize;
+        }
+
+        // jouer plusieurs fichiers
+        public void Play(IList&lt;string&gt; playlist)
+        {
+            // compose une playlist puis la joue
+            M3UFile m3uFile = new M3UFile();
+            foreach (string media in playlist)
+                m3uFile.AppendMedia(media);
+            m3uFile.Close();
+            Play(m3uFile.Name, playlist.Count);
+        }
+
+        public void PlaylistPrev()
+        {
+            if (playlistSize == 1) return;
+            int index = GetPlayingIndex();
+            if (playlistSize == -1) playlistSize = -index;
+            if (index &gt; -playlistSize)
+                Command(&quot;prev&quot;);
+        }
+
+        public void PlaylistNext()
+        {
+            if (playlistSize == 1) return;
+            if (playlistSize == -1) playlistSize = -GetPlayingIndex();
+            Command(&quot;next&quot;);
+        }
+
+
+        #endregion ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        #region Properties accessors
+
+        public bool Active
+        {
+            get
+            {
+                return active;
+            }
+        }
+
+        public bool ShowWindow
+        {
+            get
+            {
+                return showWindow;
+            }
+            set
+            {
+                if (active)
+                    SysWin32.ShowWindow(process.MainWindowHandle, value ? SysWin32.SW_SHOWNORMAL : SysWin32.SW_HIDE);
+                showWindow = value;
+            }
+        }
+
+        public AudioTranscode AudioTranscode
+        {
+            get
+            {
+                return audioTranscode;
+            }
+            set
+            {
+                MustBeStopped();
+                audioTranscode = value;
+            }
+        }
+
+        public char DVDLetter
+        {
+            get
+            {
+                return dvdLetter;
+            }
+            set
+            {
+                value = Char.ToUpper(value);
+                if ((value &lt; 'A') || (value &gt; 'Z'))
+                    throw new VLCException(&quot;Lettre invalide pour le lecteur de DVD&quot;);
+                MustBeStopped();
+                dvdLetter = value;
+            }
+        }
+
+        public int RC_host_port
+        {
+            get
+            {
+                return rc_host_port;
+            }
+            set
+            {
+                MustBeStopped();
+                rc_host_port = value;
+            }
+        }
+
+        
+        
+        #endregion ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    }
+
+    class VLCCache
+    {
+        VLCApp vlcApp;
+
+        [Flags]
+        public enum CachedFlags
+        {
+            Caption = 0x01,
+            DurationTime = 0x02,
+            ElapsedTime = 0x04,
+            ChapterInfo = 0x08,
+            TitleInfo = 0x10,
+            PlayingIndex = 0x20,
+        };
+
+        private CachedFlags cachedFlags = 0;
+
+        public VLCCache(VLCApp vlcApp)
+        {
+            this.vlcApp = vlcApp;
+        }
+
+        public void Invalidate()
+        {
+            cachedFlags = 0;
+        }
+        public void Invalidate(CachedFlags flags)
+        {
+            cachedFlags &amp;= ~flags;
+        }
+
+        private string caption;
+        public string Caption
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.Caption) == 0)
+                {
+                    caption = vlcApp.GetCurrentCaption();
+                    cachedFlags |= CachedFlags.Caption;
+                }
+                return caption;
+            }
+        }
+
+        private int durationTime;
+        public int DurationTime
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.DurationTime) == 0)
+                {
+                    durationTime = vlcApp.GetDurationTime();
+                    cachedFlags |= CachedFlags.DurationTime;
+                }
+                return durationTime;
+            }
+        }
+
+        private int elapsedTime;
+        public int ElapsedTime
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.ElapsedTime) == 0)
+                {
+                    elapsedTime = vlcApp.GetElapsedTime();
+                    cachedFlags |= CachedFlags.ElapsedTime;
+                }
+                return elapsedTime;
+            }
+        }
+
+        private int chapter;
+        private int chapterMax;
+        public int Chapter
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.ChapterInfo) == 0)
+                {
+                    chapter = vlcApp.GetChapterInfo(ref chapterMax);
+                    cachedFlags |= CachedFlags.ChapterInfo;
+                }
+                return chapter;
+            }
+        }
+        public int ChapterMax
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.ChapterInfo) == 0)
+                {
+                    chapter = vlcApp.GetChapterInfo(ref chapterMax);
+                    cachedFlags |= CachedFlags.ChapterInfo;
+                }
+                return chapterMax;
+            }
+        }
+
+        private int title;
+        private int titleMax;
+        public int Title
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.TitleInfo) == 0)
+                {
+                    title = vlcApp.GetTitleInfo(ref titleMax);
+                    cachedFlags |= CachedFlags.TitleInfo;
+                }
+                return title;
+            }
+        }
+        public int TitleMax
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.TitleInfo) == 0)
+                {
+                    title = vlcApp.GetTitleInfo(ref titleMax);
+                    cachedFlags |= CachedFlags.TitleInfo;
+                }
+                return titleMax;
+            }
+        }
+
+        public int playingIndex;
+        public int PlayingIndex
+        {
+            get
+            {
+                if ((cachedFlags &amp; CachedFlags.PlayingIndex) == 0)
+                {
+                    playingIndex = vlcApp.GetPlayingIndex();
+                    cachedFlags |= CachedFlags.PlayingIndex;
+                }
+                return playingIndex;
+            }
+        }
+    
+    }
+
+    class VLCException : ApplicationException
+    {
+        public VLCException(string message) : base(message) { }
+    }
+}
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000038.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC - New directory
+</A></li>
+	<LI>Next message: <A HREF="000039.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.23,1.24
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#40">[ date ]</a>
+              <a href="thread.html#40">[ thread ]</a>
+              <a href="subject.html#40">[ subject ]</a>
+              <a href="author.html#40">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

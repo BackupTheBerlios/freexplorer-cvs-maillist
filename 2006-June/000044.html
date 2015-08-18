@@ -1,0 +1,405 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.cs,1.11,1.12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20MainForm.cs%2C1.11%2C1.12&In-Reply-To=%3C200606301958.k5UJwEe24349%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000043.html">
+   <LINK REL="Next"  HREF="000045.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.cs,1.11,1.12</H1>
+    <B>blackfox</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20MainForm.cs%2C1.11%2C1.12&In-Reply-To=%3C200606301958.k5UJwEe24349%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.cs,1.11,1.12">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Jun 30 21:58:14 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000043.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj,1.8,1.9
+</A></li>
+        <LI>Next message: <A HREF="000045.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs,NONE,1.1 VLC.cs,1.11,NONE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14818/FreeXplorer
+
+Modified Files:
+	MainForm.cs 
+Log Message:
+
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.11
+retrieving revision 1.12
+diff -C2 -d -r1.11 -r1.12
+*** MainForm.cs	12 May 2006 17:12:26 -0000	1.11
+--- MainForm.cs	30 Jun 2006 19:58:12 -0000	1.12
+***************
+*** 16,19 ****
+--- 16,20 ----
+   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, &#201;tats-Unis. 
+   */
++ 
+  using System;
+  using System.Collections.Generic;
+***************
+*** 34,44 ****
+      public partial class MainForm : Form
+      {
+!         private VLCApp vlcApp = new VLCApp();
+!         private FreeboxServer freeboxServer = new FreeboxServer(Path.Combine(Application.StartupPath, &quot;pages&quot;));
+!         private LIRC.LIRCServer lircServer = new LIRC.LIRCServer();
+  
+          public MainForm()
+          {
+              InitializeComponent();
+              TrayIcon.Text = String.Format(TrayIcon.Text, Program.appVersionText); ;
+              TrayIcon.BalloonTipTitle = String.Format(TrayIcon.BalloonTipTitle, Program.appVersionText); ;
+--- 35,46 ----
+      public partial class MainForm : Form
+      {
+!         const string STARTMENU_LINK_NAME = &quot;FreeXplorer.lnk&quot;;
+! 
+!         FreeXplorer m_fxp;
+  
+          public MainForm()
+          {
+              InitializeComponent();
++ 
+              TrayIcon.Text = String.Format(TrayIcon.Text, Program.appVersionText); ;
+              TrayIcon.BalloonTipTitle = String.Format(TrayIcon.BalloonTipTitle, Program.appVersionText); ;
+***************
+*** 47,69 ****
+              Text = &quot;Debug&quot;;
+  #endif
+  
+!             IPHostEntry freeboxIP;
+!             try
+!             {
+!                 freeboxIP = Dns.GetHostEntry(&quot;freeplayer.freebox.fr&quot;);
+!             }
+!             catch (SocketException)
+!             {
+!                 freeboxIP = new IPHostEntry();
+!                 MessageBox.Show(&quot;Impossible de r&#233;soudre l'adresse IP de la Freebox\r\n&quot; +
+!                                 &quot;Verifiez la configuration&quot;, &quot;Initialisation&quot;,
+!                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+!             }
+!             if (freeboxIP.AddressList != null) 
+!                 freeboxServer.Init(freeboxIP.AddressList[0], vlcApp, lircServer);
+! 
+!             LoadConfig();
+!             ApplyConfig(true);
+!             if (StartMinimized.Checked)
+              {
+                  WindowState = FormWindowState.Minimized;
+--- 49,55 ----
+              Text = &quot;Debug&quot;;
+  #endif
++             m_fxp = new FreeXplorer();
+  
+!             if (m_fxp.Configuration.StartMinimized)
+              {
+                  WindowState = FormWindowState.Minimized;
+***************
+*** 74,82 ****
+          private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+          {
+!             SaveConfig();
+!             // arrets des serveurs TCP:
+!             freeboxServer.Stop();
+!             lircServer.Stop();
+!             vlcApp.Stop();
+          }
+  
+--- 60,64 ----
+          private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+          {
+!             m_fxp.Dispose();
+          }
+  
+***************
+*** 111,161 ****
+          public void LoadConfig()
+          {
+!             // pr&#233;chargement des valeurs par d&#233;faut des options
+!             SoundExts.Text = VLC.Utility.SoundExts;
+!             PictureExts.Text = VLC.Utility.PictureExts;
+!             VideoExts.Text = VLC.Utility.VideoExts;
+  
+!             // chargement des valeurs des options depuis le fichier Config.xml
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(FreeXplorer.ConfigurationFolder, &quot;config.xml&quot;));
+!             reader.ReadStartElement(&quot;Config&quot;);
+!             do
+!             {
+!                 if (reader.IsStartElement())
+!                 {
+!                     string value = reader.ReadString();
+!                     switch (reader.Name)
+!                     {
+!                         case &quot;VLCPath&quot;: VLCPath.Text = value; break;
+!                         case &quot;DVDLetter&quot;: DVDLetter.Text = value; break;
+!                         case &quot;VlcPort&quot;: VlcPort.Text = value; break;
+!                         case &quot;SoundExts&quot;: SoundExts.Text = value; break;
+!                         case &quot;PictureExts&quot;: PictureExts.Text = value; break;
+!                         case &quot;VideoExts&quot;: VideoExts.Text = value; break;
+!                         case &quot;AudioLanguage&quot;: AudioLanguage.Text = value; break;
+!                         case &quot;SubLanguage&quot;: SubLanguage.Text = value; break;
+!                         case &quot;ShowVLC&quot;: ShowVLC.Checked = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+!                         case &quot;Transcode&quot;:
+!                             switch (value.ToUpper())
+!                             {
+!                                 case &quot;MPGA&quot;: TranscodeMPGA.Checked = true; break;
+!                                 case &quot;A52&quot;: TranscodeA52.Checked = true; break;
+!                                 case &quot;PC&quot;: TranscodePC.Checked = true; break;
+!                                 default: TranscodeNone.Checked = true; break;
+!                             }
+!                             break;
+!                         case &quot;StartMinimized&quot;: StartMinimized.Checked = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+!                         case &quot;MinimizeToTray&quot;: MinimizeToTray.Checked = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+!                         case &quot;FFMpegInterlace&quot;: FFMpegInterlace.Checked = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+!                         case &quot;HalfScale&quot;: HalfScale.Checked = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+!                         case &quot;LIRCActive&quot;: LIRCActive.Checked = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+!                         case &quot;TranscodeVB&quot;: TranscodeVB.Text = value; break;
+!                         case &quot;PCControlAllowed&quot;: PCControlAllowed.Checked = Convert.ToBoolean(value); break;
+!                         case &quot;LessIconsInExplorer&quot;: LessIconsInExplorer.Checked = Convert.ToBoolean(value); break;
+!                         case &quot;BlackBkgnds&quot;: BlackBkgnds.Checked = Convert.ToBoolean(value); break;
+!                     }
+!                 }
+!             } while (reader.Read());
+!             reader.Close();
+  
+              // chargement des valeurs des options qui ne sont pas issues de Config.xml
+              StartAtBoot.Checked = File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), &quot;FreeXplorer.lnk&quot;));
+--- 93,125 ----
+          public void LoadConfig()
+          {
+!             Configuration config = m_fxp.Configuration;
+!             config.Load();
+  
+!             // chargement des valeurs depuis le Config.xml
+!             VLCPath.Text = config.VLCPath;
+!             DVDLetter.Text = config.DVDLetter;
+!             VlcPort.Text = config.VlcPort;
+!             SoundExts.Text = config.SoundExts;
+!             PictureExts.Text = config.PictureExts;
+!             VideoExts.Text = config.VideoExts;
+!             AudioLanguage.Text = config.AudioLanguage;
+!             SubLanguage.Text = config.SubLanguage;
+!             ShowVLC.Checked = config.ShowVLC;
+! 
+!             TranscodeMPGA.Checked = (config.Transcode == AudioTranscode.MPGA);
+!             TranscodeA52.Checked = (config.Transcode == AudioTranscode.A52);
+!             TranscodePC.Checked = (config.Transcode == AudioTranscode.PC);
+!             TranscodeNone.Checked = (config.Transcode == AudioTranscode.None);
+  
++             StartMinimized.Checked = config.StartMinimized;
++             MinimizeToTray.Checked = config.MinimizeToTray;
++             FFMpegInterlace.Checked = config.FFMpegInterlace;
++             HalfScale.Checked = config.HalfScale;
++             LIRCActive.Checked = config.LIRCActive;
++             TranscodeVB.Text = config.TranscodeVB;
++             PCControlAllowed.Checked = config.PCControlAllowed;
++             LessIconsInExplorer.Checked = config.LessIconsInExplorer;
++             BlackBkgnds.Checked = config.BlackBkgnds;
++            
+              // chargement des valeurs des options qui ne sont pas issues de Config.xml
+              StartAtBoot.Checked = File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), &quot;FreeXplorer.lnk&quot;));
+***************
+*** 164,194 ****
+          public void SaveConfig()
+          {
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(FreeXplorer.ConfigurationFolder, &quot;config.xml&quot;), null);
+!             writer.Formatting = Formatting.Indented;
+!             writer.WriteStartElement(&quot;Config&quot;);
+!             writer.WriteElementString(&quot;VLCPath&quot;, VLCPath.Text);
+!             writer.WriteElementString(&quot;VlcPort&quot;, VlcPort.Text);
+!             writer.WriteElementString(&quot;DVDLetter&quot;, DVDLetter.Text);
+!             writer.WriteElementString(&quot;SoundExts&quot;, SoundExts.Text);
+!             writer.WriteElementString(&quot;PictureExts&quot;, PictureExts.Text);
+!             writer.WriteElementString(&quot;VideoExts&quot;, VideoExts.Text);
+!             writer.WriteElementString(&quot;AudioLanguage&quot;, AudioLanguage.Text);
+!             writer.WriteElementString(&quot;SubLanguage&quot;, SubLanguage.Text);
+!             writer.WriteElementString(&quot;ShowVLC&quot;, ShowVLC.Checked.ToString());
+!             writer.WriteElementString(&quot;Transcode&quot;,  TranscodeMPGA.Checked   ? &quot;MPGA&quot; :
+!                                                     TranscodeA52.Checked ? &quot;A52&quot; :
+!                                                     TranscodePC.Checked ? &quot;PC&quot; : 
+!                                                                            &quot;NONE&quot;);
+!             writer.WriteElementString(&quot;StartMinimized&quot;, StartMinimized.Checked.ToString());
+!             writer.WriteElementString(&quot;MinimizeToTray&quot;, MinimizeToTray.Checked.ToString());
+!             writer.WriteElementString(&quot;FFMpegInterlace&quot;, FFMpegInterlace.Checked.ToString());
+!             writer.WriteElementString(&quot;HalfScale&quot;, HalfScale.Checked.ToString());
+!             writer.WriteElementString(&quot;LIRCActive&quot;, LIRCActive.Checked.ToString());
+!             writer.WriteElementString(&quot;TranscodeVB&quot;, TranscodeVB.Text);
+!             writer.WriteElementString(&quot;PCControlAllowed&quot;, PCControlAllowed.Checked.ToString());
+!             writer.WriteElementString(&quot;LessIconsInExplorer&quot;, LessIconsInExplorer.Checked.ToString());
+!             writer.WriteElementString(&quot;BlackBkgnds&quot;, BlackBkgnds.Checked.ToString());
+!             
+!             writer.Close();
+          }
+  
+--- 128,159 ----
+          public void SaveConfig()
+          {
+!             Configuration config = m_fxp.Configuration;
+! 
+!             config.VLCPath = VLCPath.Text;
+!             config.VlcPort = VlcPort.Text;
+!             config.DVDLetter = DVDLetter.Text;
+!             config.SoundExts = SoundExts.Text;
+!             config.PictureExts = PictureExts.Text;
+!             config.VideoExts = VideoExts.Text;
+!             config.AudioLanguage = AudioLanguage.Text;
+!             config.SubLanguage = SubLanguage.Text;
+!             config.ShowVLC = ShowVLC.Checked;
+! 
+!             config.Transcode = TranscodeMPGA.Checked ? AudioTranscode.MPGA :
+!                                TranscodeA52.Checked ? AudioTranscode.A52 :
+!                                TranscodePC.Checked ? AudioTranscode.PC : 
+!                                AudioTranscode.None;
+! 
+!             config.StartMinimized = StartMinimized.Checked;
+!             config.MinimizeToTray = MinimizeToTray.Checked;
+!             config.FFMpegInterlace = FFMpegInterlace.Checked;
+!             config.HalfScale = HalfScale.Checked;
+!             config.LIRCActive = LIRCActive.Checked;
+!             config.TranscodeVB = TranscodeVB.Text;
+!             config.PCControlAllowed = PCControlAllowed.Checked;
+!             config.LessIconsInExplorer = LessIconsInExplorer.Checked;
+!             config.BlackBkgnds = BlackBkgnds.Checked;
+! 
+!             config.Save();
+          }
+  
+***************
+*** 196,200 ****
+--- 161,175 ----
+          {
+              SaveConfig();
++             try
++             {
++                 m_fxp.ApplyConfig(restartVLC);
++             }
++             catch (VLCLaunchException e)
++             {
++                 MessageBox.Show(e.Message, &quot;Initialisation&quot;,
++                     MessageBoxButtons.OK, MessageBoxIcon.Error);
++             }
+  
++             /*
+              // arrets des serveurs TCP
+              freeboxServer.Stop();
+***************
+*** 249,252 ****
+--- 224,228 ----
+                                  &quot;V&#233;rifiez que FreeXplorer, VLC, un autre Freeplayer ou un serveur proxy n'est pas d&#233;j&#224; actif&quot;);
+              }
++             */
+          }
+  
+***************
+*** 271,286 ****
+              WindowState = FormWindowState.Normal;
+          }
+! 
+!         public VLC.AudioTranscode GetAudioTranscode()
+          {
+!             return TranscodeMPGA.Checked ? VLC.AudioTranscode.MPGA :
+                      TranscodeA52.Checked ? VLC.AudioTranscode.A52 :
+                      TranscodePC.Checked ? VLC.AudioTranscode.PC :
+                                              VLC.AudioTranscode.None;
+!         }
+  
+          private void ShowVLC_CheckedChanged(object sender, EventArgs e)
+          {
+!             vlcApp.ShowWindow = ShowVLC.Checked;
+          }
+  
+--- 247,262 ----
+              WindowState = FormWindowState.Normal;
+          }
+!         /*
+!         public Wizou.VLC.AudioTranscode GetAudioTranscode()
+          {
+!             return TranscodeMPGA.Checked ? Wizou.VLC.AudioTranscode.MPGA :
+                      TranscodeA52.Checked ? VLC.AudioTranscode.A52 :
+                      TranscodePC.Checked ? VLC.AudioTranscode.PC :
+                                              VLC.AudioTranscode.None;
+!         }*/
+  
+          private void ShowVLC_CheckedChanged(object sender, EventArgs e)
+          {
+!             m_fxp.VLCVisible = ShowVLC.Checked;
+          }
+  
+***************
+*** 289,301 ****
+              if (!Created) return;
+              if (StartAtBoot.Checked)
+!                 File.Copy(Path.Combine(Application.StartupPath, &quot;FreeXplorer.lnk&quot;),
+!                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), &quot;FreeXplorer.lnk&quot;));
+              else
+!                 File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), &quot;FreeXplorer.lnk&quot;));
+          }
+  
+          private void PCControlAllowed_CheckedChanged(object sender, EventArgs e)
+          {
+!             freeboxServer.PCControlAllowed = PCControlAllowed.Checked;
+              if (!PCControlAllowed.Checked)
+                  LIRCActive.Checked = false;
+--- 265,277 ----
+              if (!Created) return;
+              if (StartAtBoot.Checked)
+!                 File.Copy(Path.Combine(Application.StartupPath, STARTMENU_LINK_NAME),
+!                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), STARTMENU_LINK_NAME));
+              else
+!                 File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), STARTMENU_LINK_NAME));
+          }
+  
+          private void PCControlAllowed_CheckedChanged(object sender, EventArgs e)
+          {
+!             m_fxp.FreeboxServer.PCControlAllowed = PCControlAllowed.Checked;
+              if (!PCControlAllowed.Checked)
+                  LIRCActive.Checked = false;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000043.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj,1.8,1.9
+</A></li>
+	<LI>Next message: <A HREF="000045.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs,NONE,1.1 VLC.cs,1.11,NONE
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#44">[ date ]</a>
+              <a href="thread.html#44">[ thread ]</a>
+              <a href="subject.html#44">[ subject ]</a>
+              <a href="author.html#44">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

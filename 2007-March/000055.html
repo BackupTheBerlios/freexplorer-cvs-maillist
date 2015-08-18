@@ -1,0 +1,1092 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Configuration.cs%2C%201.1%2C%0A%091.2%20FreeXplorer.cs%2C%201.5%2C%201.6%20FreeXplorer.csproj%2C%201.9%2C%0A%091.10%20Freebox.cs%2C%201.24%2C%201.25%20HTTP.cs%2C%201.8%2C%0A%091.9%20MainForm.Designer.cs%2C%201.6%2C%201.7%20MainForm.cs%2C%201.12%2C%0A%091.13%20Recents.cs%2C%201.3%2C%201.4&In-Reply-To=%3C20070320184742.A89F5DF17C%40mail.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000049.html">
+   <LINK REL="Next"  HREF="000050.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Configuration.cs%2C%201.1%2C%0A%091.2%20FreeXplorer.cs%2C%201.5%2C%201.6%20FreeXplorer.csproj%2C%201.9%2C%0A%091.10%20Freebox.cs%2C%201.24%2C%201.25%20HTTP.cs%2C%201.8%2C%0A%091.9%20MainForm.Designer.cs%2C%201.6%2C%201.7%20MainForm.cs%2C%201.12%2C%0A%091.13%20Recents.cs%2C%201.3%2C%201.4&In-Reply-To=%3C20070320184742.A89F5DF17C%40mail.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs, 1.1,	1.2 FreeXplorer.cs, 1.5, 1.6 FreeXplorer.csproj, 1.9,	1.10 Freebox.cs, 1.24, 1.25 HTTP.cs, 1.8,	1.9 MainForm.Designer.cs, 1.6, 1.7 MainForm.cs, 1.12,	1.13 Recents.cs, 1.3, 1.4">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Tue Mar 20 19:47:42 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000049.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties	AssemblyInfo.cs, 1.10, 1.11 app.manifest, 1.1, 1.2
+</A></li>
+        <LI>Next message: <A HREF="000050.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv25825/FreeXplorer
+
+Modified Files:
+	Configuration.cs FreeXplorer.cs FreeXplorer.csproj Freebox.cs 
+	HTTP.cs MainForm.Designer.cs MainForm.cs Recents.cs 
+Log Message:
+FreeXplorer 1.6
+
+    * Support de la Freebox HD
+    * Choix de non-transcodage vid&#233;o pour la Freebox HD
+    * Correction du doublonnage des &quot;fichiers r&#233;cents&quot;
+    * Inclusion de vlc-0.8.6 en standard
+    * Mise &#224; jour de l'installeur 
+
+Index: Configuration.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Configuration.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** Configuration.cs	30 Jun 2006 19:58:34 -0000	1.1
+--- Configuration.cs	20 Mar 2007 18:45:58 -0000	1.2
+***************
+*** 25,29 ****
+          public string SubLanguage = &quot;fr,en&quot;;
+          public bool ShowVLC = false;
+!         public AudioTranscode Transcode = AudioTranscode.MPGA;
+          public bool StartMinimized = true;
+          public bool MinimizeToTray = true;
+--- 25,30 ----
+          public string SubLanguage = &quot;fr,en&quot;;
+          public bool ShowVLC = false;
+!         public AudioTranscode TranscodeAudio = AudioTranscode.MPGA;
+!         public VideoTranscode TranscodeVideo = VideoTranscode.MPG2;
+          public bool StartMinimized = true;
+          public bool MinimizeToTray = true;
+***************
+*** 67,74 ****
+                                  switch (value.ToUpper())
+                                  {
+!                                     case &quot;MPGA&quot;: Transcode = AudioTranscode.MPGA; break;
+!                                     case &quot;A52&quot;: Transcode = AudioTranscode.A52; break;
+!                                     case &quot;PC&quot;: Transcode = AudioTranscode.PC; break;
+!                                     default: Transcode = AudioTranscode.None; break;
+                                  }
+                                  break;
+--- 68,75 ----
+                                  switch (value.ToUpper())
+                                  {
+!                                     case &quot;MPGA&quot;: TranscodeAudio = AudioTranscode.MPGA; break;
+!                                     case &quot;A52&quot;: TranscodeAudio = AudioTranscode.A52; break;
+!                                     case &quot;PC&quot;: TranscodeAudio = AudioTranscode.PC; break;
+!                                     default: TranscodeAudio = AudioTranscode.None; break;
+                                  }
+                                  break;
+***************
+*** 82,85 ****
+--- 83,93 ----
+                              case &quot;LessIconsInExplorer&quot;: LessIconsInExplorer = Convert.ToBoolean(value); break;
+                              case &quot;BlackBkgnds&quot;: BlackBkgnds = Convert.ToBoolean(value); break;
++                             case &quot;TranscodeVideo&quot;:
++                                 switch (value.ToUpper())
++                                 {
++                                     case &quot;MPG2&quot;: TranscodeVideo = VideoTranscode.MPG2; break;
++                                     default: TranscodeVideo = VideoTranscode.None; break;
++                                 }
++                                 break;
+                          }
+                      } while (reader.Read());
+***************
+*** 109,113 ****
+                  writer.WriteElementString(&quot;SubLanguage&quot;, SubLanguage);
+                  writer.WriteElementString(&quot;ShowVLC&quot;, ShowVLC.ToString());
+!                 writer.WriteElementString(&quot;Transcode&quot;, Transcode.ToString());
+                  writer.WriteElementString(&quot;StartMinimized&quot;, StartMinimized.ToString());
+                  writer.WriteElementString(&quot;MinimizeToTray&quot;, MinimizeToTray.ToString());
+--- 117,122 ----
+                  writer.WriteElementString(&quot;SubLanguage&quot;, SubLanguage);
+                  writer.WriteElementString(&quot;ShowVLC&quot;, ShowVLC.ToString());
+!                 writer.WriteElementString(&quot;Transcode&quot;, TranscodeAudio.ToString());
+!                 writer.WriteElementString(&quot;TranscodeVideo&quot;, TranscodeVideo.ToString());
+                  writer.WriteElementString(&quot;StartMinimized&quot;, StartMinimized.ToString());
+                  writer.WriteElementString(&quot;MinimizeToTray&quot;, MinimizeToTray.ToString());
+
+Index: FreeXplorer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.cs,v
+retrieving revision 1.5
+retrieving revision 1.6
+diff -C2 -d -r1.5 -r1.6
+*** FreeXplorer.cs	30 Jun 2006 19:57:19 -0000	1.5
+--- FreeXplorer.cs	20 Mar 2007 18:45:58 -0000	1.6
+***************
+*** 130,134 ****
+                      m_vlcApp.RC_host_port = Convert.ToInt32(m_config.VlcPort);
+                      m_vlcApp.DVDLetter = m_config.DVDLetter[0];
+!                     m_vlcApp.AudioTranscode = m_config.Transcode;
+                      m_vlcApp.SetConfig(m_config.VLCPath, m_config.AudioLanguage, m_config.SubLanguage, m_config.FFMpegInterlace, m_config.HalfScale ? 0.1 : 1.0, Convert.ToInt32(m_config.TranscodeVB));
+                      m_vlcApp.Start();
+--- 130,135 ----
+                      m_vlcApp.RC_host_port = Convert.ToInt32(m_config.VlcPort);
+                      m_vlcApp.DVDLetter = m_config.DVDLetter[0];
+!                     m_vlcApp.AudioTranscode = m_config.TranscodeAudio;
+!                     m_vlcApp.VideoTranscode = m_config.TranscodeVideo;
+                      m_vlcApp.SetConfig(m_config.VLCPath, m_config.AudioLanguage, m_config.SubLanguage, m_config.FFMpegInterlace, m_config.HalfScale ? 0.1 : 1.0, Convert.ToInt32(m_config.TranscodeVB));
+                      m_vlcApp.Start();
+
+Index: FreeXplorer.csproj
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.csproj,v
+retrieving revision 1.9
+retrieving revision 1.10
+diff -C2 -d -r1.9 -r1.10
+*** FreeXplorer.csproj	30 Jun 2006 19:57:37 -0000	1.9
+--- FreeXplorer.csproj	20 Mar 2007 18:45:58 -0000	1.10
+***************
+*** 13,16 ****
+--- 13,21 ----
+      &lt;ApplicationIcon&gt;AppIcon.ico&lt;/ApplicationIcon&gt;
+      &lt;StartupObject&gt;Wizou.FreeXplorer.Program&lt;/StartupObject&gt;
++     &lt;ManifestCertificateThumbprint&gt;E03C47273823C790ECD055B90005DA6D7A97DE93&lt;/ManifestCertificateThumbprint&gt;
++     &lt;ManifestKeyFile&gt;FreeXplorer_TemporaryKey.pfx&lt;/ManifestKeyFile&gt;
++     &lt;GenerateManifests&gt;false&lt;/GenerateManifests&gt;
++     &lt;TargetZone&gt;LocalIntranet&lt;/TargetZone&gt;
++     &lt;SignManifests&gt;true&lt;/SignManifests&gt;
+      &lt;PublishUrl&gt;<A HREF="http://localhost/FreeXplorer/&lt;/PublishUrl">http://localhost/FreeXplorer/&lt;/PublishUrl</A>&gt;
+      &lt;Install&gt;true&lt;/Install&gt;
+***************
+*** 23,27 ****
+      &lt;UpdateRequired&gt;false&lt;/UpdateRequired&gt;
+      &lt;MapFileExtensions&gt;true&lt;/MapFileExtensions&gt;
+!     &lt;ApplicationVersion&gt;0.5.0.*&lt;/ApplicationVersion&gt;
+      &lt;BootstrapperEnabled&gt;true&lt;/BootstrapperEnabled&gt;
+    &lt;/PropertyGroup&gt;
+--- 28,32 ----
+      &lt;UpdateRequired&gt;false&lt;/UpdateRequired&gt;
+      &lt;MapFileExtensions&gt;true&lt;/MapFileExtensions&gt;
+!     &lt;ApplicationVersion&gt;0.5.0.%2a&lt;/ApplicationVersion&gt;
+      &lt;BootstrapperEnabled&gt;true&lt;/BootstrapperEnabled&gt;
+    &lt;/PropertyGroup&gt;
+***************
+*** 85,88 ****
+--- 90,95 ----
+        &lt;DesignTime&gt;True&lt;/DesignTime&gt;
+      &lt;/Compile&gt;
++     &lt;None Include=&quot;FreeXplorer_TemporaryKey.pfx&quot; /&gt;
++     &lt;None Include=&quot;Properties\app.manifest&quot; /&gt;
+      &lt;None Include=&quot;Properties\Settings.settings&quot;&gt;
+        &lt;Generator&gt;SettingsSingleFileGenerator&lt;/Generator&gt;
+***************
+*** 103,108 ****
+    &lt;ItemGroup&gt;
+      &lt;BootstrapperPackage Include=&quot;Microsoft.Net.Framework.2.0&quot;&gt;
+!       &lt;InProject&gt;False&lt;/InProject&gt;
+!       &lt;ProductName&gt;.NET Framework 2.0 Beta&lt;/ProductName&gt;
+        &lt;Install&gt;true&lt;/Install&gt;
+      &lt;/BootstrapperPackage&gt;
+--- 110,115 ----
+    &lt;ItemGroup&gt;
+      &lt;BootstrapperPackage Include=&quot;Microsoft.Net.Framework.2.0&quot;&gt;
+!       &lt;Visible&gt;False&lt;/Visible&gt;
+!       &lt;ProductName&gt;.NET Framework 2.0&lt;/ProductName&gt;
+        &lt;Install&gt;true&lt;/Install&gt;
+      &lt;/BootstrapperPackage&gt;
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.24
+retrieving revision 1.25
+diff -C2 -d -r1.24 -r1.25
+*** Freebox.cs	30 Jun 2006 19:56:19 -0000	1.24
+--- Freebox.cs	20 Mar 2007 18:45:58 -0000	1.25
+***************
+*** 348,352 ****
+                      }
+                      else if (!param.Contains(&quot;/&quot;)) // si ce n'est pas une MRL, c'est un fichier, dans ce cas on garde juste son nom
+!                         param = Path.GetFileName(param);
+                      return param;
+  
+--- 348,358 ----
+                      }
+                      else if (!param.Contains(&quot;/&quot;)) // si ce n'est pas une MRL, c'est un fichier, dans ce cas on garde juste son nom
+!                         try
+!                         {
+!                             param = Path.GetFileName(param);
+!                         }
+!                         catch (ArgumentException)
+!                         {
+!                         }
+                      return param;
+  
+
+Index: HTTP.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/HTTP.cs,v
+retrieving revision 1.8
+retrieving revision 1.9
+diff -C2 -d -r1.8 -r1.9
+*** HTTP.cs	13 Jun 2006 21:25:35 -0000	1.8
+--- HTTP.cs	20 Mar 2007 18:45:58 -0000	1.9
+***************
+*** 201,207 ****
+                                      case &quot;content-length&quot;: RequestContentLength = Convert.ToInt64(line); break;
+                                      case &quot;content-type&quot;: RequestContentType = new ContentType(line); break;
+!                                     case &quot;host&quot;: Host = line; Console.WriteLine(&quot;HTTP&lt; Host: &quot; + line); break;
+                                      case &quot;if-modified-since&quot;: IfModifiedSince = DateTime.Parse(line); break;
+!                                     case &quot;referer&quot;: Referer = line; break;
+                                      case &quot;user-agent&quot;: UserAgent = line; break;
+                                      default:
+--- 201,207 ----
+                                      case &quot;content-length&quot;: RequestContentLength = Convert.ToInt64(line); break;
+                                      case &quot;content-type&quot;: RequestContentType = new ContentType(line); break;
+!                                     case &quot;host&quot;: Host = line; break;
+                                      case &quot;if-modified-since&quot;: IfModifiedSince = DateTime.Parse(line); break;
+!                                     case &quot;referer&quot;: Referer = line; Console.WriteLine(&quot;HTTP&lt; Referer: &quot; + line); break;
+                                      case &quot;user-agent&quot;: UserAgent = line; break;
+                                      default:
+***************
+*** 264,268 ****
+                          {
+                              writer.WriteLine(&quot;Content-Type: &quot; + ContentType);
+!                             Console.WriteLine(&quot;HTTP&gt; Content-Type: &quot; + ContentType);
+                              if ((ContentLength == -1) &amp;&amp; Content.CanSeek) 
+                                  ContentLength = Content.Length;
+--- 264,268 ----
+                          {
+                              writer.WriteLine(&quot;Content-Type: &quot; + ContentType);
+!                             //Console.WriteLine(&quot;HTTP&gt; Content-Type: &quot; + ContentType);
+                              if ((ContentLength == -1) &amp;&amp; Content.CanSeek) 
+                                  ContentLength = Content.Length;
+***************
+*** 270,274 ****
+                              {
+                                  writer.WriteLine(&quot;Content-Length: &quot; + ContentLength);
+!                                 Console.WriteLine(&quot;HTTP&gt; Content-Length: &quot; + ContentLength);
+                              }
+                          }
+--- 270,274 ----
+                              {
+                                  writer.WriteLine(&quot;Content-Length: &quot; + ContentLength);
+!                                 //Console.WriteLine(&quot;HTTP&gt; Content-Length: &quot; + ContentLength);
+                              }
+                          }
+***************
+*** 414,415 ****
+--- 414,417 ----
+      
+  }
++ //		<A HREF="http://172.18.2.30:80/html/star.html">http://172.18.2.30:80/html/star.html</A>
++ 
+
+Index: MainForm.Designer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.Designer.cs,v
+retrieving revision 1.6
+retrieving revision 1.7
+diff -C2 -d -r1.6 -r1.7
+*** MainForm.Designer.cs	12 May 2006 17:12:26 -0000	1.6
+--- MainForm.Designer.cs	20 Mar 2007 18:45:58 -0000	1.7
+***************
+*** 55,62 ****
+              this.label13 = new System.Windows.Forms.Label();
+              this.panel1 = new System.Windows.Forms.Panel();
+!             this.TranscodePC = new System.Windows.Forms.RadioButton();
+!             this.TranscodeA52 = new System.Windows.Forms.RadioButton();
+!             this.TranscodeMPGA = new System.Windows.Forms.RadioButton();
+!             this.TranscodeNone = new System.Windows.Forms.RadioButton();
+              this.StartMinimized = new System.Windows.Forms.CheckBox();
+              this.StartAtBoot = new System.Windows.Forms.CheckBox();
+--- 55,62 ----
+              this.label13 = new System.Windows.Forms.Label();
+              this.panel1 = new System.Windows.Forms.Panel();
+!             this.TranscodeAudioPC = new System.Windows.Forms.RadioButton();
+!             this.TranscodeAudioA52 = new System.Windows.Forms.RadioButton();
+!             this.TranscodeAudioMPGA = new System.Windows.Forms.RadioButton();
+!             this.TranscodeAudioNone = new System.Windows.Forms.RadioButton();
+              this.StartMinimized = new System.Windows.Forms.CheckBox();
+              this.StartAtBoot = new System.Windows.Forms.CheckBox();
+***************
+*** 76,81 ****
+--- 76,86 ----
+              this.QuitBtn = new System.Windows.Forms.Button();
+              this.BlackBkgnds = new System.Windows.Forms.CheckBox();
++             this.panel2 = new System.Windows.Forms.Panel();
++             this.TranscodeVideoMPG2 = new System.Windows.Forms.RadioButton();
++             this.TranscodeVideoNone = new System.Windows.Forms.RadioButton();
++             this.label15 = new System.Windows.Forms.Label();
+              this.panel1.SuspendLayout();
+              this.TrayContextMenu.SuspendLayout();
++             this.panel2.SuspendLayout();
+              this.SuspendLayout();
+              // 
+***************
+*** 84,88 ****
+              this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.label8.Location = new System.Drawing.Point(282, 216);
+              this.label8.Name = &quot;label8&quot;;
+              this.label8.Size = new System.Drawing.Size(253, 19);
+--- 89,93 ----
+              this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.label8.Location = new System.Drawing.Point(282, 241);
+              this.label8.Name = &quot;label8&quot;;
+              this.label8.Size = new System.Drawing.Size(253, 19);
+***************
+*** 95,99 ****
+              this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.label9.Location = new System.Drawing.Point(282, 235);
+              this.label9.Name = &quot;label9&quot;;
+              this.label9.Size = new System.Drawing.Size(253, 33);
+--- 100,104 ----
+              this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.label9.Location = new System.Drawing.Point(282, 260);
+              this.label9.Name = &quot;label9&quot;;
+              this.label9.Size = new System.Drawing.Size(253, 33);
+***************
+*** 105,109 ****
+              // SubLanguage
+              // 
+!             this.SubLanguage.Location = new System.Drawing.Point(190, 242);
+              this.SubLanguage.Name = &quot;SubLanguage&quot;;
+              this.SubLanguage.Size = new System.Drawing.Size(86, 20);
+--- 110,114 ----
+              // SubLanguage
+              // 
+!             this.SubLanguage.Location = new System.Drawing.Point(190, 267);
+              this.SubLanguage.Name = &quot;SubLanguage&quot;;
+              this.SubLanguage.Size = new System.Drawing.Size(86, 20);
+***************
+*** 140,144 ****
+              // label7
+              // 
+!             this.label7.Location = new System.Drawing.Point(12, 216);
+              this.label7.Name = &quot;label7&quot;;
+              this.label7.Size = new System.Drawing.Size(172, 19);
+--- 145,149 ----
+              // label7
+              // 
+!             this.label7.Location = new System.Drawing.Point(12, 241);
+              this.label7.Name = &quot;label7&quot;;
+              this.label7.Size = new System.Drawing.Size(172, 19);
+***************
+*** 167,171 ****
+              // label10
+              // 
+!             this.label10.Location = new System.Drawing.Point(12, 242);
+              this.label10.Name = &quot;label10&quot;;
+              this.label10.Size = new System.Drawing.Size(172, 19);
+--- 172,176 ----
+              // label10
+              // 
+!             this.label10.Location = new System.Drawing.Point(12, 267);
+              this.label10.Name = &quot;label10&quot;;
+              this.label10.Size = new System.Drawing.Size(172, 19);
+***************
+*** 179,185 ****
+                          | System.Windows.Forms.AnchorStyles.Right)));
+              this.label11.Font = new System.Drawing.Font(&quot;Microsoft Sans Serif&quot;, 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+!             this.label11.Location = new System.Drawing.Point(11, 436);
+              this.label11.Name = &quot;label11&quot;;
+!             this.label11.Size = new System.Drawing.Size(260, 26);
+              this.label11.TabIndex = 32;
+              this.label11.Text = &quot;Certains r&#233;glages n&#233;cessitent de relancer VLC pour &#234;tre pris en compte&quot;;
+--- 184,190 ----
+                          | System.Windows.Forms.AnchorStyles.Right)));
+              this.label11.Font = new System.Drawing.Font(&quot;Microsoft Sans Serif&quot;, 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+!             this.label11.Location = new System.Drawing.Point(12, 461);
+              this.label11.Name = &quot;label11&quot;;
+!             this.label11.Size = new System.Drawing.Size(259, 26);
+              this.label11.TabIndex = 32;
+              this.label11.Text = &quot;Certains r&#233;glages n&#233;cessitent de relancer VLC pour &#234;tre pris en compte&quot;;
+***************
+*** 190,194 ****
+              this.OkBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+              this.OkBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
+!             this.OkBtn.Location = new System.Drawing.Point(277, 436);
+              this.OkBtn.Name = &quot;OkBtn&quot;;
+              this.OkBtn.Size = new System.Drawing.Size(82, 23);
+--- 195,199 ----
+              this.OkBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+              this.OkBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
+!             this.OkBtn.Location = new System.Drawing.Point(277, 461);
+              this.OkBtn.Name = &quot;OkBtn&quot;;
+              this.OkBtn.Size = new System.Drawing.Size(82, 23);
+***************
+*** 203,206 ****
+--- 208,212 ----
+              this.VLCPath.Location = new System.Drawing.Point(190, 9);
+              this.VLCPath.Name = &quot;VLCPath&quot;;
++             this.VLCPath.ReadOnly = true;
+              this.VLCPath.Size = new System.Drawing.Size(345, 20);
+              this.VLCPath.TabIndex = 1;
+***************
+*** 209,213 ****
+              // AudioLanguage
+              // 
+!             this.AudioLanguage.Location = new System.Drawing.Point(190, 216);
+              this.AudioLanguage.Name = &quot;AudioLanguage&quot;;
+              this.AudioLanguage.Size = new System.Drawing.Size(86, 20);
+--- 215,219 ----
+              // AudioLanguage
+              // 
+!             this.AudioLanguage.Location = new System.Drawing.Point(190, 241);
+              this.AudioLanguage.Name = &quot;AudioLanguage&quot;;
+              this.AudioLanguage.Size = new System.Drawing.Size(86, 20);
+***************
+*** 270,274 ****
+              // ShowVLC
+              // 
+!             this.ShowVLC.Location = new System.Drawing.Point(41, 296);
+              this.ShowVLC.Margin = new System.Windows.Forms.Padding(1);
+              this.ShowVLC.Name = &quot;ShowVLC&quot;;
+--- 276,280 ----
+              // ShowVLC
+              // 
+!             this.ShowVLC.Location = new System.Drawing.Point(41, 321);
+              this.ShowVLC.Margin = new System.Windows.Forms.Padding(1);
+              this.ShowVLC.Name = &quot;ShowVLC&quot;;
+***************
+*** 281,285 ****
+              // 
+              this.RestartVLCBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+!             this.RestartVLCBtn.Location = new System.Drawing.Point(453, 436);
+              this.RestartVLCBtn.Name = &quot;RestartVLCBtn&quot;;
+              this.RestartVLCBtn.Size = new System.Drawing.Size(82, 23);
+--- 287,291 ----
+              // 
+              this.RestartVLCBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+!             this.RestartVLCBtn.Location = new System.Drawing.Point(453, 461);
+              this.RestartVLCBtn.Name = &quot;RestartVLCBtn&quot;;
+              this.RestartVLCBtn.Size = new System.Drawing.Size(82, 23);
+***************
+*** 290,294 ****
+              // label13
+              // 
+!             this.label13.Location = new System.Drawing.Point(12, 165);
+              this.label13.Name = &quot;label13&quot;;
+              this.label13.Size = new System.Drawing.Size(172, 19);
+--- 296,300 ----
+              // label13
+              // 
+!             this.label13.Location = new System.Drawing.Point(12, 190);
+              this.label13.Name = &quot;label13&quot;;
+              this.label13.Size = new System.Drawing.Size(172, 19);
+***************
+*** 301,354 ****
+              this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.panel1.Controls.Add(this.TranscodePC);
+!             this.panel1.Controls.Add(this.TranscodeA52);
+!             this.panel1.Controls.Add(this.TranscodeMPGA);
+!             this.panel1.Controls.Add(this.TranscodeNone);
+!             this.panel1.Location = new System.Drawing.Point(190, 165);
+              this.panel1.Name = &quot;panel1&quot;;
+              this.panel1.Size = new System.Drawing.Size(345, 19);
+              this.panel1.TabIndex = 13;
+              // 
+!             // TranscodePC
+              // 
+!             this.TranscodePC.AutoSize = true;
+!             this.TranscodePC.Location = new System.Drawing.Point(258, 1);
+!             this.TranscodePC.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodePC.Name = &quot;TranscodePC&quot;;
+!             this.TranscodePC.Size = new System.Drawing.Size(86, 17);
+!             this.TranscodePC.TabIndex = 3;
+!             this.TranscodePC.Text = &quot;Audio sur PC&quot;;
+              // 
+!             // TranscodeA52
+              // 
+!             this.TranscodeA52.AutoSize = true;
+!             this.TranscodeA52.Location = new System.Drawing.Point(159, 1);
+!             this.TranscodeA52.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeA52.Name = &quot;TranscodeA52&quot;;
+!             this.TranscodeA52.Size = new System.Drawing.Size(97, 17);
+!             this.TranscodeA52.TabIndex = 2;
+!             this.TranscodeA52.Text = &quot;A/52 Dolby 5.1&quot;;
+              // 
+!             // TranscodeMPGA
+              // 
+!             this.TranscodeMPGA.AutoSize = true;
+!             this.TranscodeMPGA.Checked = true;
+!             this.TranscodeMPGA.Location = new System.Drawing.Point(58, 1);
+!             this.TranscodeMPGA.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeMPGA.Name = &quot;TranscodeMPGA&quot;;
+!             this.TranscodeMPGA.Size = new System.Drawing.Size(99, 17);
+!             this.TranscodeMPGA.TabIndex = 1;
+!             this.TranscodeMPGA.TabStop = true;
+!             this.TranscodeMPGA.Text = &quot;MPEG-II St&#233;r&#233;o&quot;;
+              // 
+!             // TranscodeNone
+              // 
+!             this.TranscodeNone.AutoSize = true;
+!             this.TranscodeNone.Location = new System.Drawing.Point(0, 1);
+!             this.TranscodeNone.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeNone.Name = &quot;TranscodeNone&quot;;
+!             this.TranscodeNone.Size = new System.Drawing.Size(56, 17);
+!             this.TranscodeNone.TabIndex = 0;
+!             this.TranscodeNone.Text = &quot;Aucun&quot;;
+              // 
+              // StartMinimized
+--- 307,360 ----
+              this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.panel1.Controls.Add(this.TranscodeAudioPC);
+!             this.panel1.Controls.Add(this.TranscodeAudioA52);
+!             this.panel1.Controls.Add(this.TranscodeAudioMPGA);
+!             this.panel1.Controls.Add(this.TranscodeAudioNone);
+!             this.panel1.Location = new System.Drawing.Point(190, 190);
+              this.panel1.Name = &quot;panel1&quot;;
+              this.panel1.Size = new System.Drawing.Size(345, 19);
+              this.panel1.TabIndex = 13;
+              // 
+!             // TranscodeAudioPC
+              // 
+!             this.TranscodeAudioPC.AutoSize = true;
+!             this.TranscodeAudioPC.Location = new System.Drawing.Point(58, 1);
+!             this.TranscodeAudioPC.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeAudioPC.Name = &quot;TranscodeAudioPC&quot;;
+!             this.TranscodeAudioPC.Size = new System.Drawing.Size(86, 17);
+!             this.TranscodeAudioPC.TabIndex = 3;
+!             this.TranscodeAudioPC.Text = &quot;Audio sur PC&quot;;
+              // 
+!             // TranscodeAudioA52
+              // 
+!             this.TranscodeAudioA52.AutoSize = true;
+!             this.TranscodeAudioA52.Location = new System.Drawing.Point(247, 1);
+!             this.TranscodeAudioA52.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeAudioA52.Name = &quot;TranscodeAudioA52&quot;;
+!             this.TranscodeAudioA52.Size = new System.Drawing.Size(97, 17);
+!             this.TranscodeAudioA52.TabIndex = 2;
+!             this.TranscodeAudioA52.Text = &quot;A/52 Dolby 5.1&quot;;
+              // 
+!             // TranscodeAudioMPGA
+              // 
+!             this.TranscodeAudioMPGA.AutoSize = true;
+!             this.TranscodeAudioMPGA.Checked = true;
+!             this.TranscodeAudioMPGA.Location = new System.Drawing.Point(146, 1);
+!             this.TranscodeAudioMPGA.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeAudioMPGA.Name = &quot;TranscodeAudioMPGA&quot;;
+!             this.TranscodeAudioMPGA.Size = new System.Drawing.Size(99, 17);
+!             this.TranscodeAudioMPGA.TabIndex = 1;
+!             this.TranscodeAudioMPGA.TabStop = true;
+!             this.TranscodeAudioMPGA.Text = &quot;MPEG-II St&#233;r&#233;o&quot;;
+              // 
+!             // TranscodeAudioNone
+              // 
+!             this.TranscodeAudioNone.AutoSize = true;
+!             this.TranscodeAudioNone.Location = new System.Drawing.Point(0, 1);
+!             this.TranscodeAudioNone.Margin = new System.Windows.Forms.Padding(1);
+!             this.TranscodeAudioNone.Name = &quot;TranscodeAudioNone&quot;;
+!             this.TranscodeAudioNone.Size = new System.Drawing.Size(56, 17);
+!             this.TranscodeAudioNone.TabIndex = 0;
+!             this.TranscodeAudioNone.Text = &quot;Aucun&quot;;
+              // 
+              // StartMinimized
+***************
+*** 356,360 ****
+              this.StartMinimized.Checked = true;
+              this.StartMinimized.CheckState = System.Windows.Forms.CheckState.Checked;
+!             this.StartMinimized.Location = new System.Drawing.Point(41, 277);
+              this.StartMinimized.Margin = new System.Windows.Forms.Padding(1);
+              this.StartMinimized.Name = &quot;StartMinimized&quot;;
+--- 362,366 ----
+              this.StartMinimized.Checked = true;
+              this.StartMinimized.CheckState = System.Windows.Forms.CheckState.Checked;
+!             this.StartMinimized.Location = new System.Drawing.Point(41, 302);
+              this.StartMinimized.Margin = new System.Windows.Forms.Padding(1);
+              this.StartMinimized.Name = &quot;StartMinimized&quot;;
+***************
+*** 367,371 ****
+              this.StartAtBoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.StartAtBoot.Location = new System.Drawing.Point(285, 296);
+              this.StartAtBoot.Margin = new System.Windows.Forms.Padding(1);
+              this.StartAtBoot.Name = &quot;StartAtBoot&quot;;
+--- 373,377 ----
+              this.StartAtBoot.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.StartAtBoot.Location = new System.Drawing.Point(285, 321);
+              this.StartAtBoot.Margin = new System.Windows.Forms.Padding(1);
+              this.StartAtBoot.Name = &quot;StartAtBoot&quot;;
+***************
+*** 381,385 ****
+              this.MinimizeToTray.Checked = true;
+              this.MinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+!             this.MinimizeToTray.Location = new System.Drawing.Point(285, 277);
+              this.MinimizeToTray.Margin = new System.Windows.Forms.Padding(1);
+              this.MinimizeToTray.Name = &quot;MinimizeToTray&quot;;
+--- 387,391 ----
+              this.MinimizeToTray.Checked = true;
+              this.MinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+!             this.MinimizeToTray.Location = new System.Drawing.Point(285, 302);
+              this.MinimizeToTray.Margin = new System.Windows.Forms.Padding(1);
+              this.MinimizeToTray.Name = &quot;MinimizeToTray&quot;;
+***************
+*** 392,396 ****
+              this.FFMpegInterlace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.FFMpegInterlace.Location = new System.Drawing.Point(41, 346);
+              this.FFMpegInterlace.Margin = new System.Windows.Forms.Padding(1);
+              this.FFMpegInterlace.Name = &quot;FFMpegInterlace&quot;;
+--- 398,402 ----
+              this.FFMpegInterlace.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.FFMpegInterlace.Location = new System.Drawing.Point(41, 371);
+              this.FFMpegInterlace.Margin = new System.Windows.Forms.Padding(1);
+              this.FFMpegInterlace.Name = &quot;FFMpegInterlace&quot;;
+***************
+*** 404,408 ****
+              this.HalfScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.HalfScale.Location = new System.Drawing.Point(41, 365);
+              this.HalfScale.Margin = new System.Windows.Forms.Padding(1);
+              this.HalfScale.Name = &quot;HalfScale&quot;;
+--- 410,414 ----
+              this.HalfScale.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.HalfScale.Location = new System.Drawing.Point(41, 390);
+              this.HalfScale.Margin = new System.Windows.Forms.Padding(1);
+              this.HalfScale.Name = &quot;HalfScale&quot;;
+***************
+*** 416,420 ****
+              this.LIRCActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.LIRCActive.Location = new System.Drawing.Point(285, 315);
+              this.LIRCActive.Margin = new System.Windows.Forms.Padding(1);
+              this.LIRCActive.Name = &quot;LIRCActive&quot;;
+--- 422,426 ----
+              this.LIRCActive.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.LIRCActive.Location = new System.Drawing.Point(285, 340);
+              this.LIRCActive.Margin = new System.Windows.Forms.Padding(1);
+              this.LIRCActive.Name = &quot;LIRCActive&quot;;
+***************
+*** 425,429 ****
+              // label3
+              // 
+!             this.label3.Location = new System.Drawing.Point(12, 190);
+              this.label3.Name = &quot;label3&quot;;
+              this.label3.Size = new System.Drawing.Size(172, 19);
+--- 431,435 ----
+              // label3
+              // 
+!             this.label3.Location = new System.Drawing.Point(12, 215);
+              this.label3.Name = &quot;label3&quot;;
+              this.label3.Size = new System.Drawing.Size(172, 19);
+***************
+*** 434,438 ****
+              // TranscodeVB
+              // 
+!             this.TranscodeVB.Location = new System.Drawing.Point(190, 190);
+              this.TranscodeVB.Name = &quot;TranscodeVB&quot;;
+              this.TranscodeVB.Size = new System.Drawing.Size(86, 20);
+--- 440,444 ----
+              // TranscodeVB
+              // 
+!             this.TranscodeVB.Location = new System.Drawing.Point(190, 215);
+              this.TranscodeVB.Name = &quot;TranscodeVB&quot;;
+              this.TranscodeVB.Size = new System.Drawing.Size(86, 20);
+***************
+*** 444,448 ****
+              this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.label14.Location = new System.Drawing.Point(282, 190);
+              this.label14.Name = &quot;label14&quot;;
+              this.label14.Size = new System.Drawing.Size(253, 19);
+--- 450,454 ----
+              this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.label14.Location = new System.Drawing.Point(282, 215);
+              this.label14.Name = &quot;label14&quot;;
+              this.label14.Size = new System.Drawing.Size(253, 19);
+***************
+*** 455,459 ****
+              this.PCControlAllowed.Checked = true;
+              this.PCControlAllowed.CheckState = System.Windows.Forms.CheckState.Checked;
+!             this.PCControlAllowed.Location = new System.Drawing.Point(41, 315);
+              this.PCControlAllowed.Margin = new System.Windows.Forms.Padding(1);
+              this.PCControlAllowed.Name = &quot;PCControlAllowed&quot;;
+--- 461,465 ----
+              this.PCControlAllowed.Checked = true;
+              this.PCControlAllowed.CheckState = System.Windows.Forms.CheckState.Checked;
+!             this.PCControlAllowed.Location = new System.Drawing.Point(41, 340);
+              this.PCControlAllowed.Margin = new System.Windows.Forms.Padding(1);
+              this.PCControlAllowed.Name = &quot;PCControlAllowed&quot;;
+***************
+*** 467,471 ****
+              this.LessIconsInExplorer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.LessIconsInExplorer.Location = new System.Drawing.Point(41, 384);
+              this.LessIconsInExplorer.Margin = new System.Windows.Forms.Padding(1);
+              this.LessIconsInExplorer.Name = &quot;LessIconsInExplorer&quot;;
+--- 473,477 ----
+              this.LessIconsInExplorer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                          | System.Windows.Forms.AnchorStyles.Right)));
+!             this.LessIconsInExplorer.Location = new System.Drawing.Point(41, 409);
+              this.LessIconsInExplorer.Margin = new System.Windows.Forms.Padding(1);
+              this.LessIconsInExplorer.Name = &quot;LessIconsInExplorer&quot;;
+***************
+*** 513,517 ****
+              this.QuitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+              this.QuitBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
+!             this.QuitBtn.Location = new System.Drawing.Point(365, 436);
+              this.QuitBtn.Name = &quot;QuitBtn&quot;;
+              this.QuitBtn.Size = new System.Drawing.Size(82, 23);
+--- 519,523 ----
+              this.QuitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+              this.QuitBtn.DialogResult = System.Windows.Forms.DialogResult.OK;
+!             this.QuitBtn.Location = new System.Drawing.Point(365, 461);
+              this.QuitBtn.Name = &quot;QuitBtn&quot;;
+              this.QuitBtn.Size = new System.Drawing.Size(82, 23);
+***************
+*** 522,526 ****
+              // BlackBkgnds
+              // 
+!             this.BlackBkgnds.Location = new System.Drawing.Point(41, 403);
+              this.BlackBkgnds.Margin = new System.Windows.Forms.Padding(1);
+              this.BlackBkgnds.Name = &quot;BlackBkgnds&quot;;
+--- 528,532 ----
+              // BlackBkgnds
+              // 
+!             this.BlackBkgnds.Location = new System.Drawing.Point(41, 428);
+              this.BlackBkgnds.Margin = new System.Windows.Forms.Padding(1);
+              this.BlackBkgnds.Name = &quot;BlackBkgnds&quot;;
+***************
+*** 530,539 ****
+                  &quot;&quot;;
+              // 
+              // MainForm
+              // 
+              this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+              this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+!             this.ClientSize = new System.Drawing.Size(547, 471);
+              this.Controls.Add(this.QuitBtn);
+              this.Controls.Add(this.label14);
+              this.Controls.Add(this.label3);
+--- 536,591 ----
+                  &quot;&quot;;
+              // 
++             // panel2
++             // 
++             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
++                         | System.Windows.Forms.AnchorStyles.Right)));
++             this.panel2.Controls.Add(this.TranscodeVideoMPG2);
++             this.panel2.Controls.Add(this.TranscodeVideoNone);
++             this.panel2.Location = new System.Drawing.Point(190, 165);
++             this.panel2.Name = &quot;panel2&quot;;
++             this.panel2.Size = new System.Drawing.Size(345, 19);
++             this.panel2.TabIndex = 38;
++             // 
++             // TranscodeVideoMPG2
++             // 
++             this.TranscodeVideoMPG2.AutoSize = true;
++             this.TranscodeVideoMPG2.Checked = true;
++             this.TranscodeVideoMPG2.Location = new System.Drawing.Point(146, 1);
++             this.TranscodeVideoMPG2.Margin = new System.Windows.Forms.Padding(1);
++             this.TranscodeVideoMPG2.Name = &quot;TranscodeVideoMPG2&quot;;
++             this.TranscodeVideoMPG2.Size = new System.Drawing.Size(144, 17);
++             this.TranscodeVideoMPG2.TabIndex = 1;
++             this.TranscodeVideoMPG2.TabStop = true;
++             this.TranscodeVideoMPG2.Text = &quot;MPEG-II (Freebox v3/v4)&quot;;
++             // 
++             // TranscodeVideoNone
++             // 
++             this.TranscodeVideoNone.AutoSize = true;
++             this.TranscodeVideoNone.Location = new System.Drawing.Point(0, 1);
++             this.TranscodeVideoNone.Margin = new System.Windows.Forms.Padding(1);
++             this.TranscodeVideoNone.Name = &quot;TranscodeVideoNone&quot;;
++             this.TranscodeVideoNone.Size = new System.Drawing.Size(122, 17);
++             this.TranscodeVideoNone.TabIndex = 0;
++             this.TranscodeVideoNone.Text = &quot;Aucun (Freebox HD)&quot;;
++             // 
++             // label15
++             // 
++             this.label15.Location = new System.Drawing.Point(12, 165);
++             this.label15.Name = &quot;label15&quot;;
++             this.label15.Size = new System.Drawing.Size(172, 19);
++             this.label15.TabIndex = 37;
++             this.label15.Text = &quot;Transcodage vid&#233;o :&quot;;
++             this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
++             // 
+              // MainForm
+              // 
+              this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+              this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+!             this.ClientSize = new System.Drawing.Size(547, 496);
+!             this.Controls.Add(this.panel2);
+!             this.Controls.Add(this.label15);
+              this.Controls.Add(this.QuitBtn);
++             this.Controls.Add(this.label12);
++             this.Controls.Add(this.DVDLetter);
+              this.Controls.Add(this.label14);
+              this.Controls.Add(this.label3);
+***************
+*** 549,566 ****
+              this.Controls.Add(this.MinimizeToTray);
+              this.Controls.Add(this.label13);
+!             this.Controls.Add(this.label12);
+              this.Controls.Add(this.StartAtBoot);
+-             this.Controls.Add(this.DVDLetter);
+              this.Controls.Add(this.ShowVLC);
+              this.Controls.Add(this.label9);
+!             this.Controls.Add(this.RestartVLCBtn);
+              this.Controls.Add(this.label10);
+!             this.Controls.Add(this.label11);
+              this.Controls.Add(this.label8);
+              this.Controls.Add(this.label7);
+              this.Controls.Add(this.SubLanguage);
+              this.Controls.Add(this.AudioLanguage);
+-             this.Controls.Add(this.label6);
+-             this.Controls.Add(this.PictureExts);
+              this.Controls.Add(this.label5);
+              this.Controls.Add(this.SoundExts);
+--- 601,616 ----
+              this.Controls.Add(this.MinimizeToTray);
+              this.Controls.Add(this.label13);
+!             this.Controls.Add(this.RestartVLCBtn);
+              this.Controls.Add(this.StartAtBoot);
+              this.Controls.Add(this.ShowVLC);
++             this.Controls.Add(this.label11);
+              this.Controls.Add(this.label9);
+!             this.Controls.Add(this.label6);
+              this.Controls.Add(this.label10);
+!             this.Controls.Add(this.PictureExts);
+              this.Controls.Add(this.label8);
+              this.Controls.Add(this.label7);
+              this.Controls.Add(this.SubLanguage);
+              this.Controls.Add(this.AudioLanguage);
+              this.Controls.Add(this.label5);
+              this.Controls.Add(this.SoundExts);
+***************
+*** 584,587 ****
+--- 634,639 ----
+              this.panel1.PerformLayout();
+              this.TrayContextMenu.ResumeLayout(false);
++             this.panel2.ResumeLayout(false);
++             this.panel2.PerformLayout();
+              this.ResumeLayout(false);
+              this.PerformLayout();
+***************
+*** 615,621 ****
+          private System.Windows.Forms.Label label13;
+          private System.Windows.Forms.Panel panel1;
+!         private System.Windows.Forms.RadioButton TranscodeNone;
+!         private System.Windows.Forms.RadioButton TranscodeA52;
+!         private System.Windows.Forms.RadioButton TranscodeMPGA;
+          internal System.Windows.Forms.CheckBox StartMinimized;
+          internal System.Windows.Forms.CheckBox StartAtBoot;
+--- 667,673 ----
+          private System.Windows.Forms.Label label13;
+          private System.Windows.Forms.Panel panel1;
+!         private System.Windows.Forms.RadioButton TranscodeAudioNone;
+!         private System.Windows.Forms.RadioButton TranscodeAudioA52;
+!         private System.Windows.Forms.RadioButton TranscodeAudioMPGA;
+          internal System.Windows.Forms.CheckBox StartMinimized;
+          internal System.Windows.Forms.CheckBox StartAtBoot;
+***************
+*** 627,631 ****
+          private System.Windows.Forms.TextBox TranscodeVB;
+          private System.Windows.Forms.Label label14;
+!         private System.Windows.Forms.RadioButton TranscodePC;
+          private System.Windows.Forms.CheckBox PCControlAllowed;
+          private System.Windows.Forms.CheckBox LessIconsInExplorer;
+--- 679,683 ----
+          private System.Windows.Forms.TextBox TranscodeVB;
+          private System.Windows.Forms.Label label14;
+!         private System.Windows.Forms.RadioButton TranscodeAudioPC;
+          private System.Windows.Forms.CheckBox PCControlAllowed;
+          private System.Windows.Forms.CheckBox LessIconsInExplorer;
+***************
+*** 636,639 ****
+--- 688,695 ----
+          private System.Windows.Forms.Button QuitBtn;
+          private System.Windows.Forms.CheckBox BlackBkgnds;
++         private System.Windows.Forms.Panel panel2;
++         private System.Windows.Forms.RadioButton TranscodeVideoMPG2;
++         private System.Windows.Forms.RadioButton TranscodeVideoNone;
++         private System.Windows.Forms.Label label15;
+      }
+  }
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.12
+retrieving revision 1.13
+diff -C2 -d -r1.12 -r1.13
+*** MainForm.cs	30 Jun 2006 19:58:12 -0000	1.12
+--- MainForm.cs	20 Mar 2007 18:45:58 -0000	1.13
+***************
+*** 50,54 ****
+  #endif
+              m_fxp = new FreeXplorer();
+! 
+              if (m_fxp.Configuration.StartMinimized)
+              {
+--- 50,55 ----
+  #endif
+              m_fxp = new FreeXplorer();
+!             LoadConfig();
+!             
+              if (m_fxp.Configuration.StartMinimized)
+              {
+***************
+*** 107,114 ****
+              ShowVLC.Checked = config.ShowVLC;
+  
+!             TranscodeMPGA.Checked = (config.Transcode == AudioTranscode.MPGA);
+!             TranscodeA52.Checked = (config.Transcode == AudioTranscode.A52);
+!             TranscodePC.Checked = (config.Transcode == AudioTranscode.PC);
+!             TranscodeNone.Checked = (config.Transcode == AudioTranscode.None);
+  
+              StartMinimized.Checked = config.StartMinimized;
+--- 108,117 ----
+              ShowVLC.Checked = config.ShowVLC;
+  
+!             TranscodeAudioNone.Checked = (config.TranscodeAudio == AudioTranscode.None);
+!             TranscodeAudioPC.Checked = (config.TranscodeAudio == AudioTranscode.PC);
+!             TranscodeAudioMPGA.Checked = (config.TranscodeAudio == AudioTranscode.MPGA);
+!             TranscodeAudioA52.Checked = (config.TranscodeAudio == AudioTranscode.A52);
+!             TranscodeVideoNone.Checked = (config.TranscodeVideo == VideoTranscode.None);
+!             TranscodeVideoMPG2.Checked = (config.TranscodeVideo == VideoTranscode.MPG2);
+  
+              StartMinimized.Checked = config.StartMinimized;
+***************
+*** 130,134 ****
+              Configuration config = m_fxp.Configuration;
+  
+!             config.VLCPath = VLCPath.Text;
+              config.VlcPort = VlcPort.Text;
+              config.DVDLetter = DVDLetter.Text;
+--- 133,137 ----
+              Configuration config = m_fxp.Configuration;
+  
+!             //config.VLCPath = VLCPath.Text;
+              config.VlcPort = VlcPort.Text;
+              config.DVDLetter = DVDLetter.Text;
+***************
+*** 140,147 ****
+              config.ShowVLC = ShowVLC.Checked;
+  
+!             config.Transcode = TranscodeMPGA.Checked ? AudioTranscode.MPGA :
+!                                TranscodeA52.Checked ? AudioTranscode.A52 :
+!                                TranscodePC.Checked ? AudioTranscode.PC : 
+                                 AudioTranscode.None;
+  
+              config.StartMinimized = StartMinimized.Checked;
+--- 143,152 ----
+              config.ShowVLC = ShowVLC.Checked;
+  
+!             config.TranscodeAudio = TranscodeAudioMPGA.Checked ? AudioTranscode.MPGA :
+!                                TranscodeAudioA52.Checked ? AudioTranscode.A52 :
+!                                TranscodeAudioPC.Checked ? AudioTranscode.PC : 
+                                 AudioTranscode.None;
++             config.TranscodeVideo = TranscodeVideoMPG2.Checked ? VideoTranscode.MPG2 :
++                                VideoTranscode.None;
+  
+              config.StartMinimized = StartMinimized.Checked;
+
+Index: Recents.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Recents.cs,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** Recents.cs	11 Jun 2006 16:05:18 -0000	1.3
+--- Recents.cs	20 Mar 2007 18:45:58 -0000	1.4
+***************
+*** 38,71 ****
+          public static void Add(string file)
+          {
+!             XmlTextReader reader = new XmlTextReader(FilePath);
+!             reader.ReadStartElement(&quot;Recents&quot;);
+!             XmlTextWriter writer = new XmlTextWriter(Path.ChangeExtension(FilePath, &quot;.new&quot;), null);
+!             writer.Formatting = Formatting.Indented;
+!             writer.WriteStartElement(&quot;Recents&quot;);
+!             writer.WriteStartElement(&quot;MRL&quot;);
+!             writer.WriteAttributeString(&quot;date&quot;, DateTime.Now.ToString());
+!             writer.WriteString(file);
+!             writer.WriteEndElement();
+!             int counter = 0;
+!             while (!reader.EOF)
+              {
+!                 if (reader.Value != file)
+!                 {
+!                     writer.WriteNode(reader, false);
+!                     if (reader.NodeType == XmlNodeType.Element)
+!                     {
+!                         counter++;
+!                         if (counter == 25) break;
+!                     }
+!                 }
+!                 else
+!                 {
+!                     reader.Read();
+!                 }
+              }
+!             writer.Close();
+!             reader.Close();
+!             File.Delete(FilePath);
+!             File.Move(Path.ChangeExtension(FilePath, &quot;.new&quot;), FilePath);
+          }
+      }
+--- 38,58 ----
+          public static void Add(string file)
+          {
+!             XmlDocument doc = new XmlDocument();
+!             doc.Load(FilePath);
+!             XmlElement root = doc.DocumentElement;
+!             XmlElement node;
+!             while ((node = root.SelectSingleNode(&quot;MRL[.='&quot; + file + &quot;']&quot;) as XmlElement) != null)
+              {
+!                 root.RemoveChild(node);
+              }
+!             node = doc.CreateElement(&quot;MRL&quot;);
+!             node.SetAttribute(&quot;date&quot;, DateTime.Now.ToString());
+!             node.InnerText = file;
+!             root.InsertAfter(node, null);
+!             while (root.ChildNodes.Count &gt; 25)
+!             {
+!                 root.RemoveChild(root.LastChild);
+!             }
+!             doc.Save(FilePath);
+          }
+      }
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000049.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties	AssemblyInfo.cs, 1.10, 1.11 app.manifest, 1.1, 1.2
+</A></li>
+	<LI>Next message: <A HREF="000050.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#55">[ date ]</a>
+              <a href="thread.html#55">[ thread ]</a>
+              <a href="subject.html#55">[ subject ]</a>
+              <a href="author.html#55">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

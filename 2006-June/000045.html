@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs,NONE,1.1 VLC.cs,1.11,NONE
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-June/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Configuration.cs%2CNONE%2C1.1%20VLC.cs%2C1.11%2CNONE&In-Reply-To=%3C200606301958.k5UJwde24365%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000044.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs,NONE,1.1 VLC.cs,1.11,NONE</H1>
+    <B>blackfox</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Configuration.cs%2CNONE%2C1.1%20VLC.cs%2C1.11%2CNONE&In-Reply-To=%3C200606301958.k5UJwde24365%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs,NONE,1.1 VLC.cs,1.11,NONE">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Jun 30 21:58:39 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000044.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.cs,1.11,1.12
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#45">[ date ]</a>
+              <a href="thread.html#45">[ thread ]</a>
+              <a href="subject.html#45">[ subject ]</a>
+              <a href="author.html#45">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14960/FreeXplorer
+
+Added Files:
+	Configuration.cs 
+Removed Files:
+	VLC.cs 
+Log Message:
+
+
+--- NEW FILE: Configuration.cs ---
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
+using Wizou.VLC;
+
+namespace Wizou.FreeXplorer
+{
+    public class Configuration
+    {
+        static string ConfigFile
+        { 
+            get { return Path.Combine(FreeXplorer.ConfigurationFolder, &quot;config.xml&quot;); }
+        }
+
+        public string VLCPath = @&quot;C:\Program Files\VideoLAN\VLC\vlc.exe&quot;;
+        public string DVDLetter = &quot;D&quot;;
+        public string VlcPort = &quot;31186&quot;;
+        public string SoundExts = VLC.Utility.SoundExts;
+        public string PictureExts = VLC.Utility.PictureExts;
+        public string VideoExts = VLC.Utility.VideoExts;
+        public string AudioLanguage = &quot;fr,en&quot;;
+        public string SubLanguage = &quot;fr,en&quot;;
+        public bool ShowVLC = false;
+        public AudioTranscode Transcode = AudioTranscode.MPGA;
+        public bool StartMinimized = true;
+        public bool MinimizeToTray = true;
+        public bool FFMpegInterlace = false;
+        public bool HalfScale = false;
+        public bool LIRCActive = false;
+        public string TranscodeVB = &quot;8000&quot;;
+        public bool PCControlAllowed = true;
+        public bool LessIconsInExplorer = false;
+        public bool BlackBkgnds = false;
+
+        public void Load()
+        {
+            Load(ConfigFile);
+        }
+
+        void Load(string fileName)
+        {
+            // chargement des valeurs des options depuis le fichier Config.xml
+            try
+            {
+                using (XmlTextReader reader = new XmlTextReader(fileName))
+                {
+                    reader.ReadStartElement(&quot;Config&quot;);
+                    do
+                    {
+                        if (!reader.IsStartElement()) continue;
+                        string value = reader.ReadString();
+                        switch (reader.Name)
+                        {
+                            case &quot;VLCPath&quot;: VLCPath = value; break;
+                            case &quot;DVDLetter&quot;: DVDLetter = value; break;
+                            case &quot;VlcPort&quot;: VlcPort = value; break;
+                            case &quot;SoundExts&quot;: SoundExts = value; break;
+                            case &quot;PictureExts&quot;: PictureExts = value; break;
+                            case &quot;VideoExts&quot;: VideoExts = value; break;
+                            case &quot;AudioLanguage&quot;: AudioLanguage = value; break;
+                            case &quot;SubLanguage&quot;: SubLanguage = value; break;
+                            case &quot;ShowVLC&quot;: ShowVLC = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+                            case &quot;Transcode&quot;:
+                                switch (value.ToUpper())
+                                {
+                                    case &quot;MPGA&quot;: Transcode = AudioTranscode.MPGA; break;
+                                    case &quot;A52&quot;: Transcode = AudioTranscode.A52; break;
+                                    case &quot;PC&quot;: Transcode = AudioTranscode.PC; break;
+                                    default: Transcode = AudioTranscode.None; break;
+                                }
+                                break;
+                            case &quot;StartMinimized&quot;: StartMinimized = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+                            case &quot;MinimizeToTray&quot;: MinimizeToTray = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+                            case &quot;FFMpegInterlace&quot;: FFMpegInterlace = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+                            case &quot;HalfScale&quot;: HalfScale = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+                            case &quot;LIRCActive&quot;: LIRCActive = (value == &quot;1&quot;) || (value == System.Boolean.TrueString); break;
+                            case &quot;TranscodeVB&quot;: TranscodeVB = value; break;
+                            case &quot;PCControlAllowed&quot;: PCControlAllowed = Convert.ToBoolean(value); break;
+                            case &quot;LessIconsInExplorer&quot;: LessIconsInExplorer = Convert.ToBoolean(value); break;
+                            case &quot;BlackBkgnds&quot;: BlackBkgnds = Convert.ToBoolean(value); break;
+                        }
+                    } while (reader.Read());
+                }
+            }
+            catch (FileNotFoundException) { }
+        }
+
+        public void Save()
+        {
+            Save(ConfigFile);
+        }
+
+        void Save(string fileName)
+        {
+            using (XmlTextWriter writer = new XmlTextWriter(fileName, null))
+            {
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartElement(&quot;Config&quot;);
+                writer.WriteElementString(&quot;VLCPath&quot;, VLCPath);
+                writer.WriteElementString(&quot;VlcPort&quot;, VlcPort);
+                writer.WriteElementString(&quot;DVDLetter&quot;, DVDLetter);
+                writer.WriteElementString(&quot;SoundExts&quot;, SoundExts);
+                writer.WriteElementString(&quot;PictureExts&quot;, PictureExts);
+                writer.WriteElementString(&quot;VideoExts&quot;, VideoExts);
+                writer.WriteElementString(&quot;AudioLanguage&quot;, AudioLanguage);
+                writer.WriteElementString(&quot;SubLanguage&quot;, SubLanguage);
+                writer.WriteElementString(&quot;ShowVLC&quot;, ShowVLC.ToString());
+                writer.WriteElementString(&quot;Transcode&quot;, Transcode.ToString());
+                writer.WriteElementString(&quot;StartMinimized&quot;, StartMinimized.ToString());
+                writer.WriteElementString(&quot;MinimizeToTray&quot;, MinimizeToTray.ToString());
+                writer.WriteElementString(&quot;FFMpegInterlace&quot;, FFMpegInterlace.ToString());
+                writer.WriteElementString(&quot;HalfScale&quot;, HalfScale.ToString());
+                writer.WriteElementString(&quot;LIRCActive&quot;, LIRCActive.ToString());
+                writer.WriteElementString(&quot;TranscodeVB&quot;, TranscodeVB);
+                writer.WriteElementString(&quot;PCControlAllowed&quot;, PCControlAllowed.ToString());
+                writer.WriteElementString(&quot;LessIconsInExplorer&quot;, LessIconsInExplorer.ToString());
+                writer.WriteElementString(&quot;BlackBkgnds&quot;, BlackBkgnds.ToString());
+            }
+        }
+    }
+}
+
+--- VLC.cs DELETED ---
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000044.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.cs,1.11,1.12
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#45">[ date ]</a>
+              <a href="thread.html#45">[ thread ]</a>
+              <a href="subject.html#45">[ subject ]</a>
+              <a href="author.html#45">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

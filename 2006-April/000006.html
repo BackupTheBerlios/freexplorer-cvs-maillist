@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.2,1.3 mediacenter.html,1.2,1.3
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin/pages%20lirc.html%2C1.2%2C1.3%20mediacenter.html%2C1.2%2C1.3&In-Reply-To=%3C200604142159.k3ELxSt01886%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000005.html">
+   <LINK REL="Next"  HREF="000008.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.2,1.3 mediacenter.html,1.2,1.3</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin/pages%20lirc.html%2C1.2%2C1.3%20mediacenter.html%2C1.2%2C1.3&In-Reply-To=%3C200604142159.k3ELxSt01886%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.2,1.3 mediacenter.html,1.2,1.3">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Apr 14 23:59:28 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000005.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages settings.html,1.2,1.3
+</A></li>
+        <LI>Next message: <A HREF="000008.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties AssemblyInfo.cs,1.9,1.10
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv7883
+
+Modified Files:
+	lirc.html mediacenter.html 
+Log Message:
+am&#233;lioration des modes LIRC et MediaPlayer:
+- support des touches * #
+- meilleur support des touches num&#233;riques (delais raccourcis)
+- meilleur support de la touche play/pause (devient ppause pour LIRC)
+- touche 'rec' d'extinction du PC dans le mode LIRC
+
+Index: lirc.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/lirc.html,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** lirc.html	6 Aug 2005 21:51:53 -0000	1.2
+--- lirc.html	14 Apr 2006 21:59:53 -0000	1.3
+***************
+*** 1,77 ****
+! &#239;&#187;&#191;&lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot; content=&quot;settings.html&quot;&gt;
+! 	&lt;meta name=&quot;love_page&quot;      content=&quot;lirc.html?action=lirc&amp;key=love&quot;&gt;
+! 	&lt;meta name=&quot;love2_page&quot;     content=&quot;lirc.html?action=lirc&amp;key=love2&quot;&gt;
+! 	&lt;meta name=&quot;mail_page&quot;      content=&quot;lirc.html?action=lirc&amp;key=mail&quot;&gt;
+! 	&lt;meta name=&quot;mail2_page&quot;     content=&quot;lirc.html?action=lirc&amp;key=mail2&quot;&gt;
+! 	&lt;meta name=&quot;nochannel_page&quot; content=&quot;lirc.html?action=lirc&amp;key=%d&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;lirc.html?action=lirc&amp;key=#%d&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;       href=   &quot;lirc.html?action=lirc&amp;key=help&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;      href=   &quot;lirc.html?action=lirc&amp;key=guide&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;     href=   &quot;lirc.html?action=lirc&amp;key=yellow&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;       href=   &quot;lirc.html?action=lirc&amp;key=info&quot;&gt;
+! 	&lt;link rel=&quot;options&quot;    href=   &quot;lirc.html?action=lirc&amp;key=options&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;        href=   &quot;lirc.html?action=lirc&amp;key=red&quot;--&gt;
+! 	&lt;link rel=&quot;green&quot;      href=   &quot;lirc.html?action=lirc&amp;key=green&quot;--&gt;
+! 	&lt;link rel=&quot;blue&quot;       href=   &quot;lirc.html?action=lirc&amp;key=blue&quot;--&gt;
+! 	&lt;link rel=&quot;left&quot;       href=   &quot;lirc.html?action=lirc&amp;key=left&quot;&gt;
+! 	&lt;link rel=&quot;right&quot;      href=   &quot;lirc.html?action=lirc&amp;key=right&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;         href=   &quot;lirc.html?action=lirc&amp;key=up&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;       href=   &quot;lirc.html?action=lirc&amp;key=down&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;      href=   &quot;lirc.html?action=lirc&amp;key=pause&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;       href=   &quot;lirc.html?action=lirc&amp;key=play&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;       href=   &quot;lirc.html?action=lirc&amp;key=stop&quot;&gt;
+! 	&lt;meta name=refresh	content=&quot;10;url=lirc.html?key={2}&quot;&gt;
+! &lt;/head&gt;
+! &lt;body text=&quot;#FFFFFF3F&quot;&gt;
+! &lt;table&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td bgcolor=&quot;#00000028&quot; align=center&gt;
+! 		&lt;a href=&quot;lirc.html?action=lirc&amp;key=ok&quot;&gt;&lt;/a&gt;
+! 		&lt;font size=+2 color=&quot;#C0FFFF3F&quot;&gt;
+! 		Ce mode permet de controler par la t&#195;&#169;l&#195;&#169;commande des applications compatibles LIRC&lt;br&gt;
+! 		telles que Media Player Classic ou autres&lt;br&gt;
+! 		&lt;/font&gt;
+! 		&lt;font size=+2 color=&quot;#FF80803F&quot;&gt;
+! 		{1} client(s) connect&#195;&#169;(s) - Dernier code &#195;&#169;mis: {2}
+! 		&lt;hr&gt;
+! 		&lt;/font&gt;&lt;font size=+1 color=&quot;#FFFFC03F&quot;&gt;
+! 		Table des codes touches g&#195;&#169;n&#195;&#169;r&#195;&#169;s par l'appui sur la t&#195;&#169;l&#195;&#169;commande:&lt;br&gt;
+! 		(&#195;&#160; configurer dans le logiciel client LIRC)
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td width=92% bgcolor=&quot;#00000030&quot; height=480 valign=top&gt;
+! 	&lt;table cellspacing=0 cellpadding=&quot;0&quot; align=center&gt;
+! 		&lt;tr&gt;&lt;td width=30%&gt;Coeur&lt;/td&gt;&lt;td width=15%&gt;love&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Coeur &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;love2&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre&lt;/td&gt;&lt;td&gt;mail&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;mail2&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Options&lt;/td&gt;&lt;td&gt;options&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;?&lt;/td&gt;&lt;td&gt;help&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Info&lt;/td&gt;&lt;td&gt;info&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Guide&lt;/td&gt;&lt;td&gt;guide&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Stop&lt;/td&gt;&lt;td&gt;stop&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Pause/Play&lt;/td&gt;&lt;td&gt;pause&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;V&lt;/font&gt; P+&lt;/td&gt;&lt;td&gt;up&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;U&lt;/font&gt; P-&lt;/td&gt;&lt;td&gt;down&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;OK&lt;/td&gt;&lt;td&gt;ok&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;S  #-&lt;/font&gt;&lt;/td&gt;&lt;td&gt;left&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;T  #+&lt;/font&gt;&lt;/td&gt;&lt;td&gt;right&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FF00003F&gt;Rouge&lt;/font&gt;&lt;/td&gt;&lt;td&gt;red&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#00FF003F&gt;Vert&lt;/font&gt;&lt;/td&gt;&lt;td&gt;green&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FFFF003F&gt;Jaune&lt;/font&gt;&lt;/td&gt;&lt;td&gt;yellow&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#3F3FFF3F&gt;Bleu&lt;/font&gt;&lt;/td&gt;&lt;td&gt;blue&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Chiffres&lt;/td&gt;&lt;td&gt;&lt;le chiffre&gt;&lt;/td&gt;&lt;/tr&gt;
+! 	&lt;/table&gt;
+! 	&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+--- 1,87 ----
+! &#239;&#187;&#191;&lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot; content=&quot;settings.html&quot;&gt;
+! 	&lt;meta name=&quot;love_page&quot;      content=&quot;lirc.html?action=lirc&amp;key=love&quot;&gt;
+! 	&lt;meta name=&quot;love2_page&quot;     content=&quot;lirc.html?action=lirc&amp;key=love2&quot;&gt;
+! 	&lt;meta name=&quot;mail_page&quot;      content=&quot;lirc.html?action=lirc&amp;key=mail&quot;&gt;
+! 	&lt;meta name=&quot;mail2_page&quot;     content=&quot;lirc.html?action=lirc&amp;key=mail2&quot;&gt;
+! 	&lt;meta name=&quot;nochannel_page&quot; content=&quot;lirc.html?action=lirc&amp;key=%d&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;lirc.html?action=lirc&amp;key=#%d&quot;&gt;
+! 	&lt;meta name=&quot;prog_select_timeout&quot; content=&quot;300&quot;&gt;
+! 	&lt;meta name=&quot;prog_expand_timeout&quot; content=&quot;300&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;       href=   &quot;lirc.html?action=lirc&amp;key=help&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;      href=   &quot;lirc.html?action=lirc&amp;key=guide&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;     href=   &quot;lirc.html?action=lirc&amp;key=yellow&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;       href=   &quot;lirc.html?action=lirc&amp;key=info&quot;&gt;
+! 	&lt;link rel=&quot;options&quot;    href=   &quot;lirc.html?action=lirc&amp;key=options&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;        href=   &quot;lirc.html?action=lirc&amp;key=red&quot;--&gt;
+! 	&lt;link rel=&quot;green&quot;      href=   &quot;lirc.html?action=lirc&amp;key=green&quot;--&gt;
+! 	&lt;link rel=&quot;blue&quot;       href=   &quot;lirc.html?action=lirc&amp;key=blue&quot;--&gt;
+! 	&lt;link rel=&quot;left&quot;       href=   &quot;lirc.html?action=lirc&amp;key=left&quot;&gt;
+! 	&lt;link rel=&quot;right&quot;      href=   &quot;lirc.html?action=lirc&amp;key=right&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;         href=   &quot;lirc.html?action=lirc&amp;key=up&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;       href=   &quot;lirc.html?action=lirc&amp;key=down&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;      href=   &quot;lirc.html?action=lirc&amp;key=ppause&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;       href=   &quot;lirc.html?action=lirc&amp;key=ppause&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;       href=   &quot;lirc.html?action=lirc&amp;key=stop&quot;&gt;
+! 	&lt;link rel=&quot;star&quot;       href=   &quot;lirc.html?action=lirc&amp;key=*&quot;&gt;
+! 	&lt;link rel=&quot;sharp&quot;      href=   &quot;lirc.html?action=lirc&amp;key=#&quot;&gt;
+! 
+! 	&lt;!-- Fonction sympa pour eteindre le PC &#195;&#160; la fin d'un film tout en restant dans le mode LIRC
+! 		Je la verrai bien sur l'appui-long de la touche '?' mais la balise meta correspondante n'est pas encore document&#195;&#169;e
+! 		donc pour l'instant je la met sur 'rec', touche nouvellement document&#195;&#169;e --&gt;
+! 	&lt;link rel=&quot;rec&quot;        href=   &quot;lirc.html?afterAction=suspend&quot;&gt;
+! 
+! 	&lt;meta name=refresh	content=&quot;10;url=lirc.html?key={2}&quot;&gt;
+! &lt;/head&gt;
+! &lt;body text=&quot;#FFFFFF3F&quot;&gt;
+! &lt;table&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td bgcolor=&quot;#00000028&quot; align=center&gt;
+! 		&lt;a href=&quot;lirc.html?action=lirc&amp;key=ok&quot;&gt;&lt;/a&gt;
+! 		&lt;font size=+2 color=&quot;#C0FFFF3F&quot;&gt;
+! 		Ce mode permet de controler par la t&#195;&#169;l&#195;&#169;commande des applications compatibles LIRC&lt;br&gt;
+! 		telles que Media Player Classic ou autres&lt;br&gt;
+! 		&lt;/font&gt;
+! 		&lt;font size=+2 color=&quot;#FF80803F&quot;&gt;
+! 		{1} client(s) connect&#195;&#169;(s) - Dernier code &#195;&#169;mis: {2}
+! 		&lt;hr&gt;
+! 		&lt;/font&gt;&lt;font size=+1 color=&quot;#FFFFC03F&quot;&gt;
+! 		Table des codes touches g&#195;&#169;n&#195;&#169;r&#195;&#169;s par l'appui sur la t&#195;&#169;l&#195;&#169;commande:&lt;br&gt;
+! 		(&#195;&#160; configurer dans le logiciel client LIRC)
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td width=92% bgcolor=&quot;#00000030&quot; height=480 valign=top&gt;
+! 	&lt;table cellspacing=0 cellpadding=&quot;0&quot; align=center&gt;
+! 		&lt;tr&gt;&lt;td width=30%&gt;Coeur&lt;/td&gt;&lt;td width=25%&gt;love&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Coeur &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;love2&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre&lt;/td&gt;&lt;td&gt;mail&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;mail2&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Options&lt;/td&gt;&lt;td&gt;options&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;?&lt;/td&gt;&lt;td&gt;help&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Info&lt;/td&gt;&lt;td&gt;info&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Guide&lt;/td&gt;&lt;td&gt;guide&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Stop&lt;/td&gt;&lt;td&gt;stop&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Pause/Play&lt;/td&gt;&lt;td&gt;ppause&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;V&lt;/font&gt; P+&lt;/td&gt;&lt;td&gt;up&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;U&lt;/font&gt; P-&lt;/td&gt;&lt;td&gt;down&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;OK&lt;/td&gt;&lt;td&gt;ok&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;S #&lt;/font&gt;-&lt;/td&gt;&lt;td&gt;left&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;T #&lt;/font&gt;+&lt;/td&gt;&lt;td&gt;right&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FF00003F&gt;Rouge&lt;/font&gt;&lt;/td&gt;&lt;td&gt;red&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#00FF003F&gt;Vert&lt;/font&gt;&lt;/td&gt;&lt;td&gt;green&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FFFF003F&gt;Jaune&lt;/font&gt;&lt;/td&gt;&lt;td&gt;yellow&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#3F3FFF3F&gt;Bleu&lt;/font&gt;&lt;/td&gt;&lt;td&gt;blue&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Chiffres, *, #&lt;/td&gt;&lt;td&gt;&lt;le chiffre&gt;, *, #&lt;/td&gt;&lt;/tr&gt;
+! 	&lt;/table&gt;
+! 	&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+
+Index: mediacenter.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/mediacenter.html,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** mediacenter.html	6 Aug 2005 21:51:53 -0000	1.2
+--- mediacenter.html	14 Apr 2006 21:59:53 -0000	1.3
+***************
+*** 1,74 ****
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot; content=&quot;settings.html&quot;&gt;
+! 	&lt;meta name=&quot;love_page&quot;      content=&quot;mediacenter.html?action=appcommand&amp;cmd=6&quot;&gt;
+! 	&lt;meta name=&quot;love2_page&quot;     content=&quot;mediacenter.html?action=appcommand&amp;cmd=16&quot;&gt;
+! 	&lt;meta name=&quot;mail_page&quot;      content=&quot;mediacenter.html?action=appcommand&amp;cmd=15&quot;&gt;
+! 	&lt;meta name=&quot;mail2_page&quot;     content=&quot;mediacenter.html?action=appcommand&amp;cmd=7&quot;&gt;
+! 	&lt;meta name=&quot;nochannel_page&quot; content=&quot;mediacenter.html?action=sendkeys&amp;keys=%d&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;mediacenter.html?action=sendkeys&amp;keys=#%d&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=27&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=18&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;     href=   &quot;mediacenter.html?action=appcommand&amp;cmd=1&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=17&quot;&gt;
+! 	&lt;link rel=&quot;options&quot;    href=   &quot;mediacenter.html?action=appcommand&amp;cmd=5&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;        href=   &quot;mediacenter.html?action=appcommand&amp;cmd=12&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=11&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=2&quot;&gt;
+! 	&lt;link rel=&quot;left&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=9&quot;&gt;
+! 	&lt;link rel=&quot;right&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=10&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;         href=   &quot;mediacenter.html?action=appcommand&amp;cmd=49&amp;cmd=51&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=50&amp;cmd=52&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=14&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=46&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=13&quot;&gt;
+! &lt;/head&gt;
+! &lt;body text=&quot;#FFFFFF3F&quot;&gt;
+! &lt;box height=5 border=0&gt;
+! &lt;table&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td width=92% bgcolor=&quot;#00000028&quot; align=center&gt;
+! 		&lt;a href=&quot;mediacenter.html?action=sendkeys&amp;keys={ENTER}&quot;&gt;&lt;/a&gt;
+! 		&lt;font size=+2 color=&quot;#C0FFFF3F&quot;&gt;
+! 		Ce mode permet de controler par la t&#233;l&#233;commande des applications compatibles Media Center&lt;br&gt;
+! 		ou compatibles avec les claviers Multimedia
+! 		&lt;/font&gt;
+! 		&lt;hr&gt;
+! 		&lt;font size=+1 color=&quot;#FFFFC03F&quot;&gt;
+! 		Table des codes touches g&#233;n&#233;r&#233;s par l'appui sur la t&#233;l&#233;commande:&lt;br&gt;
+! 		(eventuellement &#224; configurer dans le logiciel vis&#233;)
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td width=92% bgcolor=&quot;#00000030&quot; height=480 valign=top&gt;
+! 	&lt;table cellspacing=0 cellpadding=&quot;0&quot; align=center&gt;
+! 		&lt;tr&gt;&lt;td width=30%&gt;Coeur&lt;/td&gt;&lt;td width=40%&gt;BROWSER_FAVORITES&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Coeur &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;MEDIA_SELECT&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre&lt;/td&gt;&lt;td&gt;LAUNCH_MAIL&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;BROWSER_HOME&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Options&lt;/td&gt;&lt;td&gt;BROWSER_SEARCH&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;?&lt;/td&gt;&lt;td&gt;APPCOMMAND_HELP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Info&lt;/td&gt;&lt;td&gt;LAUNCH_APP1&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Guide&lt;/td&gt;&lt;td&gt;LAUNCH_APP2&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Stop&lt;/td&gt;&lt;td&gt;MEDIA_STOP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Pause/Play&lt;/td&gt;&lt;td&gt;MEDIA_PLAY_PAUSE&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;V&lt;/font&gt; P+&lt;/td&gt;&lt;td&gt;MEDIA_FASTFORWARD et &nbsp;MEDIA_CHANNEL_UP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;U&lt;/font&gt; P-&lt;/td&gt;&lt;td&gt;MEDIA_REWIND et &nbsp;MEDIA_CHANNEL_DOWN&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Chiffres, OK&lt;/td&gt;&lt;td&gt;&lt;i&gt;Tape le chiffre ou Entr&#233;e&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;S  #-&lt;/font&gt;&lt;/td&gt;&lt;td&gt;VOLUME_DOWN&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;T  #+&lt;/font&gt;&lt;/td&gt;&lt;td&gt;VOLUME_UP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FF00003F&gt;Rouge&lt;/font&gt;&lt;/td&gt;&lt;td&gt;MEDIA_PREVIOUSTRACK&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#00FF003F&gt;Vert&lt;/font&gt;&lt;/td&gt;&lt;td&gt;MEDIA_NEXTTRACK&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FFFF003F&gt;Jaune&lt;/font&gt;&lt;/td&gt;&lt;td&gt;BROWSER_BACKWARD&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#3F3FFF3F&gt;Bleu&lt;/font&gt;&lt;/td&gt;&lt;td&gt;BROWSER_FORWARD&lt;/td&gt;&lt;/tr&gt;
+! 	&lt;/table&gt;
+! 	&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+--- 1,78 ----
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot; content=&quot;settings.html&quot;&gt;
+! 	&lt;meta name=&quot;love_page&quot;      content=&quot;mediacenter.html?action=appcommand&amp;cmd=6&quot;&gt;
+! 	&lt;meta name=&quot;love2_page&quot;     content=&quot;mediacenter.html?action=appcommand&amp;cmd=16&quot;&gt;
+! 	&lt;meta name=&quot;mail_page&quot;      content=&quot;mediacenter.html?action=appcommand&amp;cmd=15&quot;&gt;
+! 	&lt;meta name=&quot;mail2_page&quot;     content=&quot;mediacenter.html?action=appcommand&amp;cmd=7&quot;&gt;
+! 	&lt;meta name=&quot;nochannel_page&quot; content=&quot;mediacenter.html?action=sendkeys&amp;keys=%d&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;mediacenter.html?action=sendkeys&amp;keys=%d&quot;&gt;
+! 	&lt;meta name=&quot;prog_select_timeout&quot; content=&quot;300&quot;&gt;
+! 	&lt;meta name=&quot;prog_expand_timeout&quot; content=&quot;300&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=27&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=18&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;     href=   &quot;mediacenter.html?action=appcommand&amp;cmd=1&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=17&quot;&gt;
+! 	&lt;link rel=&quot;options&quot;    href=   &quot;mediacenter.html?action=appcommand&amp;cmd=5&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;        href=   &quot;mediacenter.html?action=appcommand&amp;cmd=12&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=11&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=2&quot;&gt;
+! 	&lt;link rel=&quot;left&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=9&quot;&gt;
+! 	&lt;link rel=&quot;right&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=10&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;         href=   &quot;mediacenter.html?action=appcommand&amp;cmd=49&amp;cmd=51&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=50&amp;cmd=52&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;      href=   &quot;mediacenter.html?action=appcommand&amp;cmd=14&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=14&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;       href=   &quot;mediacenter.html?action=appcommand&amp;cmd=13&quot;&gt;
+! 	&lt;link rel=&quot;star&quot;       href=   &quot;mediacenter.html?action=sendkeys&amp;keys=*&quot;&gt;
+! 	&lt;link rel=&quot;sharp&quot;      href=   &quot;mediacenter.html?action=sendkeys&amp;keys=#&quot;&gt;
+! &lt;/head&gt;
+! &lt;body text=&quot;#FFFFFF3F&quot;&gt;
+! &lt;box height=5 border=0&gt;
+! &lt;table&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td width=92% bgcolor=&quot;#00000028&quot; align=center&gt;
+! 		&lt;a href=&quot;mediacenter.html?action=sendkeys&amp;keys={ENTER}&quot;&gt;&lt;/a&gt;
+! 		&lt;font size=+2 color=&quot;#C0FFFF3F&quot;&gt;
+! 		Ce mode permet de controler par la t&#233;l&#233;commande des applications compatibles Media Center&lt;br&gt;
+! 		ou compatibles avec les claviers Multimedia
+! 		&lt;/font&gt;
+! 		&lt;hr&gt;
+! 		&lt;font size=+1 color=&quot;#FFFFC03F&quot;&gt;
+! 		Table des codes touches g&#233;n&#233;r&#233;s par l'appui sur la t&#233;l&#233;commande:&lt;br&gt;
+! 		(eventuellement &#224; configurer dans le logiciel vis&#233;)
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td width=92% bgcolor=&quot;#00000030&quot; height=480 valign=top&gt;
+! 	&lt;table cellspacing=0 cellpadding=&quot;0&quot; align=center&gt;
+! 		&lt;tr&gt;&lt;td width=30%&gt;Coeur&lt;/td&gt;&lt;td width=40%&gt;BROWSER_FAVORITES&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Coeur &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;MEDIA_SELECT&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre&lt;/td&gt;&lt;td&gt;LAUNCH_MAIL&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Lettre &lt;i&gt;(appui long)&lt;/i&gt;&lt;/td&gt;&lt;td&gt;BROWSER_HOME&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Options&lt;/td&gt;&lt;td&gt;BROWSER_SEARCH&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;?&lt;/td&gt;&lt;td&gt;APPCOMMAND_HELP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Info&lt;/td&gt;&lt;td&gt;LAUNCH_APP1&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Guide&lt;/td&gt;&lt;td&gt;LAUNCH_APP2&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Stop&lt;/td&gt;&lt;td&gt;MEDIA_STOP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Pause/Play&lt;/td&gt;&lt;td&gt;MEDIA_PLAY_PAUSE&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;V&lt;/font&gt; P+&lt;/td&gt;&lt;td&gt;MEDIA_FASTFORWARD et &nbsp;MEDIA_CHANNEL_UP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;U&lt;/font&gt; P-&lt;/td&gt;&lt;td&gt;MEDIA_REWIND et &nbsp;MEDIA_CHANNEL_DOWN&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;Chiffres, *, #, OK&lt;/td&gt;&lt;td&gt;&lt;i&gt;Tape le chiffre, *, # ou Entr&#233;e&lt;/i&gt;&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;S #&lt;/font&gt;-&lt;/td&gt;&lt;td&gt;VOLUME_DOWN&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font family=&quot;Symbol&quot;&gt;T #&lt;/font&gt;+&lt;/td&gt;&lt;td&gt;VOLUME_UP&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FF00003F&gt;Rouge&lt;/font&gt;&lt;/td&gt;&lt;td&gt;MEDIA_PREVIOUSTRACK&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#00FF003F&gt;Vert&lt;/font&gt;&lt;/td&gt;&lt;td&gt;MEDIA_NEXTTRACK&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#FFFF003F&gt;Jaune&lt;/font&gt;&lt;/td&gt;&lt;td&gt;BROWSER_BACKWARD&lt;/td&gt;&lt;/tr&gt;
+! 		&lt;tr&gt;&lt;td&gt;&lt;font color=#3F3FFF3F&gt;Bleu&lt;/font&gt;&lt;/td&gt;&lt;td&gt;BROWSER_FORWARD&lt;/td&gt;&lt;/tr&gt;
+! 	&lt;/table&gt;
+! 	&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000005.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages settings.html,1.2,1.3
+</A></li>
+	<LI>Next message: <A HREF="000008.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties AssemblyInfo.cs,1.9,1.10
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#6">[ date ]</a>
+              <a href="thread.html#6">[ thread ]</a>
+              <a href="subject.html#6">[ subject ]</a>
+              <a href="author.html#6">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

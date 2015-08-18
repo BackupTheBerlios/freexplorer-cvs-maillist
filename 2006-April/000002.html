@@ -1,0 +1,112 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer Setup.nsi,1.11,1.12
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer%20Setup.nsi%2C1.11%2C1.12&In-Reply-To=%3C200604132225.k3DMPgt12557%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000001.html">
+   <LINK REL="Next"  HREF="000003.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer Setup.nsi,1.11,1.12</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer%20Setup.nsi%2C1.11%2C1.12&In-Reply-To=%3C200604132225.k3DMPgt12557%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer Setup.nsi,1.11,1.12">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Apr 14 00:25:42 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000001.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.16,1.17
+</A></li>
+        <LI>Next message: <A HREF="000003.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages play.html,1.1.1.1,1.2 playing.html,1.1.1.1,1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv27845
+
+Modified Files:
+	Setup.nsi 
+Log Message:
+ne pas embarquer les sous-rep CVS et test dans l'installeur
+
+
+Index: Setup.nsi
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/Setup.nsi,v
+retrieving revision 1.11
+retrieving revision 1.12
+diff -C2 -d -r1.11 -r1.12
+*** Setup.nsi	17 Sep 2005 13:35:06 -0000	1.11
+--- Setup.nsi	13 Apr 2006 22:26:05 -0000	1.12
+***************
+*** 1,548 ****
+! ; FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+! ; Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+! ; 
+! ; Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+! ; termes de la Licence Publique G&#233;n&#233;rale GNU publi&#233;e par la Free Software 
+! ; Foundation (version 2 ou bien toute autre version ult&#233;rieure choisie par vous).
+! ; 
+! ; Ce programme est distribu&#233; car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+! ; ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+! ; dans un but sp&#233;cifique. Reportez-vous &#224; la Licence Publique G&#233;n&#233;rale GNU pour 
+[...1067 lines suppressed...]
+! 	Delete &quot;$INSTDIR\FreeXplorer.lnk&quot;
+! 	Delete &quot;$INSTDIR\Lisez-Moi.html&quot;
+! 	Delete &quot;$INSTDIR\Uninstall.exe&quot;
+! 	;Remove program directory (only if directory is empty)
+! 	RMDir &quot;$INSTDIR&quot;
+! 	;Remove manufacturer directory (only if directory is empty)
+! 	Push &quot;$INSTDIR&quot;
+! 	Call un.GetParent
+! 	Pop $R0
+! 	RMDir &quot;$R0&quot;
+! 
+! 	;Remove shortcuts
+! 	Delete &quot;$SMPROGRAMS\${PRODUCT} ${VERSION}.lnk&quot;
+! 
+! 	;Remove registration
+! 	DeleteRegKey HKLM &quot;${UNINSTALLKEY}&quot;
+! 
+! 	DeleteRegKey /ifempty HKLM &quot;Software\${MFG}\${PRODUCT}&quot;
+! 	DeleteRegKey /ifempty HKLM &quot;Software\${MFG}&quot;
+! SectionEnd
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000001.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.16,1.17
+</A></li>
+	<LI>Next message: <A HREF="000003.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages play.html,1.1.1.1,1.2 playing.html,1.1.1.1,1.2
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#2">[ date ]</a>
+              <a href="thread.html#2">[ thread ]</a>
+              <a href="subject.html#2">[ subject ]</a>
+              <a href="author.html#2">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

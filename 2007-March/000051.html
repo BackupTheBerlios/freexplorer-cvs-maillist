@@ -1,0 +1,265 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages $$back.html, 1.1,	1.2 play.html, 1.2, 1.3 settings.html, 1.3, 1.4
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2007-March/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin/pages%20%24%24back.html%2C%201.1%2C%0A%091.2%20play.html%2C%201.2%2C%201.3%20settings.html%2C%201.3%2C%201.4&In-Reply-To=%3C20070320184743.90D22DF8AD%40mail.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000050.html">
+   <LINK REL="Next"  HREF="000052.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages $$back.html, 1.1,	1.2 play.html, 1.2, 1.3 settings.html, 1.3, 1.4</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin/pages%20%24%24back.html%2C%201.1%2C%0A%091.2%20play.html%2C%201.2%2C%201.3%20settings.html%2C%201.3%2C%201.4&In-Reply-To=%3C20070320184743.90D22DF8AD%40mail.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages $$back.html, 1.1,	1.2 play.html, 1.2, 1.3 settings.html, 1.3, 1.4">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Tue Mar 20 19:47:43 CET 2007</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000050.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2
+</A></li>
+        <LI>Next message: <A HREF="000052.html">[Freexplorer-cvs] FreeXplorer/Installer .cvsignore, NONE, 1.1 7z.sfx,	NONE, 1.1 7z_License.txt, NONE, 1.1 InetLoad.dll, NONE,	1.1 InetLoad_Readme.txt, NONE, 1.1 Lisez-Moi.html, NONE,	1.1 Setup.nsh, NONE, 1.1 Setup.nsi, NONE, 1.1 get_vlc.bat,	NONE, 1.1 nsisXML.dll, NONE, 1.1 nsisXML_license.txt, NONE, 1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv25825/FreeXplorer/bin/pages
+
+Modified Files:
+	$$back.html play.html settings.html 
+Log Message:
+FreeXplorer 1.6
+
+    * Support de la Freebox HD
+    * Choix de non-transcodage vid&#233;o pour la Freebox HD
+    * Correction du doublonnage des &quot;fichiers r&#233;cents&quot;
+    * Inclusion de vlc-0.8.6 en standard
+    * Mise &#224; jour de l'installeur 
+
+Index: $$back.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/$$back.html,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** $$back.html	11 Sep 2005 02:34:12 -0000	1.1
+--- $$back.html	20 Mar 2007 18:45:59 -0000	1.2
+***************
+*** 10,14 ****
+  	&lt;meta name=&quot;mail2_page&quot;     content=&quot;/$$/netflux.html&quot;&gt;
+  	&lt;meta name=&quot;nochannel_page&quot; content=&quot;none&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;/$$/channel_page.html?index=%d&quot;&gt; &lt;!-- probablement appel&#233; par le zapping up/down --&gt;
+  	&lt;!-- manque la valeur pour la touche &quot;clear&quot; --&gt;
+  	&lt;services&gt;
+--- 10,14 ----
+  	&lt;meta name=&quot;mail2_page&quot;     content=&quot;/$$/netflux.html&quot;&gt;
+  	&lt;meta name=&quot;nochannel_page&quot; content=&quot;none&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;none&quot;&gt; &lt;!-- /$$/channel_page.html?index=%d probablement appel&#233; par le zapping up/down --&gt;
+  	&lt;!-- manque la valeur pour la touche &quot;clear&quot; --&gt;
+  	&lt;services&gt;
+
+Index: play.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/play.html,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** play.html	13 Apr 2006 23:50:21 -0000	1.2
+--- play.html	20 Mar 2007 18:45:59 -0000	1.3
+***************
+*** 1,46 ****
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot;	content=&quot;home.html&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;	href=   &quot;help.html&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;	href=   &quot;$explore&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;	href=   &quot;back&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;	href=   &quot;sound_bug.html&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;	href=   &quot;controls.html&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;	href=   &quot;seek.html?action=rewind&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;		href=   &quot;seek.html?action=forward&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;		href=   &quot;seekpl.html?action=plprev&amp;param=Fichier+pr&#233;c&#233;dent&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;	href=   &quot;seekpl.html?action=plnext&amp;param=Fichier+suivant&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;	href=   &quot;seek.html?action=pause&amp;_action=Pause&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;	href=   &quot;seek.html?action=pause&amp;_action=Lecture&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;	href=   &quot;$explore?action=stop&quot;&gt;
+! 	&lt;meta name=disappear	content=&quot;2&quot;&gt;
+! 	&lt;flags volume_key=true&gt;
+! 	&lt;meta name=refresh content=&quot;4;url=playing.html&quot;&gt;
+! &lt;/head&gt;
+! &lt;body&gt;
+! &lt;table&gt;
+! &lt;tr&gt;&lt;td height=460&gt;&nbsp;&lt;/td&gt;&lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td  bgcolor=&quot;#00000028&quot; align=left&gt;
+! 		&lt;font size=+1&gt;
+! 		{1}&lt;br&gt;
+! 		Utilisez les touches&nbsp;
+! 			&lt;font size=-1&gt;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P-&quot;&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;A/Y&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;Z&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P+&quot;&gt;&nbsp;
+! 			&lt;/font&gt;
+! 		pour controler la lecture
+! 		{2}
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+--- 1,46 ----
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot;	content=&quot;home.html&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;	href=   &quot;help.html&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;	href=   &quot;$explore&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;	href=   &quot;back&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;	href=   &quot;sound_bug.html&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;	href=   &quot;controls.html&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;	href=   &quot;seek.html?action=rewind&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;		href=   &quot;seek.html?action=forward&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;		href=   &quot;seekpl.html?action=plprev&amp;param=Fichier+pr&#233;c&#233;dent&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;	href=   &quot;seekpl.html?action=plnext&amp;param=Fichier+suivant&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;	href=   &quot;seek.html?action=pause&amp;_action=Pause&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;	href=   &quot;seek.html?action=pause&amp;_action=Lecture&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;	href=   &quot;$explore?action=stop&quot;&gt;
+! 	&lt;meta name=disappear	content=&quot;2&quot;&gt;
+! 	&lt;flags volume_key=true&gt;
+! 	&lt;meta name=refresh content=&quot;4;url=playing.html&quot;&gt;
+! &lt;/head&gt;
+! &lt;body background=&quot;<A HREF="ts://127.0.0.1">ts://127.0.0.1</A>&quot;&gt;
+! &lt;table&gt;
+! &lt;tr&gt;&lt;td height=460&gt;&nbsp;&lt;/td&gt;&lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td  bgcolor=&quot;#00000028&quot; align=left&gt;
+! 		&lt;font size=+1&gt;
+! 		{1}&lt;br&gt;
+! 		Utilisez les touches&nbsp;
+! 			&lt;font size=-1&gt;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P-&quot;&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;A/Y&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;Z&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P+&quot;&gt;&nbsp;
+! 			&lt;/font&gt;
+! 		pour controler la lecture
+! 		{2}
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+
+Index: settings.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/settings.html,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** settings.html	14 Apr 2006 21:55:17 -0000	1.3
+--- settings.html	20 Mar 2007 18:45:59 -0000	1.4
+***************
+*** 1,25 ****
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;title&gt;FreeXplorer&lt;/title&gt;
+! 	&lt;meta name=&quot;settings_page&quot;  content=&quot;<A HREF="http://212.27.38.254:8080/settings.html">http://212.27.38.254:8080/settings.html</A>&quot;&gt;
+! 	&lt;meta name=&quot;home_page&quot;      content=&quot;/$$/home.html&quot;&gt;
+! 	&lt;meta name=&quot;love_page&quot;      content=&quot;/$$/favorites.xsl?xml=favorites.xml&quot;&gt;
+! 	&lt;meta name=&quot;love2_page&quot;     content=&quot;/$$/recents.xsl?xml=recents.xml&quot;&gt;
+! 	&lt;meta name=&quot;mail_page&quot;      content=&quot;/$$/netpages.html&quot;&gt;
+! 	&lt;meta name=&quot;mail2_page&quot;     content=&quot;/$$/netflux.html&quot;&gt;
+! 	&lt;meta name=&quot;nochannel_page&quot; content=&quot;none&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;/$$/channel_page.html?index=%d&quot;&gt; &lt;!-- probablement appel&#233; par le zapping up/down --&gt;
+! 	&lt;!-- manque la valeur pour la touche &quot;clear&quot; --&gt;
+! 	&lt;services&gt;
+! 	&lt;/services&gt;
+! 	&lt;meta name=maddr content=&quot;127.0.0.1&quot;&gt;
+! 	&lt;meta name=pcr content=&quot;68&quot;&gt;
+! 	&lt;meta name=vid content=&quot;68&quot;&gt;
+! 	&lt;meta name=aud content=&quot;{1}&quot;&gt;
+! 	&lt;meta name=refresh content=&quot;0;url=<A HREF="http://212.27.38.254:8080/home.html">http://212.27.38.254:8080/home.html</A>&quot;&gt;
+! &lt;/head&gt;
+! &lt;body bgcolor=&quot;#00000028&quot;&gt;
+! &lt;h1 align=center&gt;Bienvenue dans FreeXplorer {2}&lt;/h1&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+--- 1,27 ----
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;title&gt;FreeXplorer&lt;/title&gt;
+! 	&lt;meta name=&quot;settings_page&quot;  content=&quot;<A HREF="http://212.27.38.254:8080/settings.html">http://212.27.38.254:8080/settings.html</A>&quot;&gt;
+! 	&lt;meta name=&quot;home_page&quot;      content=&quot;/$$/home.html&quot;&gt;
+! 	&lt;meta name=&quot;love_page&quot;      content=&quot;/$$/favorites.xsl?xml=favorites.xml&quot;&gt;
+! 	&lt;meta name=&quot;love2_page&quot;     content=&quot;/$$/recents.xsl?xml=recents.xml&quot;&gt;
+! 	&lt;meta name=&quot;mail_page&quot;      content=&quot;/$$/netpages.html&quot;&gt;
+! 	&lt;meta name=&quot;mail2_page&quot;     content=&quot;/$$/netflux.html&quot;&gt;
+! 	&lt;meta name=&quot;nochannel_page&quot; content=&quot;none&quot;&gt;
+! 	&lt;meta name=&quot;channel_page&quot;   content=&quot;none&quot;&gt;
+! 	&lt;meta name=&quot;prompt&quot;         content=&quot;All your base...&quot;&gt;
+! 
+! 	&lt;!-- manque la valeur pour la touche &quot;clear&quot; --&gt;
+! 	&lt;services&gt;
+! 	&lt;/services&gt;
+! 	&lt;meta name=maddr content=&quot;127.0.0.1&quot;&gt;
+! 	&lt;meta name=pcr content=&quot;68&quot;&gt;
+! 	&lt;meta name=vid content=&quot;68&quot;&gt;
+! 	&lt;meta name=aud content=&quot;{1}&quot;&gt;
+! 	&lt;meta name=refresh content=&quot;0;url=<A HREF="http://212.27.38.254:8080/home.html">http://212.27.38.254:8080/home.html</A>&quot;&gt;
+! &lt;/head&gt;
+! &lt;body bgcolor=&quot;#00000028&quot;&gt;
+! &lt;h1 align=center&gt;Bienvenue dans FreeXplorer {2}&lt;/h1&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000050.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs, 1.1,	1.2 VLCApp.cs, 1.1, 1.2
+</A></li>
+	<LI>Next message: <A HREF="000052.html">[Freexplorer-cvs] FreeXplorer/Installer .cvsignore, NONE, 1.1 7z.sfx,	NONE, 1.1 7z_License.txt, NONE, 1.1 InetLoad.dll, NONE,	1.1 InetLoad_Readme.txt, NONE, 1.1 Lisez-Moi.html, NONE,	1.1 Setup.nsh, NONE, 1.1 Setup.nsi, NONE, 1.1 get_vlc.bat,	NONE, 1.1 nsisXML.dll, NONE, 1.1 nsisXML_license.txt, NONE, 1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#51">[ date ]</a>
+              <a href="thread.html#51">[ thread ]</a>
+              <a href="subject.html#51">[ subject ]</a>
+              <a href="author.html#51">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

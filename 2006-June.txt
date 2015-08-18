@@ -1,0 +1,2155 @@
+From nobody at sheep.berlios.de  Sun Jun 11 16:17:15 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sun, 11 Jun 2006 16:17:15 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages/img/media - New directory
+Message-ID: <200606111417.k5BEHFb04137@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img/media
+In directory sheep:/tmp/cvs-serv22922/media
+
+Log Message:
+Directory /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img/media added to the repository
+
+
+
+
+From nobody at sheep.berlios.de  Sun Jun 11 16:18:31 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sun, 11 Jun 2006 16:18:31 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages/img/media Picture.gif,NONE,1.1 Sound.gif,NONE,1.1 Video.gif,NONE,1.1
+Message-ID: <200606111418.k5BEIVb04450@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img/media
+In directory sheep:/tmp/cvs-serv23151/FreeXplorer/bin/pages/img/media
+
+Added Files:
+	Picture.gif Sound.gif Video.gif 
+Log Message:
+Icons for multimedia types, from the tango! project ( http://tango.freedesktop.org/Tango_Desktop_Project )
+
+--- NEW FILE: Picture.gif ---
+(This appears to be a binary file; contents omitted.)
+
+--- NEW FILE: Sound.gif ---
+(This appears to be a binary file; contents omitted.)
+
+--- NEW FILE: Video.gif ---
+(This appears to be a binary file; contents omitted.)
+
+
+
+From nobody at sheep.berlios.de  Sun Jun 11 16:40:02 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sun, 11 Jun 2006 16:40:02 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages/img cddvd.gif,1.1.1.1,1.2 folder.gif,1.1.1.1,1.2 harddisk.gif,1.1.1.1,1.2
+Message-ID: <200606111440.k5BEe2b05786@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img
+In directory sheep:/tmp/cvs-serv25362/FreeXplorer/bin/pages/img
+
+Modified Files:
+	cddvd.gif folder.gif harddisk.gif 
+Log Message:
+Transparent background for some icons (Was it a change in the freebox code that made thoses black background apear black instead of transparent ?)
+
+Index: cddvd.gif
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img/cddvd.gif,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+Binary files /tmp/cvs.ijw18u and /tmp/cvs.55CYQm differ
+
+Index: folder.gif
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img/folder.gif,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+Binary files /tmp/cvs.z78qby and /tmp/cvs.jW49Tp differ
+
+Index: harddisk.gif
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/img/harddisk.gif,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+Binary files /tmp/cvs.mdHUYw and /tmp/cvs.STwIIo differ
+
+
+
+From nobody at sheep.berlios.de  Sun Jun 11 18:05:20 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sun, 11 Jun 2006 18:05:20 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Recents.cs,1.2,1.3
+Message-ID: <200606111605.k5BG5Kb11205@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv1759/FreeXplorer
+
+Modified Files:
+	Recents.cs 
+Log Message:
+Emp?che les doublons dans les fichiers r?cents.
+
+Index: Recents.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Recents.cs,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** Recents.cs	14 Apr 2006 22:44:46 -0000	1.2
+--- Recents.cs	11 Jun 2006 16:05:18 -0000	1.3
+***************
+*** 50,58 ****
+              while (!reader.EOF)
+              {
+!                 writer.WriteNode(reader, false);
+!                 if (reader.NodeType == XmlNodeType.Element)
+                  {
+!                     counter++;
+!                     if (counter == 25) break;
+                  }
+              }
+--- 50,65 ----
+              while (!reader.EOF)
+              {
+!                 if (reader.Value != file)
+                  {
+!                     writer.WriteNode(reader, false);
+!                     if (reader.NodeType == XmlNodeType.Element)
+!                     {
+!                         counter++;
+!                         if (counter == 25) break;
+!                     }
+!                 }
+!                 else
+!                 {
+!                     reader.Read();
+                  }
+              }
+
+
+
+From nobody at sheep.berlios.de  Sun Jun 11 18:08:19 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sun, 11 Jun 2006 18:08:19 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer OSUtils.cs,NONE,1.1 FreeXplorer.cs,1.2,1.3 FreeXplorer.csproj,1.7,1.8 Freebox.cs,1.22,1.23 VLC.cs,1.10,1.11
+Message-ID: <200606111608.k5BG8Jb11330@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv2001/FreeXplorer
+
+Modified Files:
+	FreeXplorer.cs FreeXplorer.csproj Freebox.cs VLC.cs 
+Added Files:
+	OSUtils.cs 
+Log Message:
+Meilleure base de code pour d?tecter l'OS (Windows ou Unix typiquement).
+
+--- NEW FILE: OSUtils.cs ---
+using System;
+
+namespace Wizou.FreeXplorer
+{
+    public enum OSType { Windows, Unix }
+
+    public static class OSUtils
+    {
+        public static OSType OSType
+        {
+            get
+            {
+                // Pour une explication sur le 128 voir :
+                // http://www.mono-project.com/FAQ:_Technical#How_to_detect_the_execution_platform_.3F
+                switch (Environment.OSVersion.Platform)
+                {
+                    case PlatformID.Unix:
+                    case (PlatformID)128:
+                        return OSType.Unix;
+
+                    case PlatformID.Win32NT:
+                    case PlatformID.Win32S:
+                    case PlatformID.Win32Windows:
+                    case PlatformID.WinCE:
+                        return OSType.Windows;
+
+                    default:
+                        throw new Exception("OS non support? par FreeXplorer");
+                }
+            }
+        }
+
+        public static bool IsWindows
+        {
+            get
+            {
+                return (OSType == OSType.Windows);
+            }
+        }
+
+        public static bool IsUnix
+        {
+            get
+            {
+                return (OSType == OSType.Unix);
+            }
+        }
+    }
+}
+
+Index: FreeXplorer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.cs,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** FreeXplorer.cs	14 Apr 2006 23:07:36 -0000	1.2
+--- FreeXplorer.cs	11 Jun 2006 16:08:17 -0000	1.3
+***************
+*** 12,26 ****
+              get
+              {
+!                 // http://www.mono-project.com/FAQ:_Technical#How_to_detect_the_execution_platform_.3F
+!                 int platform = (int) Environment.OSVersion.Platform;
+!                 if ((platform == 4) || (platform == 128))
+!                 {
+!                     return Path.Combine(Environment.GetFolderPath(
+!                         Environment.SpecialFolder.Personal), ".freexplorer");
+!                 }
+!                 else
+                  {
+!                     return Path.Combine(Environment.GetFolderPath(
+!                         Environment.SpecialFolder.ApplicationData), "FreeXplorer");
+                  }
+              }
+--- 12,25 ----
+              get
+              {
+!                 switch (OSUtils.OSType)
+                  {
+!                     case OSType.Windows:
+!                         return Path.Combine(Environment.GetFolderPath(
+!                             Environment.SpecialFolder.ApplicationData), "FreeXplorer");
+!                     
+!                     case OSType.Unix :
+!                     default :
+!                         return Path.Combine(Environment.GetFolderPath(
+!                             Environment.SpecialFolder.Personal), ".freexplorer");
+                  }
+              }
+
+Index: FreeXplorer.csproj
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.csproj,v
+retrieving revision 1.7
+retrieving revision 1.8
+diff -C2 -d -r1.7 -r1.8
+*** FreeXplorer.csproj	16 Apr 2006 01:07:46 -0000	1.7
+--- FreeXplorer.csproj	11 Jun 2006 16:08:17 -0000	1.8
+***************
+*** 66,69 ****
+--- 66,70 ----
+      <Compile Include="HTTP.cs" />
+      <Compile Include="M3UFile.cs" />
++     <Compile Include="OSUtils.cs" />
+      <Compile Include="Program.cs" />
+      <Compile Include="Properties\AssemblyInfo.cs" />
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.22
+retrieving revision 1.23
+diff -C2 -d -r1.22 -r1.23
+*** Freebox.cs	12 May 2006 17:40:08 -0000	1.22
+--- Freebox.cs	11 Jun 2006 16:08:17 -0000	1.23
+***************
+*** 49,56 ****
+          private VLCApp vlcApp;
+          private VLCCache vlcCache;
+!         public Boolean PCControlAllowed;
+!         public Boolean BlackBkgnds;
+          private IPAddress FreeboxAddress;
+!         private StringDictionary GlobalVars = new StringDictionary(); // variables globales utilis?es par les pages (conserv?es d'un appel ? l'autre au serveur)
+          private CookieContainer webCookieContainer;
+          string keyboardHTML;
+--- 49,56 ----
+          private VLCApp vlcApp;
+          private VLCCache vlcCache;
+!         public bool PCControlAllowed;
+!         public bool BlackBkgnds;
+          private IPAddress FreeboxAddress;
+!         private Dictionary<string, string> GlobalVars = new Dictionary<string, string>(); // variables globales utilis?es par les pages (conserv?es d'un appel ? l'autre au serveur)
+          private CookieContainer webCookieContainer;
+          string keyboardHTML;
+***************
+*** 979,985 ****
+          public static Boolean LessIconsInExplorer;
+  
+!         internal static StringCollection GetPlayableFilesInDir(string path)
+          {
+!             StringCollection result = new StringCollection();
+              string[] files = Directory.GetFiles(path);
+              foreach (string file in files)
+--- 979,985 ----
+          public static Boolean LessIconsInExplorer;
+  
+!         internal static List<string> GetPlayableFilesInDir(string path)
+          {
+!             List<string> result = new List<string>();
+              string[] files = Directory.GetFiles(path);
+              foreach (string file in files)
+***************
+*** 1164,1169 ****
+  
+                  case "$my video":
+!                     return (string)Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders",
+!                         "My Video", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)); 
+  
+                  default:
+--- 1164,1177 ----
+  
+                  case "$my video":
+!                     switch(OSUtils.OSType)
+!                     {
+!                         case OSType.Windows :
+!                             return (string)Microsoft.Win32.Registry.GetValue("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\User Shell Folders",
+!                                 "My Video", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)); 
+! 
+!                         case OSType.Unix :
+!                         default :
+!                             return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+!                     }
+  
+                  default:
+
+Index: VLC.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC.cs,v
+retrieving revision 1.10
+retrieving revision 1.11
+diff -C2 -d -r1.10 -r1.11
+*** VLC.cs	16 May 2006 17:26:00 -0000	1.10
+--- VLC.cs	11 Jun 2006 16:08:17 -0000	1.11
+***************
+*** 463,467 ****
+  
+          // jouer plusieurs fichiers
+!         public void Play(System.Collections.Specialized.StringCollection playlist)
+          {
+              // compose une playlist puis la joue
+--- 463,467 ----
+  
+          // jouer plusieurs fichiers
+!         public void Play(IList<string> playlist)
+          {
+              // compose une playlist puis la joue
+
+
+
+From nobody at sheep.berlios.de  Mon Jun 12 20:05:40 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Mon, 12 Jun 2006 20:05:40 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.3,1.4 OSUtils.cs,1.1,1.2
+Message-ID: <200606121805.k5CI5eb21983@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv17336/FreeXplorer
+
+Modified Files:
+	FreeXplorer.cs OSUtils.cs 
+Log Message:
+Ajout des licenses sur 2 fichiers.
+
+
+Index: FreeXplorer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.cs,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** FreeXplorer.cs	11 Jun 2006 16:08:17 -0000	1.3
+--- FreeXplorer.cs	12 Jun 2006 18:05:36 -0000	1.4
+***************
+*** 1,2 ****
+--- 1,21 ----
++ /*
++  * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
++  *
++  * Copyright (C) 2006 Roncaglia Julien <freexplorer at virtualblackfox.net>
++  * 
++  * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
++  * termes de la Licence Publique G??n??rale GNU publi??e par la Free Software 
++  * Foundation (version 2 ou bien toute autre version ult??rieure choisie par vous).
++  * 
++  * Ce programme est distribu?? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
++  * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
++  * dans un but sp??cifique. Reportez-vous ?? la Licence Publique G??n??rale GNU pour 
++  * plus de d??tails.
++  * 
++  * Vous devez avoir re??u une copie de la Licence Publique G??n??rale GNU en m??me 
++  * temps que ce programme ; si ce n'est pas le cas, ??crivez ?? la Free Software 
++  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ??tats-Unis. 
++  */
++ 
+  using System;
+  using System.Collections.Generic;
+
+Index: OSUtils.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/OSUtils.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** OSUtils.cs	11 Jun 2006 16:08:17 -0000	1.1
+--- OSUtils.cs	12 Jun 2006 18:05:36 -0000	1.2
+***************
+*** 1,2 ****
+--- 1,21 ----
++ /*
++  * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
++  *
++  * Copyright (C) 2006 Roncaglia Julien <freexplorer at virtualblackfox.net>
++  * 
++  * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
++  * termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
++  * Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
++  * 
++  * Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
++  * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
++  * dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
++  * plus de d?tails.
++  * 
++  * Vous devez avoir re?u une copie de la Licence Publique G?n?rale GNU en m?me 
++  * temps que ce programme ; si ce n'est pas le cas, ?crivez ? la Free Software 
++  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ?tats-Unis. 
++  */
++ 
+  using System;
+  
+
+
+
+From nobody at sheep.berlios.de  Tue Jun 13 23:25:38 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Tue, 13 Jun 2006 23:25:38 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer HTTP.cs,1.7,1.8
+Message-ID: <200606132125.k5DLPcb09442@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv4308/FreeXplorer
+
+Modified Files:
+	HTTP.cs 
+Log Message:
+ReadAllText est seulement dans la version SVN de mono...
+
+Index: HTTP.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/HTTP.cs,v
+retrieving revision 1.7
+retrieving revision 1.8
+diff -C2 -d -r1.7 -r1.8
+*** HTTP.cs	12 May 2006 17:12:26 -0000	1.7
+--- HTTP.cs	13 Jun 2006 21:25:35 -0000	1.8
+***************
+*** 357,361 ****
+                  return HttpStatusCode.NotFound;
+              }
+!             return ReplyString(String.Format(File.ReadAllText(path, Encoding.Default), args));
+          }
+          
+--- 357,364 ----
+                  return HttpStatusCode.NotFound;
+              }
+!             using (StreamReader r = new StreamReader(path, Encoding.Default))
+!             {
+!                 return ReplyString(String.Format(r.ReadToEnd(), args));
+!             }
+          }
+          
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:52:17 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:52:17 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC - New directory
+Message-ID: <200606301952.k5UJqHe23991@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC
+In directory sheep:/tmp/cvs-serv13487/VLC
+
+Log Message:
+Directory /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC added to the repository
+
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:56:22 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:56:22 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.23,1.24
+Message-ID: <200606301956.k5UJuLe24210@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14450/FreeXplorer
+
+Modified Files:
+	Freebox.cs 
+Log Message:
+
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.23
+retrieving revision 1.24
+diff -C2 -d -r1.23 -r1.24
+*** Freebox.cs	11 Jun 2006 16:08:17 -0000	1.23
+--- Freebox.cs	30 Jun 2006 19:56:19 -0000	1.24
+***************
+*** 977,981 ****
+      static class Helper
+      {
+!         public static Boolean LessIconsInExplorer;
+  
+          internal static List<string> GetPlayableFilesInDir(string path)
+--- 977,981 ----
+      static class Helper
+      {
+!         public static bool LessIconsInExplorer;
+  
+          internal static List<string> GetPlayableFilesInDir(string path)
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:55:40 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:55:40 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/VLC AudioTranscode.cs,NONE,1.1 Utility.cs,NONE,1.1 VLCApp.cs,NONE,1.1
+Message-ID: <200606301955.k5UJtee24160@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC
+In directory sheep:/tmp/cvs-serv14222/FreeXplorer/VLC
+
+Added Files:
+	AudioTranscode.cs Utility.cs VLCApp.cs 
+Log Message:
+J'essaye de commiter en morceaux car CVS plante...
+
+--- NEW FILE: AudioTranscode.cs ---
+/*
+ * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+ * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+ * 
+ * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+ * termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
+ * Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
+ * 
+ * Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+ * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+ * dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
+ * plus de d?tails.
+ * 
+ * Vous devez avoir re?u une copie de la Licence Publique G?n?rale GNU en m?me 
+ * temps que ce programme ; si ce n'est pas le cas, ?crivez ? la Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ?tats-Unis. 
+ */
+
+namespace Wizou.VLC
+{
+    public enum AudioTranscode
+    {
+        None,
+        MPGA,
+        A52,
+        PC
+    };
+}
+--- NEW FILE: Utility.cs ---
+/*
+ * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+ * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+ * 
+ * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+ * termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
+ * Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
+ * 
+ * Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+ * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+ * dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
+ * plus de d?tails.
+ * 
+ * Vous devez avoir re?u une copie de la Licence Publique G?n?rale GNU en m?me 
+ * temps que ce programme ; si ce n'est pas le cas, ?crivez ? la Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ?tats-Unis. 
+ */
+
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+
+namespace Wizou.VLC
+{
+    static class Utility
+    {
+        public static string VideoExts = ".mpg.ts.mp2.mpeg.vob.avi.ogm.mkv.mp4.mov.mjpeg.asf.wmv.wma.divx";
+        public static string SoundExts = ".mp3.aac.au.aif.aiff.wav.ogg";
+        public static string PictureExts = ".jpg.jpeg.png.tiff.gif";
+
+        public enum MediaType
+        {
+            Unknown,
+            DVD,
+            Playlist,
+            Video,
+            Sound,
+            Picture,
+        }
+
+        public static MediaType GetMediaType(string media)
+        {
+            if (media.StartsWith("dvdsimple://"))
+                return MediaType.DVD;
+            string value;
+            try
+            {
+                value = Path.GetExtension(media).ToLower();
+            }
+            catch (ArgumentException)
+            {
+                return MediaType.Unknown;
+            }
+            if (value.Length != 0)
+            {
+                if (value == ".m3u")
+                    return MediaType.Playlist;
+                else if (SoundExts.Contains(value))
+                    return MediaType.Sound;
+                else if (VideoExts.Contains(value))
+                    return MediaType.Video;
+                else if (PictureExts.Contains(value))
+                    return MediaType.Picture;
+            }
+            return MediaType.Unknown;
+        }
+
+        /// <remarks>
+        /// can return null if no options !
+        /// </remarks>
+        public static string[] GetMediaMRLOptions(string media)
+        {
+            switch (GetMediaType(media))
+            {
+                case MediaType.Picture:
+                    return new string[]
+                    {
+                        "fake-file=" + media,
+                        "sout-transcode-vfilter=deinterlace",
+                        "sout-deinterlace-mode=blend",
+                        "sout-ffmpeg-keyint=8",
+                    };
+                case MediaType.Video:
+                    if (File.Exists(Path.ChangeExtension(media, ".srt")))
+                        return new string[] { "sub-track=0" };
+                    else
+                        return null;
+                default:
+                    return null;
+            }
+        }
+
+        public static string GetMediaMRL(string media)
+        {
+            if (GetMediaType(media) == MediaType.Picture)
+                return "fake:";
+            else
+                return media;
+        }
+
+    }
+}
+
+--- NEW FILE: VLCApp.cs ---
+/*
+ * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+ * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+ * 
+ * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+ * termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
+ * Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
+ * 
+ * Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+ * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+ * dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
+ * plus de d?tails.
+ * 
+ * Vous devez avoir re?u une copie de la Licence Publique G?n?rale GNU en m?me 
+ * temps que ce programme ; si ce n'est pas le cas, ?crivez ? la Free Software 
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ?tats-Unis. 
+ */
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Diagnostics;
+using System.Net.Sockets;
+using System.Threading;
+using System.Text.RegularExpressions;
+using System.Collections.Specialized;
+using System.Windows.Forms;
+using System.Net;
+
+namespace Wizou.VLC
+{
+    public class VLCApp
+    {
+        private bool active = false;
+        private bool showWindow = false;
+        private Process process = null;
+        private TcpClient tcpClient;
+        private NetworkStream networkStream;
+        private int playlistSize;
+        private int itemAddedCounter;
+
+        private ProcessStartInfo startInfo;
+        private int rc_host_port;// = 31186;
+        private char dvdLetter;// = 'D';
+        private AudioTranscode audioTranscode;// = AudioTranscode.MPGA;
+        private enum VlcMode
+        {
+            FreeplayerV1,
+            FreeplayerV2,
+        }
+        private VlcMode vlcMode;
+        private Encoding vlcEncoding;
+        private byte vlcNewlineChar1;
+        private byte vlcNewlineChar2;
+        
+        private static string AudioTranscode2Options(AudioTranscode audioTranscode)
+        {
+            switch (audioTranscode)
+            {
+                case AudioTranscode.MPGA: return " --sout-transcode-acodec=mpga --sout-transcode-ab=192 --sout-transcode-channels=2";
+                case AudioTranscode.A52: return " --sout-transcode-acodec=a52 --sout-transcode-ab=448 --sout-transcode-channels=6";
+                case AudioTranscode.PC: return " --sout=#duplicate{dst=transcode:std,select=video,dst=display,select=audio} --audio-desync=850";
+                default: return " --sout-transcode-acodec= --sout-transcode-ab= --sout-transcode-channels=";
+            }
+        }
+
+        public void SetConfig(string exeFilename, string audioLanguage, string subLanguage, bool ffmpeg_interlace, double transform_scale, int transcode_vb)
+        {
+            switch (FileVersionInfo.GetVersionInfo(exeFilename).FileVersion)
+            {
+                case "0.8.4-svn": vlcMode = VlcMode.FreeplayerV1; break;
+                case "0.8.4-fbx-2": vlcMode = VlcMode.FreeplayerV2; break;
+                default:
+                    MessageBox.Show("FreeXplorer "+Wizou.FreeXplorer.Program.appVersionText+"n'est peut-?tre pas compatible avec cette version de vlc.exe\r\n\r\n" +
+                                "Cliquez sur Oui pour activer le mode de compatibilit? Freeplayer V1\r\n"+
+                                "Cliquez sur Non pour activer le mode de compatibilit? Freeplayer V2",
+                                "Compatibilit? VLC",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    break;
+            }
+            switch (vlcMode)
+            {
+                case VlcMode.FreeplayerV1:
+                    vlcEncoding = Encoding.Default;
+                    vlcNewlineChar1 = 0x0A;
+                    vlcNewlineChar2 = 0x0D;
+                    break;
+                case VlcMode.FreeplayerV2:
+                    vlcEncoding = Encoding.UTF8;
+                    vlcNewlineChar1 = 0x0D;
+                    vlcNewlineChar2 = 0x0A;
+                    break;
+            }
+            startInfo = new ProcessStartInfo(exeFilename,
+                " --config ." + Path.DirectorySeparatorChar + (vlcMode == VlcMode.FreeplayerV1 ? "vlcrcV1" : "vlcrcV2") +
+                " --rc-host 127.0.0.1:" + rc_host_port +
+                " --audio-language=" + audioLanguage +
+                " --sub-language=" + subLanguage +
+                " --dvd=" + dvdLetter + ":" +
+                " --" + (ffmpeg_interlace ? "sout-ffmpeg-interlace" : "no-sout-ffmpeg-interlace") +
+                " --sout-transcode-scale=" + transform_scale.ToString(System.Globalization.NumberFormatInfo.InvariantInfo) +
+                AudioTranscode2Options(audioTranscode)+
+                " --sout-transcode-vb=" + transcode_vb.ToString() +
+                " --wxwin-config-last=(-1,0,0,1280,1024)(0,650,21,363,141)");
+            startInfo.UseShellExecute = true;
+        }
+
+        public void Start()
+        {
+            if (active) return;
+            // la ligne suivante n'a pas l'air de marcher avec VLC
+            //if (!showWindow) startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            process = Process.Start(startInfo);
+            if ((process == null) || (!process.WaitForInputIdle(15000)) ||
+                process.HasExited || (process.MainWindowHandle == IntPtr.Zero))
+            {
+                if ((process != null) && !process.HasExited) process.Kill();
+                throw new VLCException("Le processus n'a pas d?marr? normalement");
+            }
+            if (!showWindow) SysWin32.ShowWindow(process.MainWindowHandle, SysWin32.SW_HIDE);
+            Console.WriteLine("VLC started");
+            tcpClient = null;
+            for (int retries = 0; retries < 5; retries++)
+            {
+                try
+                {
+                    tcpClient = new TcpClient(new IPEndPoint(IPAddress.Loopback, 0));
+                    tcpClient.Connect(IPAddress.Loopback, Convert.ToInt32(rc_host_port));
+                    break;
+                }
+                catch (SocketException)
+                {
+                    if (retries == 4)
+                    {
+                        process.Kill();
+                        throw new VLCException("L'interface RC de VLC ne r?pond pas");
+                    }
+                    Thread.Sleep(500);
+                }
+            }
+            networkStream = tcpClient.GetStream();
+            networkStream.ReadTimeout = 1000;
+            /*WriteLine("get_length");
+            Thread.Sleep(200);
+            networkStream.Read(RC_buffer, 0, 1024);*/
+            RC_buffer_count = 0;
+            itemAddedCounter = 0;
+            active = true;
+        }
+
+        public void Stop()
+        {
+            if (!active) return;
+            if (!Crashed())
+            {
+                // on essaye de terminer proprement VLC
+                try
+                {
+                    Command("quit");
+                }
+                catch (VLCException)
+                {
+                }
+            }
+            networkStream.Close();
+            // si vlc n'est pas mort apres 2 sec, on le tue
+            if (!process.WaitForExit(2000))
+                try
+                {
+                    process.Kill();
+                }
+                catch (InvalidOperationException)
+                {
+                }
+            active = false;
+            Console.WriteLine("VLC stopped");
+        }
+
+        private void MustBeStopped()
+        {
+            if (active) throw new VLCException("VLC doit ?tre arret? pour changer le reglage");
+        }
+
+        private void MustBeActive()
+        {
+            if (!active) throw new VLCException("VLC n'est pas lanc?");
+        }
+
+        public bool Crashed()
+        {
+            return (process.HasExited || !tcpClient.Connected);
+        }
+
+        public string PathFromMRL(string param)
+        {
+            if (!param.Contains("://")) // si ce n'est pas une MRL, c'est directement un chemin d'acc?s de fichier
+                return param;
+            else if (param.StartsWith("dvdsimple://"))
+            {
+                if (param.Length == 12)
+                    return dvdLetter + ":\\";
+                else
+                    return param.Substring(12);
+            }
+            else // c'est une MRL inconnue
+                return "";
+        }
+       
+        #region Socket Buffer
+
+        byte[] RC_buffer = new byte[1024];
+        int RC_buffer_count = 0;
+
+        private void WriteLine(string value)
+        {
+            if (Crashed())
+                throw new VLCException("VLC vient (encore!) de planter...\r\nJe vais le relancer mais la lecture en cours est abandonn?e");
+            Console.WriteLine("VLC> " + value);
+            byte[] buffer = vlcEncoding.GetBytes(value);
+            networkStream.Write(buffer, 0, buffer.Length);
+            try
+            {
+                networkStream.WriteByte(0x0A);
+            }
+            catch (IOException)
+            {
+                if (Crashed())
+                    throw new VLCException("VLC vient (encore!) de planter...\r\nJe vais le relancer mais la lecture en cours est abandonn?e");
+                throw;
+            }
+        }
+
+        private string ReadLine()
+        {
+#if DEBUG
+            Array.Clear(RC_buffer, RC_buffer_count, 1024 - RC_buffer_count);
+#endif
+            int index = 0;
+            while (index+1 < RC_buffer_count)
+            {
+                if (RC_buffer[index] == vlcNewlineChar1)
+                    if (RC_buffer[index + 1] == vlcNewlineChar2)
+                    {
+                        string result = vlcEncoding.GetString(RC_buffer, 0, index);
+                        RC_buffer_count -= index + 2;
+                        Array.Copy(RC_buffer, index + 2, RC_buffer, 0, RC_buffer_count);
+                        Console.WriteLine("VLC<   " + result);
+                        return result;
+                    }
+                    else
+                        throw new VLCException("R?ponse inattendue");
+                index++;
+            }
+            while (RC_buffer_count < 1024)
+            {
+                bool test = process.HasExited;
+                try
+                {
+                    RC_buffer_count += networkStream.Read(RC_buffer, RC_buffer_count, 1024 - RC_buffer_count); // on donne 1 sec pour lire plus
+                    //Console.Write("Received from VLC: "); for (int scan = 0; scan < RC_buffer_count; scan++) Console.Write("{0:X2} ", RC_buffer[scan]); Console.WriteLine();
+                }
+                catch (IOException)
+                {
+                    if (Crashed())
+                        throw new VLCException("VLC vient (encore!) de planter...\r\nJe vais le relancer mais la lecture en cours est abandonn?e");
+                    throw;
+                }
+                while (index+1 < RC_buffer_count)
+                {
+                    if (RC_buffer[index] == vlcNewlineChar1) 
+                        if (RC_buffer[index + 1] == vlcNewlineChar2)
+                        {
+                            string result = vlcEncoding.GetString(RC_buffer, 0, index);
+                            RC_buffer_count -= index + 2;
+                            Array.Copy(RC_buffer, index + 2, RC_buffer, 0, RC_buffer_count);
+                            Console.WriteLine("VLC<   " + result);
+                            return result;
+                        }
+                        else
+                            throw new VLCException("R?ponse inattendue");
+                    index++;
+                }
+            }
+            throw new VLCException("Buffer plein");
+        }
+
+        private void MakeSureReadEmpty()
+        {
+            if ((RC_buffer_count != 0) || networkStream.DataAvailable)
+            {
+#if DEBUG
+                string temp = vlcEncoding.GetString(RC_buffer, 0, RC_buffer_count);
+                //Debugger.Break();
+#endif
+                while (networkStream.DataAvailable)
+                    networkStream.Read(RC_buffer, 0, 1024);
+                RC_buffer_count = 0;
+                //throw new VLCException("Lignes inattendues dans la reponse precedente");
+            }
+        }
+
+        #endregion ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        #region RC commands
+        private void ReadCheckNoError(string command)
+        {
+            string line;
+            do
+                line = ReadLine();
+            while (line.StartsWith("status change: ") || (line=="press menu select or pause to continue"));
+            if (line != command + ": returned 0 (no error)")
+                throw new VLCException("La commande RC a renvoy?e une erreur");
+        }
+
+        public void Command(string command)
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine(command);
+            ReadCheckNoError(command.Substring(0,(command+' ').IndexOf(' ')));
+        }
+
+        public string GetCurrentCaption()
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine("get_title");
+            return ReadLine();
+        }
+
+        public int GetDurationTime()
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine("get_length");
+            return Convert.ToInt32(ReadLine());
+        }
+
+        public int GetElapsedTime()
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine("get_time");
+            return Convert.ToInt32(ReadLine());
+        }
+
+        public int GetChapterInfo(ref int max)
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine("chapter");
+            string line = ReadLine();
+            if (line == "press menu select or pause to continue")
+                line = ReadLine();
+            if (line == "chapter: returned 0 (no error)")
+            {
+                max = 0;
+                return -1;
+            }
+            Match m = (new Regex("Currently playing chapter (\\d+)/(\\d+)")).Match(line);
+            if (!m.Success)
+                throw new VLCException("R?ponse inattendue pour 'chapter'");
+            ReadCheckNoError("chapter");
+            max = Convert.ToInt32(m.Groups[2].Value);
+            return Convert.ToInt32(m.Groups[1].Value);
+        }
+
+        public int GetTitleInfo(ref int max)
+        {
+            MustBeActive();
+            MakeSureReadEmpty();
+            WriteLine("title");
+            string line = ReadLine();
+            if (line == "press menu select or pause to continue")
+                line = ReadLine();
+            if (line == "title: returned 0 (no error)")
+            {
+                max = 0;
+                return -1;
+            }
+            Match m = (new Regex("Currently playing title (\\d+)/(\\d+)")).Match(line);
+            if (!m.Success)
+                throw new VLCException("R?ponse inattendue pour 'title'");
+            ReadCheckNoError("title");
+            max = Convert.ToInt32(m.Groups[2].Value);
+            return Convert.ToInt32(m.Groups[1].Value);
+        }
+
+        // renvoit un nombre negatif: indiquant l'indice negatif de l'item en train d'etre jou?, relatif aux derniers ajouts
+        // -1 repr?sente le dernier de la liste, -2 l'avant-dernier
+        public int GetPlayingIndex()
+        {
+            MustBeActive();
+            WriteLine("playlist");
+            string line;
+            int result = 0, count = 0;
+            do
+            {
+                line = ReadLine();
+                if ((line[0] == '|') && (line != "| no entries"))
+                {
+                    count++;
+                    if (line[1] == '*')
+                        result = -1;
+                    else if (result != 0)
+                        result--;
+                }
+            } while (line != "playlist: returned 0 (no error)");
+            itemAddedCounter = count;
+            return result;
+        }
+
+        // index doit etre un indice negatif de l'item ? jouer
+        // -1 repr?sente le dernier de la liste, -2 l'avant-dernier
+        public void SetPlayingIndex(int index)
+        {
+            Debugger.Break(); // fonction jamais test?e
+            MustBeActive();
+            WriteLine("goto " + (itemAddedCounter+index));
+            ReadCheckNoError("goto");
+        }
+
+        // mettre playlistLength ? 0 pour calculer automatiquement le nombre d'element ? jouer
+        //  (quand on ne sait pas s'il s'agit d'une playlist ou non)
+        public void Play(string media, int playlistLength)
+        {
+            MustBeActive();
+            // compose la MRL qui sera pars? par VLC [dans rc.c : parse_MRL()]
+            string MRL;
+            if ((media[0] == '"') || (media[0] == '\''))
+                MRL = media;
+            else
+            {
+                MRL = '"' + Utility.GetMediaMRL(media) + '"';
+                string[] MRLOptions = Utility.GetMediaMRLOptions(media);
+                if (MRLOptions != null)
+                    foreach (string MRLOption in MRLOptions)
+                        if (MRLOption.Contains(" "))
+                            MRL += " \":" + MRLOption + '"';
+                        else
+                            MRL += " :" + MRLOption;
+            }
+            MakeSureReadEmpty();
+            if (playlistLength != 0)
+                playlistSize = playlistLength;
+            else if (Utility.GetMediaType(media) != Utility.MediaType.Playlist)
+                playlistSize = 1;
+            else
+            {
+                playlistSize = -1; // obtenir de VLC la taille de la playlist
+                itemAddedCounter = 0;
+            }
+            WriteLine("add " + MRL);
+            string line;
+            do
+                line = ReadLine();
+            while (line.StartsWith("status change: "));
+            if (!line.StartsWith("trying to add "))
+                throw new VLCException("R?ponse inattendue pour 'add'");
+            ReadCheckNoError("add");
+            itemAddedCounter += playlistSize;
+        }
+
+        // jouer plusieurs fichiers
+        public void Play(IList<string> playlist)
+        {
+            // compose une playlist puis la joue
+            M3UFile m3uFile = new M3UFile();
+            foreach (string media in playlist)
+                m3uFile.AppendMedia(media);
+            m3uFile.Close();
+            Play(m3uFile.Name, playlist.Count);
+        }
+
+        public void PlaylistPrev()
+        {
+            if (playlistSize == 1) return;
+            int index = GetPlayingIndex();
+            if (playlistSize == -1) playlistSize = -index;
+            if (index > -playlistSize)
+                Command("prev");
+        }
+
+        public void PlaylistNext()
+        {
+            if (playlistSize == 1) return;
+            if (playlistSize == -1) playlistSize = -GetPlayingIndex();
+            Command("next");
+        }
+
+
+        #endregion ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        #region Properties accessors
+
+        public bool Active
+        {
+            get
+            {
+                return active;
+            }
+        }
+
+        public bool ShowWindow
+        {
+            get
+            {
+                return showWindow;
+            }
+            set
+            {
+                if (active)
+                    SysWin32.ShowWindow(process.MainWindowHandle, value ? SysWin32.SW_SHOWNORMAL : SysWin32.SW_HIDE);
+                showWindow = value;
+            }
+        }
+
+        public AudioTranscode AudioTranscode
+        {
+            get
+            {
+                return audioTranscode;
+            }
+            set
+            {
+                MustBeStopped();
+                audioTranscode = value;
+            }
+        }
+
+        public char DVDLetter
+        {
+            get
+            {
+                return dvdLetter;
+            }
+            set
+            {
+                value = Char.ToUpper(value);
+                if ((value < 'A') || (value > 'Z'))
+                    throw new VLCException("Lettre invalide pour le lecteur de DVD");
+                MustBeStopped();
+                dvdLetter = value;
+            }
+        }
+
+        public int RC_host_port
+        {
+            get
+            {
+                return rc_host_port;
+            }
+            set
+            {
+                MustBeStopped();
+                rc_host_port = value;
+            }
+        }
+
+        
+        
+        #endregion ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    }
+
+    class VLCCache
+    {
+        VLCApp vlcApp;
+
+        [Flags]
+        public enum CachedFlags
+        {
+            Caption = 0x01,
+            DurationTime = 0x02,
+            ElapsedTime = 0x04,
+            ChapterInfo = 0x08,
+            TitleInfo = 0x10,
+            PlayingIndex = 0x20,
+        };
+
+        private CachedFlags cachedFlags = 0;
+
+        public VLCCache(VLCApp vlcApp)
+        {
+            this.vlcApp = vlcApp;
+        }
+
+        public void Invalidate()
+        {
+            cachedFlags = 0;
+        }
+        public void Invalidate(CachedFlags flags)
+        {
+            cachedFlags &= ~flags;
+        }
+
+        private string caption;
+        public string Caption
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.Caption) == 0)
+                {
+                    caption = vlcApp.GetCurrentCaption();
+                    cachedFlags |= CachedFlags.Caption;
+                }
+                return caption;
+            }
+        }
+
+        private int durationTime;
+        public int DurationTime
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.DurationTime) == 0)
+                {
+                    durationTime = vlcApp.GetDurationTime();
+                    cachedFlags |= CachedFlags.DurationTime;
+                }
+                return durationTime;
+            }
+        }
+
+        private int elapsedTime;
+        public int ElapsedTime
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.ElapsedTime) == 0)
+                {
+                    elapsedTime = vlcApp.GetElapsedTime();
+                    cachedFlags |= CachedFlags.ElapsedTime;
+                }
+                return elapsedTime;
+            }
+        }
+
+        private int chapter;
+        private int chapterMax;
+        public int Chapter
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.ChapterInfo) == 0)
+                {
+                    chapter = vlcApp.GetChapterInfo(ref chapterMax);
+                    cachedFlags |= CachedFlags.ChapterInfo;
+                }
+                return chapter;
+            }
+        }
+        public int ChapterMax
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.ChapterInfo) == 0)
+                {
+                    chapter = vlcApp.GetChapterInfo(ref chapterMax);
+                    cachedFlags |= CachedFlags.ChapterInfo;
+                }
+                return chapterMax;
+            }
+        }
+
+        private int title;
+        private int titleMax;
+        public int Title
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.TitleInfo) == 0)
+                {
+                    title = vlcApp.GetTitleInfo(ref titleMax);
+                    cachedFlags |= CachedFlags.TitleInfo;
+                }
+                return title;
+            }
+        }
+        public int TitleMax
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.TitleInfo) == 0)
+                {
+                    title = vlcApp.GetTitleInfo(ref titleMax);
+                    cachedFlags |= CachedFlags.TitleInfo;
+                }
+                return titleMax;
+            }
+        }
+
+        public int playingIndex;
+        public int PlayingIndex
+        {
+            get
+            {
+                if ((cachedFlags & CachedFlags.PlayingIndex) == 0)
+                {
+                    playingIndex = vlcApp.GetPlayingIndex();
+                    cachedFlags |= CachedFlags.PlayingIndex;
+                }
+                return playingIndex;
+            }
+        }
+    
+    }
+
+    class VLCException : ApplicationException
+    {
+        public VLCException(string message) : base(message) { }
+    }
+}
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:57:21 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:57:21 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.4,1.5
+Message-ID: <200606301957.k5UJvLe24274@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14634/FreeXplorer
+
+Modified Files:
+	FreeXplorer.cs 
+Log Message:
+
+
+Index: FreeXplorer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.cs,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** FreeXplorer.cs	12 Jun 2006 18:05:36 -0000	1.4
+--- FreeXplorer.cs	30 Jun 2006 19:57:19 -0000	1.5
+***************
+*** 2,19 ****
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
+   * Copyright (C) 2006 Roncaglia Julien <freexplorer at virtualblackfox.net>
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+!  * termes de la Licence Publique G??n??rale GNU publi??e par la Free Software 
+!  * Foundation (version 2 ou bien toute autre version ult??rieure choisie par vous).
+   * 
+!  * Ce programme est distribu?? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+   * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+!  * dans un but sp??cifique. Reportez-vous ?? la Licence Publique G??n??rale GNU pour 
+!  * plus de d??tails.
+   * 
+!  * Vous devez avoir re??u une copie de la Licence Publique G??n??rale GNU en m??me 
+!  * temps que ce programme ; si ce n'est pas le cas, ??crivez ?? la Free Software 
+!  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ??tats-Unis. 
+   */
+  
+--- 2,20 ----
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
++  * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr) 
+   * Copyright (C) 2006 Roncaglia Julien <freexplorer at virtualblackfox.net>
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+!  * termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
+!  * Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
+   * 
+!  * Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+   * ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+!  * dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
+!  * plus de d?tails.
+   * 
+!  * Vous devez avoir re?u une copie de la Licence Publique G?n?rale GNU en m?me 
+!  * temps que ce programme ; si ce n'est pas le cas, ?crivez ? la Free Software 
+!  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ?tats-Unis. 
+   */
+  
+***************
+*** 22,29 ****
+  using System.Text;
+  using System.IO;
+  
+  namespace Wizou.FreeXplorer
+  {
+!     static class FreeXplorer
+      {
+          public static string ConfigurationFolder
+--- 23,40 ----
+  using System.Text;
+  using System.IO;
++ using System.Net;
++ using System.Net.Sockets;
++ using Wizou.VLC;
++ using System.Reflection;
+  
+  namespace Wizou.FreeXplorer
+  {
+!     class VLCLaunchException : ApplicationException
+!     {
+!         public VLCLaunchException(string msg) : base(msg) { }
+!     }
+! 
+! 
+!     class FreeXplorer : IDisposable
+      {
+          public static string ConfigurationFolder
+***************
+*** 42,45 ****
+--- 53,162 ----
+                              Environment.SpecialFolder.Personal), ".freexplorer");
+                  }
++             }
++         }
++ 
++         public bool VLCVisible
++         {
++             get { return m_vlcApp.ShowWindow; }
++             set { m_vlcApp.ShowWindow = value; }
++         }
++ 
++         Configuration m_config = new Configuration();
++         public Configuration Configuration { get { return m_config; } }
++ 
++         VLCApp m_vlcApp = new VLCApp();
++         FreeboxServer m_freeboxServer = new FreeboxServer(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "pages"));
++         public FreeboxServer FreeboxServer { get { return m_freeboxServer; } }
++         LIRC.LIRCServer m_lircServer = new LIRC.LIRCServer();
++ 
++         IPHostEntry FreeBoxIP
++         {
++             get
++             {
++                 
++                 try
++                 {
++                     return Dns.GetHostEntry("freeplayer.freebox.fr");
++                 }
++                 catch (SocketException)
++                 {
++                     return new IPHostEntry();
++                 }
++             }
++         }
++ 
++         public FreeXplorer()
++         {
++             IPHostEntry freeboxIP = FreeBoxIP;
++ 
++             if (freeboxIP.AddressList != null)
++                 m_freeboxServer.Init(freeboxIP.AddressList[0], m_vlcApp, m_lircServer);
++ 
++             m_config.Load();
++             ApplyConfig(true);
++ 
++             if (freeboxIP.AddressList == null)
++             {
++                 throw new Exception("Impossible de r?soudre l'adresse IP de la Freebox\r\n" +
++                                 "Verifiez la configuration");
++             }            
++         }
++ 
++         public void Dispose()
++         {
++             m_config.Save();
++             m_freeboxServer.Stop();
++             m_lircServer.Stop();
++             m_vlcApp.Stop();
++         }
++ 
++         public void ApplyConfig(bool restartVLC)
++         {
++             // arrets des serveurs TCP
++             m_freeboxServer.Stop();
++             m_lircServer.Stop();
++ 
++             if (restartVLC) m_vlcApp.Stop();
++ 
++             // application des param?tres
++             VLC.Utility.SoundExts = m_config.SoundExts;
++             VLC.Utility.PictureExts = m_config.PictureExts;
++             VLC.Utility.VideoExts = m_config.VideoExts;
++ 
++             if (restartVLC)
++             {
++                 try
++                 {
++                     m_vlcApp.RC_host_port = Convert.ToInt32(m_config.VlcPort);
++                     m_vlcApp.DVDLetter = m_config.DVDLetter[0];
++                     m_vlcApp.AudioTranscode = m_config.Transcode;
++                     m_vlcApp.SetConfig(m_config.VLCPath, m_config.AudioLanguage, m_config.SubLanguage, m_config.FFMpegInterlace, m_config.HalfScale ? 0.1 : 1.0, Convert.ToInt32(m_config.TranscodeVB));
++                     m_vlcApp.Start();
++                 }
++                 catch (System.ComponentModel.Win32Exception ex)
++                 {
++                     throw new VLCLaunchException("Impossible de lancer l'executable vlc.exe\r\n\r\n" +
++                         ex.Message + "\r\n\r\nVerifiez la configuration");
++                 }
++                 catch (VLCException ex)
++                 {
++                     throw new VLCLaunchException("Probl?me au lancement de vlc.exe :\r\n\r\n" +
++                         ex.Message + "\r\n\r\nR?essayez de lancer FreeXplorer");
++                 }
++             }
++ 
++             // activation eventuelle des serveurs TCP
++             m_lircServer.Active = m_config.LIRCActive;
++             m_freeboxServer.PCControlAllowed = m_config.PCControlAllowed;
++             m_freeboxServer.BlackBkgnds = m_config.BlackBkgnds;
++ 
++             try
++             {
++                 m_freeboxServer.Start();
++             }
++             catch (SocketException)
++             {
++                 throw new Exception("Le port 8080 de cette machine est d?j? occup? !\r\n" +
++                                 "V?rifiez que FreeXplorer, VLC, un autre Freeplayer ou un serveur proxy n'est pas d?j? actif");
+              }
+          }
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:57:31 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:57:31 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Program.cs,1.6,1.7
+Message-ID: <200606301957.k5UJvVe24280@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14691/FreeXplorer
+
+Modified Files:
+	Program.cs 
+Log Message:
+
+
+Index: Program.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Program.cs,v
+retrieving revision 1.6
+retrieving revision 1.7
+diff -C2 -d -r1.6 -r1.7
+*** Program.cs	16 Apr 2006 00:50:31 -0000	1.6
+--- Program.cs	30 Jun 2006 19:57:28 -0000	1.7
+***************
+*** 19,22 ****
+--- 19,23 ----
+  using System.Collections.Generic;
+  using System.Windows.Forms;
++ using System.IO;
+  
+  namespace Wizou.FreeXplorer
+***************
+*** 42,45 ****
+--- 43,47 ----
+                      autostart = true;
+              }
++             
+              MainForm mainForm;
+              try
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:57:39 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:57:39 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj,1.8,1.9
+Message-ID: <200606301957.k5UJvde24286@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14737/FreeXplorer
+
+Modified Files:
+	FreeXplorer.csproj 
+Log Message:
+
+
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:58:14 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:58:14 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.cs,1.11,1.12
+Message-ID: <200606301958.k5UJwEe24349@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14818/FreeXplorer
+
+Modified Files:
+	MainForm.cs 
+Log Message:
+
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.11
+retrieving revision 1.12
+diff -C2 -d -r1.11 -r1.12
+*** MainForm.cs	12 May 2006 17:12:26 -0000	1.11
+--- MainForm.cs	30 Jun 2006 19:58:12 -0000	1.12
+***************
+*** 16,19 ****
+--- 16,20 ----
+   * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, ?tats-Unis. 
+   */
++ 
+  using System;
+  using System.Collections.Generic;
+***************
+*** 34,44 ****
+      public partial class MainForm : Form
+      {
+!         private VLCApp vlcApp = new VLCApp();
+!         private FreeboxServer freeboxServer = new FreeboxServer(Path.Combine(Application.StartupPath, "pages"));
+!         private LIRC.LIRCServer lircServer = new LIRC.LIRCServer();
+  
+          public MainForm()
+          {
+              InitializeComponent();
+              TrayIcon.Text = String.Format(TrayIcon.Text, Program.appVersionText); ;
+              TrayIcon.BalloonTipTitle = String.Format(TrayIcon.BalloonTipTitle, Program.appVersionText); ;
+--- 35,46 ----
+      public partial class MainForm : Form
+      {
+!         const string STARTMENU_LINK_NAME = "FreeXplorer.lnk";
+! 
+!         FreeXplorer m_fxp;
+  
+          public MainForm()
+          {
+              InitializeComponent();
++ 
+              TrayIcon.Text = String.Format(TrayIcon.Text, Program.appVersionText); ;
+              TrayIcon.BalloonTipTitle = String.Format(TrayIcon.BalloonTipTitle, Program.appVersionText); ;
+***************
+*** 47,69 ****
+              Text = "Debug";
+  #endif
+  
+!             IPHostEntry freeboxIP;
+!             try
+!             {
+!                 freeboxIP = Dns.GetHostEntry("freeplayer.freebox.fr");
+!             }
+!             catch (SocketException)
+!             {
+!                 freeboxIP = new IPHostEntry();
+!                 MessageBox.Show("Impossible de r?soudre l'adresse IP de la Freebox\r\n" +
+!                                 "Verifiez la configuration", "Initialisation",
+!                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+!             }
+!             if (freeboxIP.AddressList != null) 
+!                 freeboxServer.Init(freeboxIP.AddressList[0], vlcApp, lircServer);
+! 
+!             LoadConfig();
+!             ApplyConfig(true);
+!             if (StartMinimized.Checked)
+              {
+                  WindowState = FormWindowState.Minimized;
+--- 49,55 ----
+              Text = "Debug";
+  #endif
++             m_fxp = new FreeXplorer();
+  
+!             if (m_fxp.Configuration.StartMinimized)
+              {
+                  WindowState = FormWindowState.Minimized;
+***************
+*** 74,82 ****
+          private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+          {
+!             SaveConfig();
+!             // arrets des serveurs TCP:
+!             freeboxServer.Stop();
+!             lircServer.Stop();
+!             vlcApp.Stop();
+          }
+  
+--- 60,64 ----
+          private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+          {
+!             m_fxp.Dispose();
+          }
+  
+***************
+*** 111,161 ****
+          public void LoadConfig()
+          {
+!             // pr?chargement des valeurs par d?faut des options
+!             SoundExts.Text = VLC.Utility.SoundExts;
+!             PictureExts.Text = VLC.Utility.PictureExts;
+!             VideoExts.Text = VLC.Utility.VideoExts;
+  
+!             // chargement des valeurs des options depuis le fichier Config.xml
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(FreeXplorer.ConfigurationFolder, "config.xml"));
+!             reader.ReadStartElement("Config");
+!             do
+!             {
+!                 if (reader.IsStartElement())
+!                 {
+!                     string value = reader.ReadString();
+!                     switch (reader.Name)
+!                     {
+!                         case "VLCPath": VLCPath.Text = value; break;
+!                         case "DVDLetter": DVDLetter.Text = value; break;
+!                         case "VlcPort": VlcPort.Text = value; break;
+!                         case "SoundExts": SoundExts.Text = value; break;
+!                         case "PictureExts": PictureExts.Text = value; break;
+!                         case "VideoExts": VideoExts.Text = value; break;
+!                         case "AudioLanguage": AudioLanguage.Text = value; break;
+!                         case "SubLanguage": SubLanguage.Text = value; break;
+!                         case "ShowVLC": ShowVLC.Checked = (value == "1") || (value == System.Boolean.TrueString); break;
+!                         case "Transcode":
+!                             switch (value.ToUpper())
+!                             {
+!                                 case "MPGA": TranscodeMPGA.Checked = true; break;
+!                                 case "A52": TranscodeA52.Checked = true; break;
+!                                 case "PC": TranscodePC.Checked = true; break;
+!                                 default: TranscodeNone.Checked = true; break;
+!                             }
+!                             break;
+!                         case "StartMinimized": StartMinimized.Checked = (value == "1") || (value == System.Boolean.TrueString); break;
+!                         case "MinimizeToTray": MinimizeToTray.Checked = (value == "1") || (value == System.Boolean.TrueString); break;
+!                         case "FFMpegInterlace": FFMpegInterlace.Checked = (value == "1") || (value == System.Boolean.TrueString); break;
+!                         case "HalfScale": HalfScale.Checked = (value == "1") || (value == System.Boolean.TrueString); break;
+!                         case "LIRCActive": LIRCActive.Checked = (value == "1") || (value == System.Boolean.TrueString); break;
+!                         case "TranscodeVB": TranscodeVB.Text = value; break;
+!                         case "PCControlAllowed": PCControlAllowed.Checked = Convert.ToBoolean(value); break;
+!                         case "LessIconsInExplorer": LessIconsInExplorer.Checked = Convert.ToBoolean(value); break;
+!                         case "BlackBkgnds": BlackBkgnds.Checked = Convert.ToBoolean(value); break;
+!                     }
+!                 }
+!             } while (reader.Read());
+!             reader.Close();
+  
+              // chargement des valeurs des options qui ne sont pas issues de Config.xml
+              StartAtBoot.Checked = File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "FreeXplorer.lnk"));
+--- 93,125 ----
+          public void LoadConfig()
+          {
+!             Configuration config = m_fxp.Configuration;
+!             config.Load();
+  
+!             // chargement des valeurs depuis le Config.xml
+!             VLCPath.Text = config.VLCPath;
+!             DVDLetter.Text = config.DVDLetter;
+!             VlcPort.Text = config.VlcPort;
+!             SoundExts.Text = config.SoundExts;
+!             PictureExts.Text = config.PictureExts;
+!             VideoExts.Text = config.VideoExts;
+!             AudioLanguage.Text = config.AudioLanguage;
+!             SubLanguage.Text = config.SubLanguage;
+!             ShowVLC.Checked = config.ShowVLC;
+! 
+!             TranscodeMPGA.Checked = (config.Transcode == AudioTranscode.MPGA);
+!             TranscodeA52.Checked = (config.Transcode == AudioTranscode.A52);
+!             TranscodePC.Checked = (config.Transcode == AudioTranscode.PC);
+!             TranscodeNone.Checked = (config.Transcode == AudioTranscode.None);
+  
++             StartMinimized.Checked = config.StartMinimized;
++             MinimizeToTray.Checked = config.MinimizeToTray;
++             FFMpegInterlace.Checked = config.FFMpegInterlace;
++             HalfScale.Checked = config.HalfScale;
++             LIRCActive.Checked = config.LIRCActive;
++             TranscodeVB.Text = config.TranscodeVB;
++             PCControlAllowed.Checked = config.PCControlAllowed;
++             LessIconsInExplorer.Checked = config.LessIconsInExplorer;
++             BlackBkgnds.Checked = config.BlackBkgnds;
++            
+              // chargement des valeurs des options qui ne sont pas issues de Config.xml
+              StartAtBoot.Checked = File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "FreeXplorer.lnk"));
+***************
+*** 164,194 ****
+          public void SaveConfig()
+          {
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(FreeXplorer.ConfigurationFolder, "config.xml"), null);
+!             writer.Formatting = Formatting.Indented;
+!             writer.WriteStartElement("Config");
+!             writer.WriteElementString("VLCPath", VLCPath.Text);
+!             writer.WriteElementString("VlcPort", VlcPort.Text);
+!             writer.WriteElementString("DVDLetter", DVDLetter.Text);
+!             writer.WriteElementString("SoundExts", SoundExts.Text);
+!             writer.WriteElementString("PictureExts", PictureExts.Text);
+!             writer.WriteElementString("VideoExts", VideoExts.Text);
+!             writer.WriteElementString("AudioLanguage", AudioLanguage.Text);
+!             writer.WriteElementString("SubLanguage", SubLanguage.Text);
+!             writer.WriteElementString("ShowVLC", ShowVLC.Checked.ToString());
+!             writer.WriteElementString("Transcode",  TranscodeMPGA.Checked   ? "MPGA" :
+!                                                     TranscodeA52.Checked ? "A52" :
+!                                                     TranscodePC.Checked ? "PC" : 
+!                                                                            "NONE");
+!             writer.WriteElementString("StartMinimized", StartMinimized.Checked.ToString());
+!             writer.WriteElementString("MinimizeToTray", MinimizeToTray.Checked.ToString());
+!             writer.WriteElementString("FFMpegInterlace", FFMpegInterlace.Checked.ToString());
+!             writer.WriteElementString("HalfScale", HalfScale.Checked.ToString());
+!             writer.WriteElementString("LIRCActive", LIRCActive.Checked.ToString());
+!             writer.WriteElementString("TranscodeVB", TranscodeVB.Text);
+!             writer.WriteElementString("PCControlAllowed", PCControlAllowed.Checked.ToString());
+!             writer.WriteElementString("LessIconsInExplorer", LessIconsInExplorer.Checked.ToString());
+!             writer.WriteElementString("BlackBkgnds", BlackBkgnds.Checked.ToString());
+!             
+!             writer.Close();
+          }
+  
+--- 128,159 ----
+          public void SaveConfig()
+          {
+!             Configuration config = m_fxp.Configuration;
+! 
+!             config.VLCPath = VLCPath.Text;
+!             config.VlcPort = VlcPort.Text;
+!             config.DVDLetter = DVDLetter.Text;
+!             config.SoundExts = SoundExts.Text;
+!             config.PictureExts = PictureExts.Text;
+!             config.VideoExts = VideoExts.Text;
+!             config.AudioLanguage = AudioLanguage.Text;
+!             config.SubLanguage = SubLanguage.Text;
+!             config.ShowVLC = ShowVLC.Checked;
+! 
+!             config.Transcode = TranscodeMPGA.Checked ? AudioTranscode.MPGA :
+!                                TranscodeA52.Checked ? AudioTranscode.A52 :
+!                                TranscodePC.Checked ? AudioTranscode.PC : 
+!                                AudioTranscode.None;
+! 
+!             config.StartMinimized = StartMinimized.Checked;
+!             config.MinimizeToTray = MinimizeToTray.Checked;
+!             config.FFMpegInterlace = FFMpegInterlace.Checked;
+!             config.HalfScale = HalfScale.Checked;
+!             config.LIRCActive = LIRCActive.Checked;
+!             config.TranscodeVB = TranscodeVB.Text;
+!             config.PCControlAllowed = PCControlAllowed.Checked;
+!             config.LessIconsInExplorer = LessIconsInExplorer.Checked;
+!             config.BlackBkgnds = BlackBkgnds.Checked;
+! 
+!             config.Save();
+          }
+  
+***************
+*** 196,200 ****
+--- 161,175 ----
+          {
+              SaveConfig();
++             try
++             {
++                 m_fxp.ApplyConfig(restartVLC);
++             }
++             catch (VLCLaunchException e)
++             {
++                 MessageBox.Show(e.Message, "Initialisation",
++                     MessageBoxButtons.OK, MessageBoxIcon.Error);
++             }
+  
++             /*
+              // arrets des serveurs TCP
+              freeboxServer.Stop();
+***************
+*** 249,252 ****
+--- 224,228 ----
+                                  "V?rifiez que FreeXplorer, VLC, un autre Freeplayer ou un serveur proxy n'est pas d?j? actif");
+              }
++             */
+          }
+  
+***************
+*** 271,286 ****
+              WindowState = FormWindowState.Normal;
+          }
+! 
+!         public VLC.AudioTranscode GetAudioTranscode()
+          {
+!             return TranscodeMPGA.Checked ? VLC.AudioTranscode.MPGA :
+                      TranscodeA52.Checked ? VLC.AudioTranscode.A52 :
+                      TranscodePC.Checked ? VLC.AudioTranscode.PC :
+                                              VLC.AudioTranscode.None;
+!         }
+  
+          private void ShowVLC_CheckedChanged(object sender, EventArgs e)
+          {
+!             vlcApp.ShowWindow = ShowVLC.Checked;
+          }
+  
+--- 247,262 ----
+              WindowState = FormWindowState.Normal;
+          }
+!         /*
+!         public Wizou.VLC.AudioTranscode GetAudioTranscode()
+          {
+!             return TranscodeMPGA.Checked ? Wizou.VLC.AudioTranscode.MPGA :
+                      TranscodeA52.Checked ? VLC.AudioTranscode.A52 :
+                      TranscodePC.Checked ? VLC.AudioTranscode.PC :
+                                              VLC.AudioTranscode.None;
+!         }*/
+  
+          private void ShowVLC_CheckedChanged(object sender, EventArgs e)
+          {
+!             m_fxp.VLCVisible = ShowVLC.Checked;
+          }
+  
+***************
+*** 289,301 ****
+              if (!Created) return;
+              if (StartAtBoot.Checked)
+!                 File.Copy(Path.Combine(Application.StartupPath, "FreeXplorer.lnk"),
+!                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "FreeXplorer.lnk"));
+              else
+!                 File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "FreeXplorer.lnk"));
+          }
+  
+          private void PCControlAllowed_CheckedChanged(object sender, EventArgs e)
+          {
+!             freeboxServer.PCControlAllowed = PCControlAllowed.Checked;
+              if (!PCControlAllowed.Checked)
+                  LIRCActive.Checked = false;
+--- 265,277 ----
+              if (!Created) return;
+              if (StartAtBoot.Checked)
+!                 File.Copy(Path.Combine(Application.StartupPath, STARTMENU_LINK_NAME),
+!                     Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), STARTMENU_LINK_NAME));
+              else
+!                 File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Startup), STARTMENU_LINK_NAME));
+          }
+  
+          private void PCControlAllowed_CheckedChanged(object sender, EventArgs e)
+          {
+!             m_fxp.FreeboxServer.PCControlAllowed = PCControlAllowed.Checked;
+              if (!PCControlAllowed.Checked)
+                  LIRCActive.Checked = false;
+
+
+
+From nobody at sheep.berlios.de  Fri Jun 30 21:58:39 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Fri, 30 Jun 2006 21:58:39 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Configuration.cs,NONE,1.1 VLC.cs,1.11,NONE
+Message-ID: <200606301958.k5UJwde24365@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv14960/FreeXplorer
+
+Added Files:
+	Configuration.cs 
+Removed Files:
+	VLC.cs 
+Log Message:
+
+
+--- NEW FILE: Configuration.cs ---
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+using System.Xml.Serialization;
+using System.Xml;
+using Wizou.VLC;
+
+namespace Wizou.FreeXplorer
+{
+    public class Configuration
+    {
+        static string ConfigFile
+        { 
+            get { return Path.Combine(FreeXplorer.ConfigurationFolder, "config.xml"); }
+        }
+
+        public string VLCPath = @"C:\Program Files\VideoLAN\VLC\vlc.exe";
+        public string DVDLetter = "D";
+        public string VlcPort = "31186";
+        public string SoundExts = VLC.Utility.SoundExts;
+        public string PictureExts = VLC.Utility.PictureExts;
+        public string VideoExts = VLC.Utility.VideoExts;
+        public string AudioLanguage = "fr,en";
+        public string SubLanguage = "fr,en";
+        public bool ShowVLC = false;
+        public AudioTranscode Transcode = AudioTranscode.MPGA;
+        public bool StartMinimized = true;
+        public bool MinimizeToTray = true;
+        public bool FFMpegInterlace = false;
+        public bool HalfScale = false;
+        public bool LIRCActive = false;
+        public string TranscodeVB = "8000";
+        public bool PCControlAllowed = true;
+        public bool LessIconsInExplorer = false;
+        public bool BlackBkgnds = false;
+
+        public void Load()
+        {
+            Load(ConfigFile);
+        }
+
+        void Load(string fileName)
+        {
+            // chargement des valeurs des options depuis le fichier Config.xml
+            try
+            {
+                using (XmlTextReader reader = new XmlTextReader(fileName))
+                {
+                    reader.ReadStartElement("Config");
+                    do
+                    {
+                        if (!reader.IsStartElement()) continue;
+                        string value = reader.ReadString();
+                        switch (reader.Name)
+                        {
+                            case "VLCPath": VLCPath = value; break;
+                            case "DVDLetter": DVDLetter = value; break;
+                            case "VlcPort": VlcPort = value; break;
+                            case "SoundExts": SoundExts = value; break;
+                            case "PictureExts": PictureExts = value; break;
+                            case "VideoExts": VideoExts = value; break;
+                            case "AudioLanguage": AudioLanguage = value; break;
+                            case "SubLanguage": SubLanguage = value; break;
+                            case "ShowVLC": ShowVLC = (value == "1") || (value == System.Boolean.TrueString); break;
+                            case "Transcode":
+                                switch (value.ToUpper())
+                                {
+                                    case "MPGA": Transcode = AudioTranscode.MPGA; break;
+                                    case "A52": Transcode = AudioTranscode.A52; break;
+                                    case "PC": Transcode = AudioTranscode.PC; break;
+                                    default: Transcode = AudioTranscode.None; break;
+                                }
+                                break;
+                            case "StartMinimized": StartMinimized = (value == "1") || (value == System.Boolean.TrueString); break;
+                            case "MinimizeToTray": MinimizeToTray = (value == "1") || (value == System.Boolean.TrueString); break;
+                            case "FFMpegInterlace": FFMpegInterlace = (value == "1") || (value == System.Boolean.TrueString); break;
+                            case "HalfScale": HalfScale = (value == "1") || (value == System.Boolean.TrueString); break;
+                            case "LIRCActive": LIRCActive = (value == "1") || (value == System.Boolean.TrueString); break;
+                            case "TranscodeVB": TranscodeVB = value; break;
+                            case "PCControlAllowed": PCControlAllowed = Convert.ToBoolean(value); break;
+                            case "LessIconsInExplorer": LessIconsInExplorer = Convert.ToBoolean(value); break;
+                            case "BlackBkgnds": BlackBkgnds = Convert.ToBoolean(value); break;
+                        }
+                    } while (reader.Read());
+                }
+            }
+            catch (FileNotFoundException) { }
+        }
+
+        public void Save()
+        {
+            Save(ConfigFile);
+        }
+
+        void Save(string fileName)
+        {
+            using (XmlTextWriter writer = new XmlTextWriter(fileName, null))
+            {
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartElement("Config");
+                writer.WriteElementString("VLCPath", VLCPath);
+                writer.WriteElementString("VlcPort", VlcPort);
+                writer.WriteElementString("DVDLetter", DVDLetter);
+                writer.WriteElementString("SoundExts", SoundExts);
+                writer.WriteElementString("PictureExts", PictureExts);
+                writer.WriteElementString("VideoExts", VideoExts);
+                writer.WriteElementString("AudioLanguage", AudioLanguage);
+                writer.WriteElementString("SubLanguage", SubLanguage);
+                writer.WriteElementString("ShowVLC", ShowVLC.ToString());
+                writer.WriteElementString("Transcode", Transcode.ToString());
+                writer.WriteElementString("StartMinimized", StartMinimized.ToString());
+                writer.WriteElementString("MinimizeToTray", MinimizeToTray.ToString());
+                writer.WriteElementString("FFMpegInterlace", FFMpegInterlace.ToString());
+                writer.WriteElementString("HalfScale", HalfScale.ToString());
+                writer.WriteElementString("LIRCActive", LIRCActive.ToString());
+                writer.WriteElementString("TranscodeVB", TranscodeVB);
+                writer.WriteElementString("PCControlAllowed", PCControlAllowed.ToString());
+                writer.WriteElementString("LessIconsInExplorer", LessIconsInExplorer.ToString());
+                writer.WriteElementString("BlackBkgnds", BlackBkgnds.ToString());
+            }
+        }
+    }
+}
+
+--- VLC.cs DELETED ---
+
+
+

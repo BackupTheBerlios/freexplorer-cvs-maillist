@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.15,1.16
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.15%2C1.16&In-Reply-To=%3C200604132114.k3DLEPt10181%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   
+   <LINK REL="Next"  HREF="000001.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.15,1.16</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.15%2C1.16&In-Reply-To=%3C200604132114.k3DLEPt10181%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.15,1.16">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Thu Apr 13 23:14:25 CEST 2006</I>
+    <P><UL>
+        
+        <LI>Next message: <A HREF="000001.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.16,1.17
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv23499
+
+Modified Files:
+	Freebox.cs 
+Log Message:
+&#233;vite un plantage potentiel
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.15
+retrieving revision 1.16
+diff -C2 -d -r1.15 -r1.16
+*** Freebox.cs	7 Apr 2006 21:22:22 -0000	1.15
+--- Freebox.cs	13 Apr 2006 21:14:49 -0000	1.16
+***************
+*** 2,6 ****
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
+!  * Copyright (C) 2005 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+   * Copyright (C) 2006 Roncaglia Julien &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at virtualblackfox.net</A>&gt;
+   * 
+--- 2,6 ----
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
+!  * Copyright (C) 2005-2006 Olivier Marcoux (<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at free.fr</A> / <A HREF="http://freexplorer.free.fr">http://freexplorer.free.fr</A>)
+   * Copyright (C) 2006 Roncaglia Julien &lt;<A HREF="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">freexplorer at virtualblackfox.net</A>&gt;
+   * 
+***************
+*** 782,786 ****
+              {
+                  string paramname = QueryArgs[&quot;$$keyboard&quot;];
+!                 if (paramname.Length != 0)
+                  {
+                      string paramvalue = QueryArgs[paramname];
+--- 782,786 ----
+              {
+                  string paramname = QueryArgs[&quot;$$keyboard&quot;];
+!                 if ((paramname != null) &amp;&amp; (paramname.Length != 0))
+                  {
+                      string paramvalue = QueryArgs[paramname];
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	
+	<LI>Next message: <A HREF="000001.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.16,1.17
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#0">[ date ]</a>
+              <a href="thread.html#0">[ thread ]</a>
+              <a href="subject.html#0">[ subject ]</a>
+              <a href="author.html#0">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

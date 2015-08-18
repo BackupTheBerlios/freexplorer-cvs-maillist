@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.21,1.22
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.21%2C1.22&In-Reply-To=%3C200605121736.k4CHaMZ20045%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000026.html">
+   <LINK REL="Next"  HREF="000028.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.21,1.22</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20Freebox.cs%2C1.21%2C1.22&In-Reply-To=%3C200605121736.k4CHaMZ20045%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.21,1.22">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri May 12 19:36:22 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000026.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages/img black.png,NONE,1.1
+</A></li>
+        <LI>Next message: <A HREF="000028.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.4,1.5 mediacenter.html,1.4,1.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv28935/FreeXplorer
+
+Modified Files:
+	Freebox.cs 
+Log Message:
+Anti-brul&#251;re pour les &#233;crans Plasma
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.21
+retrieving revision 1.22
+diff -C2 -d -r1.21 -r1.22
+*** Freebox.cs	12 May 2006 17:12:26 -0000	1.21
+--- Freebox.cs	12 May 2006 17:40:08 -0000	1.22
+***************
+*** 387,391 ****
+                      case &quot;bkgnd&quot;:
+                          if (BlackBkgnds)
+!                             filename = Path.Combine(BaseDir, &quot;img&quot;+Path.PathSeparator+&quot;black.png&quot;);
+                          else
+                              filename = QueryArgs[&quot;bkgnd&quot;];
+--- 387,391 ----
+                      case &quot;bkgnd&quot;:
+                          if (BlackBkgnds)
+!                             filename = &quot;img&quot; + Path.DirectorySeparatorChar + &quot;black.png&quot;;
+                          else
+                              filename = QueryArgs[&quot;bkgnd&quot;];
+***************
+*** 419,422 ****
+--- 419,424 ----
+                              responseStream.Close();
+                          }
++                         else
++                             filename = Path.Combine(BaseDir, filename);
+                          vlcApp.Play(filename, 0);
+                          vlcCache.Invalidate();
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000026.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages/img black.png,NONE,1.1
+</A></li>
+	<LI>Next message: <A HREF="000028.html">[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.4,1.5 mediacenter.html,1.4,1.5
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#27">[ date ]</a>
+              <a href="thread.html#27">[ thread ]</a>
+              <a href="subject.html#27">[ subject ]</a>
+              <a href="author.html#27">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

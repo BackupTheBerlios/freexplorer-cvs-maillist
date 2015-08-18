@@ -1,0 +1,2484 @@
+From nobody at sheep.berlios.de  Thu Apr 13 23:14:25 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Thu, 13 Apr 2006 23:14:25 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.15,1.16
+Message-ID: <200604132114.k3DLEPt10181@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv23499
+
+Modified Files:
+	Freebox.cs 
+Log Message:
+?vite un plantage potentiel
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.15
+retrieving revision 1.16
+diff -C2 -d -r1.15 -r1.16
+*** Freebox.cs	7 Apr 2006 21:22:22 -0000	1.15
+--- Freebox.cs	13 Apr 2006 21:14:49 -0000	1.16
+***************
+*** 2,6 ****
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
+!  * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+   * Copyright (C) 2006 Roncaglia Julien <freexplorer at virtualblackfox.net>
+   * 
+--- 2,6 ----
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+   *
+!  * Copyright (C) 2005-2006 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+   * Copyright (C) 2006 Roncaglia Julien <freexplorer at virtualblackfox.net>
+   * 
+***************
+*** 782,786 ****
+              {
+                  string paramname = QueryArgs["$$keyboard"];
+!                 if (paramname.Length != 0)
+                  {
+                      string paramvalue = QueryArgs[paramname];
+--- 782,786 ----
+              {
+                  string paramname = QueryArgs["$$keyboard"];
+!                 if ((paramname != null) && (paramname.Length != 0))
+                  {
+                      string paramvalue = QueryArgs[paramname];
+
+
+
+From nobody at sheep.berlios.de  Thu Apr 13 23:51:32 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Thu, 13 Apr 2006 23:51:32 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.16,1.17
+Message-ID: <200604132151.k3DLpWt11311@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv25941/FreeXplorer
+
+Modified Files:
+	Freebox.cs 
+Log Message:
+Possibilit?e de mettre un icone diff?rent pour chaque type de fichier multimedia.
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.16
+retrieving revision 1.17
+diff -C2 -d -r1.16 -r1.17
+*** Freebox.cs	13 Apr 2006 21:14:49 -0000	1.16
+--- Freebox.cs	13 Apr 2006 21:51:56 -0000	1.17
+***************
+*** 1004,1008 ****
+                  {
+                      html.Append("<img src=");
+!                     html.Append("img/mediafile.gif"); // TODO: mettre le bon icone suivant le mediaType
+                      html.Append(" width=16 height=17>");
+                  }
+--- 1004,1008 ----
+                  {
+                      html.Append("<img src=");
+!                     html.Append(GetIconForMediaType(mediaType, "img/mediafile.gif"));
+                      html.Append(" width=16 height=17>");
+                  }
+***************
+*** 1020,1023 ****
+--- 1020,1030 ----
+              else
+                  return html.ToString();
++         }
++ 
++         internal static string GetIconForMediaType(VLC.Utility.MediaType type, string defaultIcon)
++         {
++             FileInfo iconFile = new FileInfo("pages/img/media/" + type.ToString() + ".gif");
++             return iconFile.Exists ? "img/media/" + iconFile.Name : defaultIcon;
++ 
+          }
+  
+
+
+
+From nobody at sheep.berlios.de  Fri Apr 14 00:25:42 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Fri, 14 Apr 2006 00:25:42 +0200
+Subject: [Freexplorer-cvs] FreeXplorer Setup.nsi,1.11,1.12
+Message-ID: <200604132225.k3DMPgt12557@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv27845
+
+Modified Files:
+	Setup.nsi 
+Log Message:
+ne pas embarquer les sous-rep CVS et test dans l'installeur
+
+
+Index: Setup.nsi
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/Setup.nsi,v
+retrieving revision 1.11
+retrieving revision 1.12
+diff -C2 -d -r1.11 -r1.12
+*** Setup.nsi	17 Sep 2005 13:35:06 -0000	1.11
+--- Setup.nsi	13 Apr 2006 22:26:05 -0000	1.12
+***************
+*** 1,548 ****
+! ; FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+! ; Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+! ; 
+! ; Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+! ; termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
+! ; Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
+! ; 
+! ; Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+! ; ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+! ; dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
+[...1067 lines suppressed...]
+! 	Delete "$INSTDIR\FreeXplorer.lnk"
+! 	Delete "$INSTDIR\Lisez-Moi.html"
+! 	Delete "$INSTDIR\Uninstall.exe"
+! 	;Remove program directory (only if directory is empty)
+! 	RMDir "$INSTDIR"
+! 	;Remove manufacturer directory (only if directory is empty)
+! 	Push "$INSTDIR"
+! 	Call un.GetParent
+! 	Pop $R0
+! 	RMDir "$R0"
+! 
+! 	;Remove shortcuts
+! 	Delete "$SMPROGRAMS\${PRODUCT} ${VERSION}.lnk"
+! 
+! 	;Remove registration
+! 	DeleteRegKey HKLM "${UNINSTALLKEY}"
+! 
+! 	DeleteRegKey /ifempty HKLM "Software\${MFG}\${PRODUCT}"
+! 	DeleteRegKey /ifempty HKLM "Software\${MFG}"
+! SectionEnd
+
+
+
+From nobody at sheep.berlios.de  Fri Apr 14 01:50:07 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Fri, 14 Apr 2006 01:50:07 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages play.html,1.1.1.1,1.2 playing.html,1.1.1.1,1.2
+Message-ID: <200604132350.k3DNo7t17255@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv24565
+
+Modified Files:
+	play.html playing.html 
+Log Message:
+Diff?renciation touches play/pause d? ? une evol du firmware
+
+Index: play.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/play.html,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+*** play.html	3 Aug 2005 18:54:27 -0000	1.1.1.1
+--- play.html	13 Apr 2006 23:50:21 -0000	1.2
+***************
+*** 1,45 ****
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page"	content="home.html">
+! 	<link rel="help"	href=   "help.html">
+! 	<link rel="guide"	href=   "$explore">
+! 	<link rel="yellow"	href=   "back">
+! 	<link rel="blue"	href=   "sound_bug.html">
+! 	<link rel="info"	href=   "controls.html">
+! 	<link rel="down"	href=   "seek.html?action=rewind">
+! 	<link rel="up"		href=   "seek.html?action=forward">
+! 	<link rel="red"		href=   "seekpl.html?action=plprev&param=Fichier+pr?c?dent">
+! 	<link rel="green"	href=   "seekpl.html?action=plnext&param=Fichier+suivant">
+! 	<link rel="pause"	href=   "seek.html?action=pause&_action=Lecture/Pause">
+! 	<link rel="stop"	href=   "$explore?action=stop">
+! 	<meta name=disappear	content="2">
+! 	<flags volume_key=true>
+! 	<meta name=refresh content="4;url=playing.html">
+! </head>
+! <body>
+! <table>
+! <tr><td height=460>&nbsp;</td></tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td  bgcolor="#00000028" align=left>
+! 		<font size=+1>
+! 		{1}<br>
+! 		Utilisez les touches&nbsp;
+! 			<font size=-1>
+! 			<box border=2 width=28 height=18 align=center text="P-">&nbsp;
+! 			<font family="Symbol"><box border=2 width=28 height=18 align=center text="A/Y"></font>&nbsp;
+! 			<font family="Symbol"><box border=2 width=28 height=18 align=center text="Z"></font>&nbsp;
+! 			<box border=2 width=28 height=18 align=center text="P+">&nbsp;
+! 			</font>
+! 		pour controler la lecture
+! 		{2}
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! </table>
+! </td>
+! </tr>
+! </body>
+! </html>
+--- 1,46 ----
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page"	content="home.html">
+! 	<link rel="help"	href=   "help.html">
+! 	<link rel="guide"	href=   "$explore">
+! 	<link rel="yellow"	href=   "back">
+! 	<link rel="blue"	href=   "sound_bug.html">
+! 	<link rel="info"	href=   "controls.html">
+! 	<link rel="down"	href=   "seek.html?action=rewind">
+! 	<link rel="up"		href=   "seek.html?action=forward">
+! 	<link rel="red"		href=   "seekpl.html?action=plprev&param=Fichier+pr?c?dent">
+! 	<link rel="green"	href=   "seekpl.html?action=plnext&param=Fichier+suivant">
+! 	<link rel="pause"	href=   "seek.html?action=pause&_action=Pause">
+! 	<link rel="play"	href=   "seek.html?action=pause&_action=Lecture">
+! 	<link rel="stop"	href=   "$explore?action=stop">
+! 	<meta name=disappear	content="2">
+! 	<flags volume_key=true>
+! 	<meta name=refresh content="4;url=playing.html">
+! </head>
+! <body>
+! <table>
+! <tr><td height=460>&nbsp;</td></tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td  bgcolor="#00000028" align=left>
+! 		<font size=+1>
+! 		{1}<br>
+! 		Utilisez les touches&nbsp;
+! 			<font size=-1>
+! 			<box border=2 width=28 height=18 align=center text="P-">&nbsp;
+! 			<font family="Symbol"><box border=2 width=28 height=18 align=center text="A/Y"></font>&nbsp;
+! 			<font family="Symbol"><box border=2 width=28 height=18 align=center text="Z"></font>&nbsp;
+! 			<box border=2 width=28 height=18 align=center text="P+">&nbsp;
+! 			</font>
+! 		pour controler la lecture
+! 		{2}
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! </table>
+! </td>
+! </tr>
+! </body>
+! </html>
+
+Index: playing.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/playing.html,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+*** playing.html	3 Aug 2005 18:54:27 -0000	1.1.1.1
+--- playing.html	13 Apr 2006 23:50:21 -0000	1.2
+***************
+*** 1,22 ****
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="home.html">
+! 	<link rel="help"	href=   "help.html">
+! 	<link rel="guide"	href=   "$explore">
+! 	<link rel="yellow"	href=   "back">
+! 	<link rel="blue"	href=   "sound_bug.html">
+! 	<link rel="info"	href=   "controls.html">
+! 	<link rel="down"	href=   "seek.html?action=rewind">
+! 	<link rel="up"		href=   "seek.html?action=forward">
+! 	<link rel="red"		href=   "seekpl.html?action=plprev&param=Fichier+pr?c?dent">
+! 	<link rel="green"	href=   "seekpl.html?action=plnext&param=Fichier+suivant">
+! 	<link rel="pause"	href=   "seek.html?action=pause&_action=Lecture/Pause">
+! 	<link rel="stop"	href=   "$explore?action=stop">
+! 	<meta name=disappear	content="0">
+! 	<flags volume_key=true>
+! 
+! </head>
+! <body>
+! </body>
+! </html>
+--- 1,23 ----
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="home.html">
+! 	<link rel="help"	href=   "help.html">
+! 	<link rel="guide"	href=   "$explore">
+! 	<link rel="yellow"	href=   "back">
+! 	<link rel="blue"	href=   "sound_bug.html">
+! 	<link rel="info"	href=   "controls.html">
+! 	<link rel="down"	href=   "seek.html?action=rewind">
+! 	<link rel="up"		href=   "seek.html?action=forward">
+! 	<link rel="red"		href=   "seekpl.html?action=plprev&param=Fichier+pr?c?dent">
+! 	<link rel="green"	href=   "seekpl.html?action=plnext&param=Fichier+suivant">
+! 	<link rel="pause"	href=   "seek.html?action=pause&_action=Pause">
+! 	<link rel="play"	href=   "seek.html?action=pause&_action=Lecture">
+! 	<link rel="stop"	href=   "$explore?action=stop">
+! 	<meta name=disappear	content="0">
+! 	<flags volume_key=true>
+! 
+! </head>
+! <body>
+! </body>
+! </html>
+
+
+
+From nobody at sheep.berlios.de  Fri Apr 14 12:14:46 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Fri, 14 Apr 2006 12:14:46 +0200
+Subject: [Freexplorer-cvs] FreeXplorer InetLoad.dll,NONE,1.1 InetLoad_Readme.txt,NONE,1.1
+Message-ID: <200604141014.k3EAEkt07283@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv21523
+
+Added Files:
+	InetLoad.dll InetLoad_Readme.txt 
+Log Message:
+Livraison d'InetLoad, utilis? dans l'installeur
+
+
+--- NEW FILE: InetLoad.dll ---
+(This appears to be a binary file; contents omitted.)
+
+--- NEW FILE: InetLoad_Readme.txt ---
+(This appears to be a binary file; contents omitted.)
+
+
+
+From nobody at sheep.berlios.de  Fri Apr 14 23:54:53 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Fri, 14 Apr 2006 23:54:53 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages settings.html,1.2,1.3
+Message-ID: <200604142154.k3ELsrt01761@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv7473
+
+Modified Files:
+	settings.html 
+Log Message:
+revenir dans FreeXplorer au rallumage si on ?teint la Freebox dans FreeXplorer
+
+Index: settings.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/settings.html,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** settings.html	11 Sep 2005 02:34:12 -0000	1.2
+--- settings.html	14 Apr 2006 21:55:17 -0000	1.3
+***************
+*** 1,24 ****
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<title>FreeXplorer</title>
+! 	<meta name="home_page"      content="/$$/home.html">
+! 	<meta name="love_page"      content="/$$/favorites.xsl?xml=favorites.xml">
+! 	<meta name="love2_page"     content="/$$/recents.xsl?xml=recents.xml">
+! 	<meta name="mail_page"      content="/$$/netpages.html">
+! 	<meta name="mail2_page"     content="/$$/netflux.html">
+! 	<meta name="nochannel_page" content="none">
+! 	<meta name="channel_page"   content="/$$/channel_page.html?index=%d"> <!-- probablement appel? par le zapping up/down -->
+! 	<!-- manque la valeur pour la touche "clear" -->
+! 	<services>
+! 	</services>
+! 	<meta name=maddr content="127.0.0.1">
+! 	<meta name=pcr content="68">
+! 	<meta name=vid content="68">
+! 	<meta name=aud content="{1}">
+! 	<meta name=refresh content="0;url=http://212.27.38.254:8080/home.html">
+! </head>
+! <body bgcolor="#00000028">
+! <h1 align=center>Bienvenue dans FreeXplorer {2}</h1>
+! </body>
+! </html>
+--- 1,25 ----
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<title>FreeXplorer</title>
+! 	<meta name="settings_page"  content="http://212.27.38.254:8080/settings.html">
+! 	<meta name="home_page"      content="/$$/home.html">
+! 	<meta name="love_page"      content="/$$/favorites.xsl?xml=favorites.xml">
+! 	<meta name="love2_page"     content="/$$/recents.xsl?xml=recents.xml">
+! 	<meta name="mail_page"      content="/$$/netpages.html">
+! 	<meta name="mail2_page"     content="/$$/netflux.html">
+! 	<meta name="nochannel_page" content="none">
+! 	<meta name="channel_page"   content="/$$/channel_page.html?index=%d"> <!-- probablement appel? par le zapping up/down -->
+! 	<!-- manque la valeur pour la touche "clear" -->
+! 	<services>
+! 	</services>
+! 	<meta name=maddr content="127.0.0.1">
+! 	<meta name=pcr content="68">
+! 	<meta name=vid content="68">
+! 	<meta name=aud content="{1}">
+! 	<meta name=refresh content="0;url=http://212.27.38.254:8080/home.html">
+! </head>
+! <body bgcolor="#00000028">
+! <h1 align=center>Bienvenue dans FreeXplorer {2}</h1>
+! </body>
+! </html>
+
+
+
+From nobody at sheep.berlios.de  Fri Apr 14 23:59:28 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Fri, 14 Apr 2006 23:59:28 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc.html,1.2,1.3 mediacenter.html,1.2,1.3
+Message-ID: <200604142159.k3ELxSt01886@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv7883
+
+Modified Files:
+	lirc.html mediacenter.html 
+Log Message:
+am?lioration des modes LIRC et MediaPlayer:
+- support des touches * #
+- meilleur support des touches num?riques (delais raccourcis)
+- meilleur support de la touche play/pause (devient ppause pour LIRC)
+- touche 'rec' d'extinction du PC dans le mode LIRC
+
+Index: lirc.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/lirc.html,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** lirc.html	6 Aug 2005 21:51:53 -0000	1.2
+--- lirc.html	14 Apr 2006 21:59:53 -0000	1.3
+***************
+*** 1,77 ****
+! ???<!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="lirc.html?action=lirc&key=love">
+! 	<meta name="love2_page"     content="lirc.html?action=lirc&key=love2">
+! 	<meta name="mail_page"      content="lirc.html?action=lirc&key=mail">
+! 	<meta name="mail2_page"     content="lirc.html?action=lirc&key=mail2">
+! 	<meta name="nochannel_page" content="lirc.html?action=lirc&key=%d">
+! 	<meta name="channel_page"   content="lirc.html?action=lirc&key=#%d">
+! 	<link rel="help"       href=   "lirc.html?action=lirc&key=help">
+! 	<link rel="guide"      href=   "lirc.html?action=lirc&key=guide">
+! 	<link rel="yellow"     href=   "lirc.html?action=lirc&key=yellow">
+! 	<link rel="info"       href=   "lirc.html?action=lirc&key=info">
+! 	<link rel="options"    href=   "lirc.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc.html?action=lirc&key=red"-->
+! 	<link rel="green"      href=   "lirc.html?action=lirc&key=green"-->
+! 	<link rel="blue"       href=   "lirc.html?action=lirc&key=blue"-->
+! 	<link rel="left"       href=   "lirc.html?action=lirc&key=left">
+! 	<link rel="right"      href=   "lirc.html?action=lirc&key=right">
+! 	<link rel="up"         href=   "lirc.html?action=lirc&key=up">
+! 	<link rel="down"       href=   "lirc.html?action=lirc&key=down">
+! 	<link rel="pause"      href=   "lirc.html?action=lirc&key=pause">
+! 	<link rel="play"       href=   "lirc.html?action=lirc&key=play">
+! 	<link rel="stop"       href=   "lirc.html?action=lirc&key=stop">
+! 	<meta name=refresh	content="10;url=lirc.html?key={2}">
+! </head>
+! <body text="#FFFFFF3F">
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td bgcolor="#00000028" align=center>
+! 		<a href="lirc.html?action=lirc&key=ok"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t??l??commande des applications compatibles LIRC<br>
+! 		telles que Media Player Classic ou autres<br>
+! 		</font>
+! 		<font size=+2 color="#FF80803F">
+! 		{1} client(s) connect??(s) - Dernier code ??mis: {2}
+! 		<hr>
+! 		</font><font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g??n??r??s par l'appui sur la t??l??commande:<br>
+! 		(?? configurer dans le logiciel client LIRC)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=15%>love</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>love2</td></tr>
+! 		<tr><td>Lettre</td><td>mail</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>mail2</td></tr>
+! 		<tr><td>Options</td><td>options</td></tr>
+! 		<tr><td>?</td><td>help</td></tr>
+! 		<tr><td>Info</td><td>info</td></tr>
+! 		<tr><td>Guide</td><td>guide</td></tr>
+! 		<tr><td>Stop</td><td>stop</td></tr>
+! 		<tr><td>Pause/Play</td><td>pause</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>up</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>down</td></tr>
+! 		<tr><td>OK</td><td>ok</td></tr>
+! 		<tr><td><font family="Symbol">S  #-</font></td><td>left</td></tr>
+! 		<tr><td><font family="Symbol">T  #+</font></td><td>right</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>red</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>green</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>yellow</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>blue</td></tr>
+! 		<tr><td>Chiffres</td><td>&lt;le chiffre&gt;</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+--- 1,87 ----
+! ???<!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="lirc.html?action=lirc&key=love">
+! 	<meta name="love2_page"     content="lirc.html?action=lirc&key=love2">
+! 	<meta name="mail_page"      content="lirc.html?action=lirc&key=mail">
+! 	<meta name="mail2_page"     content="lirc.html?action=lirc&key=mail2">
+! 	<meta name="nochannel_page" content="lirc.html?action=lirc&key=%d">
+! 	<meta name="channel_page"   content="lirc.html?action=lirc&key=#%d">
+! 	<meta name="prog_select_timeout" content="300">
+! 	<meta name="prog_expand_timeout" content="300">
+! 	<link rel="help"       href=   "lirc.html?action=lirc&key=help">
+! 	<link rel="guide"      href=   "lirc.html?action=lirc&key=guide">
+! 	<link rel="yellow"     href=   "lirc.html?action=lirc&key=yellow">
+! 	<link rel="info"       href=   "lirc.html?action=lirc&key=info">
+! 	<link rel="options"    href=   "lirc.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc.html?action=lirc&key=red"-->
+! 	<link rel="green"      href=   "lirc.html?action=lirc&key=green"-->
+! 	<link rel="blue"       href=   "lirc.html?action=lirc&key=blue"-->
+! 	<link rel="left"       href=   "lirc.html?action=lirc&key=left">
+! 	<link rel="right"      href=   "lirc.html?action=lirc&key=right">
+! 	<link rel="up"         href=   "lirc.html?action=lirc&key=up">
+! 	<link rel="down"       href=   "lirc.html?action=lirc&key=down">
+! 	<link rel="pause"      href=   "lirc.html?action=lirc&key=ppause">
+! 	<link rel="play"       href=   "lirc.html?action=lirc&key=ppause">
+! 	<link rel="stop"       href=   "lirc.html?action=lirc&key=stop">
+! 	<link rel="star"       href=   "lirc.html?action=lirc&key=*">
+! 	<link rel="sharp"      href=   "lirc.html?action=lirc&key=#">
+! 
+! 	<!-- Fonction sympa pour eteindre le PC ?? la fin d'un film tout en restant dans le mode LIRC
+! 		Je la verrai bien sur l'appui-long de la touche '?' mais la balise meta correspondante n'est pas encore document??e
+! 		donc pour l'instant je la met sur 'rec', touche nouvellement document??e -->
+! 	<link rel="rec"        href=   "lirc.html?afterAction=suspend">
+! 
+! 	<meta name=refresh	content="10;url=lirc.html?key={2}">
+! </head>
+! <body text="#FFFFFF3F">
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td bgcolor="#00000028" align=center>
+! 		<a href="lirc.html?action=lirc&key=ok"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t??l??commande des applications compatibles LIRC<br>
+! 		telles que Media Player Classic ou autres<br>
+! 		</font>
+! 		<font size=+2 color="#FF80803F">
+! 		{1} client(s) connect??(s) - Dernier code ??mis: {2}
+! 		<hr>
+! 		</font><font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g??n??r??s par l'appui sur la t??l??commande:<br>
+! 		(?? configurer dans le logiciel client LIRC)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=25%>love</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>love2</td></tr>
+! 		<tr><td>Lettre</td><td>mail</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>mail2</td></tr>
+! 		<tr><td>Options</td><td>options</td></tr>
+! 		<tr><td>?</td><td>help</td></tr>
+! 		<tr><td>Info</td><td>info</td></tr>
+! 		<tr><td>Guide</td><td>guide</td></tr>
+! 		<tr><td>Stop</td><td>stop</td></tr>
+! 		<tr><td>Pause/Play</td><td>ppause</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>up</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>down</td></tr>
+! 		<tr><td>OK</td><td>ok</td></tr>
+! 		<tr><td><font family="Symbol">S #</font>-</td><td>left</td></tr>
+! 		<tr><td><font family="Symbol">T #</font>+</td><td>right</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>red</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>green</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>yellow</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>blue</td></tr>
+! 		<tr><td>Chiffres, *, #</td><td>&lt;le chiffre&gt;, *, #</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+
+Index: mediacenter.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/mediacenter.html,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** mediacenter.html	6 Aug 2005 21:51:53 -0000	1.2
+--- mediacenter.html	14 Apr 2006 21:59:53 -0000	1.3
+***************
+*** 1,74 ****
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="mediacenter.html?action=appcommand&cmd=6">
+! 	<meta name="love2_page"     content="mediacenter.html?action=appcommand&cmd=16">
+! 	<meta name="mail_page"      content="mediacenter.html?action=appcommand&cmd=15">
+! 	<meta name="mail2_page"     content="mediacenter.html?action=appcommand&cmd=7">
+! 	<meta name="nochannel_page" content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="channel_page"   content="mediacenter.html?action=sendkeys&keys=#%d">
+! 	<link rel="help"       href=   "mediacenter.html?action=appcommand&cmd=27">
+! 	<link rel="guide"      href=   "mediacenter.html?action=appcommand&cmd=18">
+! 	<link rel="yellow"     href=   "mediacenter.html?action=appcommand&cmd=1">
+! 	<link rel="info"       href=   "mediacenter.html?action=appcommand&cmd=17">
+! 	<link rel="options"    href=   "mediacenter.html?action=appcommand&cmd=5">
+! 	<link rel="red"        href=   "mediacenter.html?action=appcommand&cmd=12">
+! 	<link rel="green"      href=   "mediacenter.html?action=appcommand&cmd=11">
+! 	<link rel="blue"       href=   "mediacenter.html?action=appcommand&cmd=2">
+! 	<link rel="left"       href=   "mediacenter.html?action=appcommand&cmd=9">
+! 	<link rel="right"      href=   "mediacenter.html?action=appcommand&cmd=10">
+! 	<link rel="up"         href=   "mediacenter.html?action=appcommand&cmd=49&cmd=51">
+! 	<link rel="down"       href=   "mediacenter.html?action=appcommand&cmd=50&cmd=52">
+! 	<link rel="pause"      href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="play"       href=   "mediacenter.html?action=appcommand&cmd=46">
+! 	<link rel="stop"       href=   "mediacenter.html?action=appcommand&cmd=13">
+! </head>
+! <body text="#FFFFFF3F">
+! <box height=5 border=0>
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000028" align=center>
+! 		<a href="mediacenter.html?action=sendkeys&keys={ENTER}"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t?l?commande des applications compatibles Media Center<br>
+! 		ou compatibles avec les claviers Multimedia
+! 		</font>
+! 		<hr>
+! 		<font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g?n?r?s par l'appui sur la t?l?commande:<br>
+! 		(eventuellement ? configurer dans le logiciel vis?)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=40%>BROWSER_FAVORITES</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>MEDIA_SELECT</td></tr>
+! 		<tr><td>Lettre</td><td>LAUNCH_MAIL</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>BROWSER_HOME</td></tr>
+! 		<tr><td>Options</td><td>BROWSER_SEARCH</td></tr>
+! 		<tr><td>?</td><td>APPCOMMAND_HELP</td></tr>
+! 		<tr><td>Info</td><td>LAUNCH_APP1</td></tr>
+! 		<tr><td>Guide</td><td>LAUNCH_APP2</td></tr>
+! 		<tr><td>Stop</td><td>MEDIA_STOP</td></tr>
+! 		<tr><td>Pause/Play</td><td>MEDIA_PLAY_PAUSE</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>MEDIA_FASTFORWARD et &nbsp;MEDIA_CHANNEL_UP</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>MEDIA_REWIND et &nbsp;MEDIA_CHANNEL_DOWN</td></tr>
+! 		<tr><td>Chiffres, OK</td><td><i>Tape le chiffre ou Entr?e</i></td></tr>
+! 		<tr><td><font family="Symbol">S  #-</font></td><td>VOLUME_DOWN</td></tr>
+! 		<tr><td><font family="Symbol">T  #+</font></td><td>VOLUME_UP</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>MEDIA_PREVIOUSTRACK</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>MEDIA_NEXTTRACK</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>BROWSER_BACKWARD</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>BROWSER_FORWARD</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+--- 1,78 ----
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="mediacenter.html?action=appcommand&cmd=6">
+! 	<meta name="love2_page"     content="mediacenter.html?action=appcommand&cmd=16">
+! 	<meta name="mail_page"      content="mediacenter.html?action=appcommand&cmd=15">
+! 	<meta name="mail2_page"     content="mediacenter.html?action=appcommand&cmd=7">
+! 	<meta name="nochannel_page" content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="channel_page"   content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="prog_select_timeout" content="300">
+! 	<meta name="prog_expand_timeout" content="300">
+! 	<link rel="help"       href=   "mediacenter.html?action=appcommand&cmd=27">
+! 	<link rel="guide"      href=   "mediacenter.html?action=appcommand&cmd=18">
+! 	<link rel="yellow"     href=   "mediacenter.html?action=appcommand&cmd=1">
+! 	<link rel="info"       href=   "mediacenter.html?action=appcommand&cmd=17">
+! 	<link rel="options"    href=   "mediacenter.html?action=appcommand&cmd=5">
+! 	<link rel="red"        href=   "mediacenter.html?action=appcommand&cmd=12">
+! 	<link rel="green"      href=   "mediacenter.html?action=appcommand&cmd=11">
+! 	<link rel="blue"       href=   "mediacenter.html?action=appcommand&cmd=2">
+! 	<link rel="left"       href=   "mediacenter.html?action=appcommand&cmd=9">
+! 	<link rel="right"      href=   "mediacenter.html?action=appcommand&cmd=10">
+! 	<link rel="up"         href=   "mediacenter.html?action=appcommand&cmd=49&cmd=51">
+! 	<link rel="down"       href=   "mediacenter.html?action=appcommand&cmd=50&cmd=52">
+! 	<link rel="pause"      href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="play"       href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="stop"       href=   "mediacenter.html?action=appcommand&cmd=13">
+! 	<link rel="star"       href=   "mediacenter.html?action=sendkeys&keys=*">
+! 	<link rel="sharp"      href=   "mediacenter.html?action=sendkeys&keys=#">
+! </head>
+! <body text="#FFFFFF3F">
+! <box height=5 border=0>
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000028" align=center>
+! 		<a href="mediacenter.html?action=sendkeys&keys={ENTER}"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t?l?commande des applications compatibles Media Center<br>
+! 		ou compatibles avec les claviers Multimedia
+! 		</font>
+! 		<hr>
+! 		<font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g?n?r?s par l'appui sur la t?l?commande:<br>
+! 		(eventuellement ? configurer dans le logiciel vis?)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=40%>BROWSER_FAVORITES</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>MEDIA_SELECT</td></tr>
+! 		<tr><td>Lettre</td><td>LAUNCH_MAIL</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>BROWSER_HOME</td></tr>
+! 		<tr><td>Options</td><td>BROWSER_SEARCH</td></tr>
+! 		<tr><td>?</td><td>APPCOMMAND_HELP</td></tr>
+! 		<tr><td>Info</td><td>LAUNCH_APP1</td></tr>
+! 		<tr><td>Guide</td><td>LAUNCH_APP2</td></tr>
+! 		<tr><td>Stop</td><td>MEDIA_STOP</td></tr>
+! 		<tr><td>Pause/Play</td><td>MEDIA_PLAY_PAUSE</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>MEDIA_FASTFORWARD et &nbsp;MEDIA_CHANNEL_UP</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>MEDIA_REWIND et &nbsp;MEDIA_CHANNEL_DOWN</td></tr>
+! 		<tr><td>Chiffres, *, #, OK</td><td><i>Tape le chiffre, *, # ou Entr?e</i></td></tr>
+! 		<tr><td><font family="Symbol">S #</font>-</td><td>VOLUME_DOWN</td></tr>
+! 		<tr><td><font family="Symbol">T #</font>+</td><td>VOLUME_UP</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>MEDIA_PREVIOUSTRACK</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>MEDIA_NEXTTRACK</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>BROWSER_BACKWARD</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>BROWSER_FORWARD</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+
+
+
+From nobody at sheep.berlios.de  Sat Apr 15 00:18:23 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sat, 15 Apr 2006 00:18:23 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer Freebox.cs,1.17,1.18 MainForm.cs,1.7,1.8 MainForm.Designer.cs,1.3,1.4 MainForm.resx,1.2,1.3 Program.cs,1.4,1.5
+Message-ID: <200604142218.k3EMIMt02772@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv9623
+
+Modified Files:
+	Freebox.cs MainForm.cs MainForm.Designer.cs MainForm.resx 
+	Program.cs 
+Log Message:
+arrangement de la fen?tre avec le Framework.NET 2.0 final
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.17
+retrieving revision 1.18
+diff -C2 -d -r1.17 -r1.18
+*** Freebox.cs	13 Apr 2006 21:51:56 -0000	1.17
+--- Freebox.cs	14 Apr 2006 22:18:47 -0000	1.18
+***************
+*** 772,776 ****
+                      html = Encoding.UTF8.GetString(Encoding.Default.GetBytes(html));
+                  }
+!                 catch (Exception e)
+                  {
+  #if DEBUG
+--- 772,776 ----
+                      html = Encoding.UTF8.GetString(Encoding.Default.GetBytes(html));
+                  }
+!                 catch (Exception)
+                  {
+  #if DEBUG
+***************
+*** 1153,1154 ****
+--- 1153,1173 ----
+      }
+  }
++ /* notes diverses
++ 
++ Webcam sur TV:
++  input: dshow://
++  output: sout=#transcode{vcodec=mp2v,vb=3072,scale=1,acodec=mpga,ab=256,channels=2} :duplicate{dst=std{access=udp,mux=ts,url=212.27.38.253:1234}}
++ ========================================================================
++ Forcer le son ? sortir par la carte son du PC
++     * Effacez les lignes contenant sout-transcode-ab et sout-transcode-acodec
++     * Ajouter la ligne #EXTVLCOPT:sout=#duplicate{dst=transcode:std,select=video,dst=display,select=audio} 
++ ========================================================================
++ 
++ manuel:
++ start vlc\vlc.exe --extraintf http --no-playlist-autostart --http-src=./http-fbx --http-host :8080 --sout="#transcode:std" --sout-standard-access=udp --sout-standard-mux=ts --sout-standard-url=212.27.38.253:1234 --sout-transcode-vcodec=mp2v --sout-transcode-vb=900 --sout-transcode-acodec=mpga --sout-transcode-ab=384 --sout-transcode-channels=2 --file-caching=1000 --sout-ts-pid-video=68 --sout-ts-pid-audio=69 --sout-ts-pcr=80 --sout-ts-dts-delay=400 --play-and-stop --open=
++ 
++ sout=#transcode{vcodec=mp2v,vb=9000,scale=1,acodec=mpga,ab=384,channels=2} :duplicate{dst=std{access=udp,mux=ts,url=212.27.38.253:1234}}
++ 
++ Note: Pour ceux qui sont en Wi-Fi, remplacez vb=9000 par vb=2000 pour ainsi ?viter les freezes.
++ 
++ */
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.7
+retrieving revision 1.8
+diff -C2 -d -r1.7 -r1.8
+*** MainForm.cs	17 Sep 2005 13:35:06 -0000	1.7
+--- MainForm.cs	14 Apr 2006 22:18:47 -0000	1.8
+***************
+*** 1,5 ****
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+--- 1,5 ----
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005-2006 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+
+Index: MainForm.Designer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.Designer.cs,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** MainForm.Designer.cs	11 Sep 2005 02:34:12 -0000	1.3
+--- MainForm.Designer.cs	14 Apr 2006 22:18:47 -0000	1.4
+***************
+*** 271,275 ****
+              this.ShowVLC.Location = new System.Drawing.Point(41, 297);
+              this.ShowVLC.Name = "ShowVLC";
+!             this.ShowVLC.Size = new System.Drawing.Size(235, 14);
+              this.ShowVLC.TabIndex = 25;
+              this.ShowVLC.Text = "Afficher la fen?tre de VLC";
+--- 271,275 ----
+              this.ShowVLC.Location = new System.Drawing.Point(41, 297);
+              this.ShowVLC.Name = "ShowVLC";
+!             this.ShowVLC.Size = new System.Drawing.Size(235, 17);
+              this.ShowVLC.TabIndex = 25;
+              this.ShowVLC.Text = "Afficher la fen?tre de VLC";
+***************
+*** 313,319 ****
+              this.TranscodePC.Location = new System.Drawing.Point(258, 1);
+              this.TranscodePC.Name = "TranscodePC";
+!             this.TranscodePC.Size = new System.Drawing.Size(82, 17);
+              this.TranscodePC.TabIndex = 3;
+-             this.TranscodePC.TabStop = false;
+              this.TranscodePC.Text = "Audio sur PC";
+              // 
+--- 313,318 ----
+              this.TranscodePC.Location = new System.Drawing.Point(258, 1);
+              this.TranscodePC.Name = "TranscodePC";
+!             this.TranscodePC.Size = new System.Drawing.Size(86, 17);
+              this.TranscodePC.TabIndex = 3;
+              this.TranscodePC.Text = "Audio sur PC";
+              // 
+***************
+*** 323,329 ****
+              this.TranscodeA52.Location = new System.Drawing.Point(159, 1);
+              this.TranscodeA52.Name = "TranscodeA52";
+!             this.TranscodeA52.Size = new System.Drawing.Size(93, 17);
+              this.TranscodeA52.TabIndex = 2;
+-             this.TranscodeA52.TabStop = false;
+              this.TranscodeA52.Text = "A/52 Dolby 5.1";
+              // 
+--- 322,327 ----
+              this.TranscodeA52.Location = new System.Drawing.Point(159, 1);
+              this.TranscodeA52.Name = "TranscodeA52";
+!             this.TranscodeA52.Size = new System.Drawing.Size(97, 17);
+              this.TranscodeA52.TabIndex = 2;
+              this.TranscodeA52.Text = "A/52 Dolby 5.1";
+              // 
+***************
+*** 334,339 ****
+              this.TranscodeMPGA.Location = new System.Drawing.Point(58, 1);
+              this.TranscodeMPGA.Name = "TranscodeMPGA";
+!             this.TranscodeMPGA.Size = new System.Drawing.Size(95, 17);
+              this.TranscodeMPGA.TabIndex = 1;
+              this.TranscodeMPGA.Text = "MPEG-II St?r?o";
+              // 
+--- 332,338 ----
+              this.TranscodeMPGA.Location = new System.Drawing.Point(58, 1);
+              this.TranscodeMPGA.Name = "TranscodeMPGA";
+!             this.TranscodeMPGA.Size = new System.Drawing.Size(99, 17);
+              this.TranscodeMPGA.TabIndex = 1;
++             this.TranscodeMPGA.TabStop = true;
+              this.TranscodeMPGA.Text = "MPEG-II St?r?o";
+              // 
+***************
+*** 343,349 ****
+              this.TranscodeNone.Location = new System.Drawing.Point(0, 1);
+              this.TranscodeNone.Name = "TranscodeNone";
+!             this.TranscodeNone.Size = new System.Drawing.Size(52, 17);
+              this.TranscodeNone.TabIndex = 0;
+-             this.TranscodeNone.TabStop = false;
+              this.TranscodeNone.Text = "Aucun";
+              // 
+--- 342,347 ----
+              this.TranscodeNone.Location = new System.Drawing.Point(0, 1);
+              this.TranscodeNone.Name = "TranscodeNone";
+!             this.TranscodeNone.Size = new System.Drawing.Size(56, 17);
+              this.TranscodeNone.TabIndex = 0;
+              this.TranscodeNone.Text = "Aucun";
+              // 
+***************
+*** 354,358 ****
+              this.StartMinimized.Location = new System.Drawing.Point(41, 277);
+              this.StartMinimized.Name = "StartMinimized";
+!             this.StartMinimized.Size = new System.Drawing.Size(235, 14);
+              this.StartMinimized.TabIndex = 23;
+              this.StartMinimized.Text = "Minimiser au lancement";
+--- 352,356 ----
+              this.StartMinimized.Location = new System.Drawing.Point(41, 277);
+              this.StartMinimized.Name = "StartMinimized";
+!             this.StartMinimized.Size = new System.Drawing.Size(235, 17);
+              this.StartMinimized.TabIndex = 23;
+              this.StartMinimized.Text = "Minimiser au lancement";
+***************
+*** 364,368 ****
+              this.StartAtBoot.Location = new System.Drawing.Point(283, 297);
+              this.StartAtBoot.Name = "StartAtBoot";
+!             this.StartAtBoot.Size = new System.Drawing.Size(247, 14);
+              this.StartAtBoot.TabIndex = 26;
+              this.StartAtBoot.Text = "Lancer FreeXplorer au d?marrage de Windows";
+--- 362,366 ----
+              this.StartAtBoot.Location = new System.Drawing.Point(283, 297);
+              this.StartAtBoot.Name = "StartAtBoot";
+!             this.StartAtBoot.Size = new System.Drawing.Size(247, 17);
+              this.StartAtBoot.TabIndex = 26;
+              this.StartAtBoot.Text = "Lancer FreeXplorer au d?marrage de Windows";
+***************
+*** 377,381 ****
+              this.MinimizeToTray.Location = new System.Drawing.Point(283, 277);
+              this.MinimizeToTray.Name = "MinimizeToTray";
+!             this.MinimizeToTray.Size = new System.Drawing.Size(247, 14);
+              this.MinimizeToTray.TabIndex = 24;
+              this.MinimizeToTray.Text = "Mini-icone pr?s de l\'horloge lorsque minimis?";
+--- 375,379 ----
+              this.MinimizeToTray.Location = new System.Drawing.Point(283, 277);
+              this.MinimizeToTray.Name = "MinimizeToTray";
+!             this.MinimizeToTray.Size = new System.Drawing.Size(247, 17);
+              this.MinimizeToTray.TabIndex = 24;
+              this.MinimizeToTray.Text = "Mini-icone pr?s de l\'horloge lorsque minimis?";
+***************
+*** 387,391 ****
+              this.FFMpegInterlace.Location = new System.Drawing.Point(41, 347);
+              this.FFMpegInterlace.Name = "FFMpegInterlace";
+!             this.FFMpegInterlace.Size = new System.Drawing.Size(489, 14);
+              this.FFMpegInterlace.TabIndex = 29;
+              this.FFMpegInterlace.Text = "Suppression du scintillement vid?o (plus agr?able pour les yeux mais consomme du " +
+--- 385,389 ----
+              this.FFMpegInterlace.Location = new System.Drawing.Point(41, 347);
+              this.FFMpegInterlace.Name = "FFMpegInterlace";
+!             this.FFMpegInterlace.Size = new System.Drawing.Size(489, 17);
+              this.FFMpegInterlace.TabIndex = 29;
+              this.FFMpegInterlace.Text = "Suppression du scintillement vid?o (plus agr?able pour les yeux mais consomme du " +
+***************
+*** 398,402 ****
+              this.HalfScale.Location = new System.Drawing.Point(41, 367);
+              this.HalfScale.Name = "HalfScale";
+!             this.HalfScale.Size = new System.Drawing.Size(489, 14);
+              this.HalfScale.TabIndex = 30;
+              this.HalfScale.Text = "Mode d\'?conomie de CPU sans baisse de qualit? visible (traitement sur moins de pi" +
+--- 396,400 ----
+              this.HalfScale.Location = new System.Drawing.Point(41, 367);
+              this.HalfScale.Name = "HalfScale";
+!             this.HalfScale.Size = new System.Drawing.Size(489, 17);
+              this.HalfScale.TabIndex = 30;
+              this.HalfScale.Text = "Mode d\'?conomie de CPU sans baisse de qualit? visible (traitement sur moins de pi" +
+***************
+*** 409,413 ****
+              this.LIRCActive.Location = new System.Drawing.Point(283, 317);
+              this.LIRCActive.Name = "LIRCActive";
+!             this.LIRCActive.Size = new System.Drawing.Size(247, 14);
+              this.LIRCActive.TabIndex = 28;
+              this.LIRCActive.Text = "Activer le serveur LIRC";
+--- 407,411 ----
+              this.LIRCActive.Location = new System.Drawing.Point(283, 317);
+              this.LIRCActive.Name = "LIRCActive";
+!             this.LIRCActive.Size = new System.Drawing.Size(247, 17);
+              this.LIRCActive.TabIndex = 28;
+              this.LIRCActive.Text = "Activer le serveur LIRC";
+***************
+*** 447,451 ****
+              this.PCControlAllowed.Location = new System.Drawing.Point(41, 317);
+              this.PCControlAllowed.Name = "PCControlAllowed";
+!             this.PCControlAllowed.Size = new System.Drawing.Size(235, 14);
+              this.PCControlAllowed.TabIndex = 27;
+              this.PCControlAllowed.Text = "Autoriser le contr?le du PC par la Freebox";
+--- 445,449 ----
+              this.PCControlAllowed.Location = new System.Drawing.Point(41, 317);
+              this.PCControlAllowed.Name = "PCControlAllowed";
+!             this.PCControlAllowed.Size = new System.Drawing.Size(235, 17);
+              this.PCControlAllowed.TabIndex = 27;
+              this.PCControlAllowed.Text = "Autoriser le contr?le du PC par la Freebox";
+***************
+*** 458,462 ****
+              this.LessIconsInExplorer.Location = new System.Drawing.Point(41, 387);
+              this.LessIconsInExplorer.Name = "LessIconsInExplorer";
+!             this.LessIconsInExplorer.Size = new System.Drawing.Size(489, 14);
+              this.LessIconsInExplorer.TabIndex = 31;
+              this.LessIconsInExplorer.Text = "Afficher moins d\'ic?nes dans l\'explorateur (acc?l?re l\'affichage des pages)";
+--- 456,460 ----
+              this.LessIconsInExplorer.Location = new System.Drawing.Point(41, 387);
+              this.LessIconsInExplorer.Name = "LessIconsInExplorer";
+!             this.LessIconsInExplorer.Size = new System.Drawing.Size(489, 17);
+              this.LessIconsInExplorer.TabIndex = 31;
+              this.LessIconsInExplorer.Text = "Afficher moins d\'ic?nes dans l\'explorateur (acc?l?re l\'affichage des pages)";
+***************
+*** 476,488 ****
+              // TrayContextMenu
+              // 
+-             this.TrayContextMenu.Enabled = true;
+-             this.TrayContextMenu.GripMargin = new System.Windows.Forms.Padding(2);
+              this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+              this.TrayConfig,
+              this.TrayQuit});
+-             this.TrayContextMenu.Location = new System.Drawing.Point(24, 65);
+              this.TrayContextMenu.Name = "TrayContextMenu";
+!             this.TrayContextMenu.RightToLeft = System.Windows.Forms.RightToLeft.No;
+!             this.TrayContextMenu.Size = new System.Drawing.Size(158, 48);
+              // 
+              // TrayConfig
+--- 474,482 ----
+              // TrayContextMenu
+              // 
+              this.TrayContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+              this.TrayConfig,
+              this.TrayQuit});
+              this.TrayContextMenu.Name = "TrayContextMenu";
+!             this.TrayContextMenu.Size = new System.Drawing.Size(180, 48);
+              // 
+              // TrayConfig
+***************
+*** 490,493 ****
+--- 484,488 ----
+              this.TrayConfig.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+              this.TrayConfig.Name = "TrayConfig";
++             this.TrayConfig.Size = new System.Drawing.Size(179, 22);
+              this.TrayConfig.Text = "Configuration";
+              this.TrayConfig.Click += new System.EventHandler(this.TrayConfig_Click);
+***************
+*** 496,499 ****
+--- 491,495 ----
+              // 
+              this.TrayQuit.Name = "TrayQuit";
++             this.TrayQuit.Size = new System.Drawing.Size(179, 22);
+              this.TrayQuit.Text = "Arr?ter FreeXplorer";
+              this.TrayQuit.Click += new System.EventHandler(this.QuitBtn_Click);
+***************
+*** 556,562 ****
+              this.Name = "MainForm";
+              this.Text = "Configuration de FreeXplorer {0}";
+-             this.Shown += new System.EventHandler(this.MainForm_Shown);
+-             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+              this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+              this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+              this.panel1.ResumeLayout(false);
+--- 552,558 ----
+              this.Name = "MainForm";
+              this.Text = "Configuration de FreeXplorer {0}";
+              this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
++             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
++             this.Shown += new System.EventHandler(this.MainForm_Shown);
+              this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+              this.panel1.ResumeLayout(false);
+
+Index: MainForm.resx
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.resx,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** MainForm.resx	28 Aug 2005 21:43:49 -0000	1.2
+--- MainForm.resx	14 Apr 2006 22:18:47 -0000	1.3
+***************
+*** 61,64 ****
+--- 61,65 ----
+      -->
+    <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
++     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+      <xsd:element name="root" msdata:IsDataSet="true">
+        <xsd:complexType>
+***************
+*** 72,75 ****
+--- 73,77 ----
+                <xsd:attribute name="type" type="xsd:string" />
+                <xsd:attribute name="mimetype" type="xsd:string" />
++               <xsd:attribute ref="xml:space" />
+              </xsd:complexType>
+            </xsd:element>
+***************
+*** 89,92 ****
+--- 91,95 ----
+                <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+                <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
++               <xsd:attribute ref="xml:space" />
+              </xsd:complexType>
+            </xsd:element>
+
+Index: Program.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Program.cs,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** Program.cs	17 Sep 2005 13:35:06 -0000	1.4
+--- Program.cs	14 Apr 2006 22:18:47 -0000	1.5
+***************
+*** 1,5 ****
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+--- 1,5 ----
+  /*
+   * FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+!  * Copyright (C) 2005-2006 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+   * 
+   * Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+***************
+*** 33,36 ****
+--- 33,37 ----
+          {
+              Application.EnableVisualStyles();
++             Application.SetCompatibleTextRenderingDefault(false);
+              Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+              appVersionText = appVersion.ToString(appVersion.Build == 0 ? 2 : 3);
+
+
+
+From nobody at sheep.berlios.de  Sat Apr 15 00:18:22 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sat, 15 Apr 2006 00:18:22 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties AssemblyInfo.cs,1.9,1.10
+Message-ID: <200604142218.k3EMIMt02768@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Properties
+In directory sheep:/tmp/cvs-serv9623/Properties
+
+Modified Files:
+	AssemblyInfo.cs 
+Log Message:
+arrangement de la fen?tre avec le Framework.NET 2.0 final
+
+Index: AssemblyInfo.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Properties/AssemblyInfo.cs,v
+retrieving revision 1.9
+retrieving revision 1.10
+diff -C2 -d -r1.9 -r1.10
+*** AssemblyInfo.cs	21 Sep 2005 23:29:43 -0000	1.9
+--- AssemblyInfo.cs	14 Apr 2006 22:18:47 -0000	1.10
+***************
+*** 11,15 ****
+  [assembly: AssemblyCompany("Olivier Marcoux")]
+  [assembly: AssemblyProduct("FreeXplorer")]
+! [assembly: AssemblyCopyright("Copyright ? Olivier Marcoux 2005")]
+  [assembly: AssemblyTrademark("")]
+  [assembly: AssemblyCulture("")]
+--- 11,15 ----
+  [assembly: AssemblyCompany("Olivier Marcoux")]
+  [assembly: AssemblyProduct("FreeXplorer")]
+! [assembly: AssemblyCopyright("Copyright ? Olivier Marcoux 2005-2006")]
+  [assembly: AssemblyTrademark("")]
+  [assembly: AssemblyCulture("")]
+
+
+
+From nobody at sheep.berlios.de  Sat Apr 15 00:44:23 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sat, 15 Apr 2006 00:44:23 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,NONE,1.1 Favorites.cs,1.3,1.4 FreeXplorer.csproj,1.5,1.6 Freebox.cs,1.18,1.19 MainForm.cs,1.8,1.9 Recents.cs,1.1,1.2
+Message-ID: <200604142244.k3EMiNt03465@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv15709/FreeXplorer
+
+Modified Files:
+	Favorites.cs FreeXplorer.csproj Freebox.cs MainForm.cs 
+	Recents.cs 
+Added Files:
+	FreeXplorer.cs 
+Log Message:
+Chemin du dossier contenant les fichiers de configuration recherch? ? un seul endroit.
+
+--- NEW FILE: FreeXplorer.cs ---
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.IO;
+
+namespace Wizou.FreeXplorer
+{
+    static class FreeXplorer
+    {
+        public static string ConfigurationFolder
+        {
+            get
+            {
+                return Path.Combine(Environment.GetFolderPath(
+                    Environment.SpecialFolder.ApplicationData), "FreeXplorer");
+            }
+        }
+    }
+}
+
+Index: Favorites.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Favorites.cs,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** Favorites.cs	6 Apr 2006 22:08:27 -0000	1.3
+--- Favorites.cs	14 Apr 2006 22:44:46 -0000	1.4
+***************
+*** 28,35 ****
+      static class Favorites
+      {
+          public static void Add(string file, string kind, string title)
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/favorites.xml"));
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode("MRL[.='" + file + "']") as XmlElement;
+--- 28,43 ----
+      static class Favorites
+      {
++         static string FilePath
++         {
++             get
++             {
++                 return Path.Combine(FreeXplorer.ConfigurationFolder, "favorites.xml");
++             }
++         }
++ 
+          public static void Add(string file, string kind, string title)
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(FilePath);
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode("MRL[.='" + file + "']") as XmlElement;
+***************
+*** 42,47 ****
+              node.SetAttribute("kind", kind);
+              node.SetAttribute("title", title);
+!             doc.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/favorites.xml"));
+! 
+          }
+  
+--- 50,54 ----
+              node.SetAttribute("kind", kind);
+              node.SetAttribute("title", title);
+!             doc.Save(FilePath);
+          }
+  
+***************
+*** 49,58 ****
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/favorites.xml"));
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode("MRL[.='" + file + "']") as XmlElement;
+              if (node != null) root.RemoveChild(node);
+!             doc.Save(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/favorites.xml"));
+! 
+          }
+      }
+--- 56,64 ----
+          {
+              XmlDocument doc = new XmlDocument();
+!             doc.Load(FilePath);
+              XmlElement root = doc.DocumentElement;
+              XmlElement node = root.SelectSingleNode("MRL[.='" + file + "']") as XmlElement;
+              if (node != null) root.RemoveChild(node);
+!             doc.Save(FilePath);
+          }
+      }
+
+Index: FreeXplorer.csproj
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.csproj,v
+retrieving revision 1.5
+retrieving revision 1.6
+diff -C2 -d -r1.5 -r1.6
+*** FreeXplorer.csproj	6 Apr 2006 22:08:58 -0000	1.5
+--- FreeXplorer.csproj	14 Apr 2006 22:44:46 -0000	1.6
+***************
+*** 56,59 ****
+--- 56,60 ----
+    <ItemGroup>
+      <Compile Include="Favorites.cs" />
++     <Compile Include="FreeXplorer.cs" />
+      <Compile Include="MainForm.cs">
+        <SubType>Form</SubType>
+
+Index: Freebox.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Freebox.cs,v
+retrieving revision 1.18
+retrieving revision 1.19
+diff -C2 -d -r1.18 -r1.19
+*** Freebox.cs	14 Apr 2006 22:18:47 -0000	1.18
+--- Freebox.cs	14 Apr 2006 22:44:46 -0000	1.19
+***************
+*** 65,69 ****
+              try
+              {
+!                 Stream stream = File.Open(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/cookies.dat"), FileMode.Open);
+                  BinaryFormatter formatter = new BinaryFormatter();
+                  webCookieContainer = (CookieContainer)formatter.Deserialize(stream);
+--- 65,69 ----
+              try
+              {
+!                 Stream stream = File.Open(Path.Combine(FreeXplorer.ConfigurationFolder, "cookies.dat"), FileMode.Open);
+                  BinaryFormatter formatter = new BinaryFormatter();
+                  webCookieContainer = (CookieContainer)formatter.Deserialize(stream);
+***************
+*** 194,198 ****
+          private HttpStatusCode ReplyXSLT(string xslPath, string xmlName)
+          {
+!             string xmlPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/" + xmlName);
+              if (!File.Exists(xslPath))
+              {
+--- 194,198 ----
+          private HttpStatusCode ReplyXSLT(string xslPath, string xmlName)
+          {
+!             string xmlPath = Path.Combine(FreeXplorer.ConfigurationFolder, xmlName);
+              if (!File.Exists(xslPath))
+              {
+***************
+*** 595,599 ****
+  #endif
+              //Opens "cookies.dat" and serializes the CookieContainer into it in Soap/XML format.
+!             Stream stream = File.Open(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/cookies.dat"), FileMode.Create);
+              BinaryFormatter formatter = new BinaryFormatter();
+              formatter.Serialize(stream, webCookieContainer);
+--- 595,599 ----
+  #endif
+              //Opens "cookies.dat" and serializes the CookieContainer into it in Soap/XML format.
+!             Stream stream = File.Open(Path.Combine(FreeXplorer.ConfigurationFolder, "cookies.dat"), FileMode.Create);
+              BinaryFormatter formatter = new BinaryFormatter();
+              formatter.Serialize(stream, webCookieContainer);
+***************
+*** 982,985 ****
+--- 982,1003 ----
+          }
+  
++         static string PathCombine(params string[] elems)
++         {
++             string result = "";
++             foreach (string elem in elems)
++             {
++                 result = Path.Combine(result, elem);
++             }
++             return result;
++         }
++ 
++         internal static string GetIconForMediaType(VLC.Utility.MediaType type, string defaultIcon)
++         {
++             //FIXME: Path relatif au CurrentDirectory mais devrait ?tre relatif au BaseDir du serveur
++             FileInfo iconFile = new FileInfo(PathCombine("pages", "img", "media", type.ToString() + ".gif"));
++             return iconFile.Exists ? "img/media/" + iconFile.Name : defaultIcon;
++ 
++         }
++ 
+          internal static string ExploreFiles(string dir, string deffile)
+          {
+***************
+*** 1020,1030 ****
+              else
+                  return html.ToString();
+-         }
+- 
+-         internal static string GetIconForMediaType(VLC.Utility.MediaType type, string defaultIcon)
+-         {
+-             FileInfo iconFile = new FileInfo("pages/img/media/" + type.ToString() + ".gif");
+-             return iconFile.Exists ? "img/media/" + iconFile.Name : defaultIcon;
+- 
+          }
+  
+--- 1038,1041 ----
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.8
+retrieving revision 1.9
+diff -C2 -d -r1.8 -r1.9
+*** MainForm.cs	14 Apr 2006 22:18:47 -0000	1.8
+--- MainForm.cs	14 Apr 2006 22:44:46 -0000	1.9
+***************
+*** 117,121 ****
+  
+              // chargement des valeurs des options depuis le fichier Config.xml
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/config.xml"));
+              reader.ReadStartElement("Config");
+              do
+--- 117,121 ----
+  
+              // chargement des valeurs des options depuis le fichier Config.xml
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(FreeXplorer.ConfigurationFolder, "config.xml"));
+              reader.ReadStartElement("Config");
+              do
+***************
+*** 163,167 ****
+          public void SaveConfig()
+          {
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/config.xml"), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement("Config");
+--- 163,167 ----
+          public void SaveConfig()
+          {
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(FreeXplorer.ConfigurationFolder, "config.xml"), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement("Config");
+
+Index: Recents.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Recents.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** Recents.cs	6 Apr 2006 22:08:58 -0000	1.1
+--- Recents.cs	14 Apr 2006 22:44:46 -0000	1.2
+***************
+*** 28,36 ****
+      static class Recents
+      {
+          public static void Add(string file)
+          {
+!             XmlTextReader reader = new XmlTextReader(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/recents.xml"));
+              reader.ReadStartElement("Recents");
+!             XmlTextWriter writer = new XmlTextWriter(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/recents.new"), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement("Recents");
+--- 28,44 ----
+      static class Recents
+      {
++         static string FilePath
++         {
++             get
++             {
++                 return Path.Combine(FreeXplorer.ConfigurationFolder, "recents.xml");
++             }
++         }
++ 
+          public static void Add(string file)
+          {
+!             XmlTextReader reader = new XmlTextReader(FilePath);
+              reader.ReadStartElement("Recents");
+!             XmlTextWriter writer = new XmlTextWriter(Path.ChangeExtension(FilePath, ".new"), null);
+              writer.Formatting = Formatting.Indented;
+              writer.WriteStartElement("Recents");
+***************
+*** 51,56 ****
+              writer.Close();
+              reader.Close();
+!             File.Delete(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/recents.xml"));
+!             File.Move(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/recents.new"), Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FreeXplorer/recents.xml"));
+          }
+      }
+--- 59,64 ----
+              writer.Close();
+              reader.Close();
+!             File.Delete(FilePath);
+!             File.Move(Path.ChangeExtension(FilePath, ".new"), FilePath);
+          }
+      }
+
+
+
+From nobody at sheep.berlios.de  Sat Apr 15 01:07:13 2006
+From: nobody at sheep.berlios.de (blackfox)
+Date: Sat, 15 Apr 2006 01:07:13 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.cs,1.1,1.2
+Message-ID: <200604142307.k3EN7Ct04106@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv31476/FreeXplorer
+
+Modified Files:
+	FreeXplorer.cs 
+Log Message:
+Dossiers de configurations d?pendants de l'OS.
+
+Index: FreeXplorer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.cs,v
+retrieving revision 1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1 -r1.2
+*** FreeXplorer.cs	14 Apr 2006 22:44:46 -0000	1.1
+--- FreeXplorer.cs	14 Apr 2006 23:07:36 -0000	1.2
+***************
+*** 12,17 ****
+              get
+              {
+!                 return Path.Combine(Environment.GetFolderPath(
+!                     Environment.SpecialFolder.ApplicationData), "FreeXplorer");
+              }
+          }
+--- 12,27 ----
+              get
+              {
+!                 // http://www.mono-project.com/FAQ:_Technical#How_to_detect_the_execution_platform_.3F
+!                 int platform = (int) Environment.OSVersion.Platform;
+!                 if ((platform == 4) || (platform == 128))
+!                 {
+!                     return Path.Combine(Environment.GetFolderPath(
+!                         Environment.SpecialFolder.Personal), ".freexplorer");
+!                 }
+!                 else
+!                 {
+!                     return Path.Combine(Environment.GetFolderPath(
+!                         Environment.SpecialFolder.ApplicationData), "FreeXplorer");
+!                 }
+              }
+          }
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 02:06:00 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 02:06:00 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.3,1.4
+Message-ID: <200604160006.k3G060t28546@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin
+In directory sheep:/tmp/cvs-serv7269/bin
+
+Modified Files:
+	vlcrcV2 
+Log Message:
+tentative d'am?lioration des param?tres VLC
+
+Index: vlcrcV2
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/vlcrcV2,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** vlcrcV2	21 Sep 2005 23:31:02 -0000	1.3
+--- vlcrcV2	16 Apr 2006 00:06:21 -0000	1.4
+***************
+*** 410,416 ****
+  #sout-ts-dts-delay=400
+  # Cryptage audio (Bool??en)
+! #sout-ts-crypt-audio=1
+  # Crypt video (Bool??en)
+! #sout-ts-crypt-video=1
+  # Cl?? CSA (Cha??ne)
+  #sout-ts-csa-ck=
+--- 410,416 ----
+  #sout-ts-dts-delay=400
+  # Cryptage audio (Bool??en)
+! sout-ts-crypt-audio=0
+  # Crypt video (Bool??en)
+! sout-ts-crypt-video=0
+  # Cl?? CSA (Cha??ne)
+  #sout-ts-csa-ck=
+***************
+*** 458,462 ****
+  #sout-ffmpeg-hurry-up=0
+  # Active l???encodage entrelac?? (Bool??en)
+! sout-ffmpeg-interlace=1
+  # Enable interlaced motion estimation (Bool??en)
+  sout-ffmpeg-interlace-me=0
+--- 458,462 ----
+  #sout-ffmpeg-hurry-up=0
+  # Active l???encodage entrelac?? (Bool??en)
+! #sout-ffmpeg-interlace=0
+  # Enable interlaced motion estimation (Bool??en)
+  sout-ffmpeg-interlace-me=0
+***************
+*** 797,805 ****
+  #freetype-font=
+  # Taille de la police en pixels (Entier)
+! #freetype-fontsize=0
+  # Opacit??, 0 ?? 255 (Entier)
+  #freetype-opacity=255
+  # Couleur par d??faut du texte (Entier)
+! #freetype-color=16777215
+  # Taille (Entier)
+  #freetype-rel-fontsize=16
+--- 797,805 ----
+  #freetype-font=
+  # Taille de la police en pixels (Entier)
+! freetype-fontsize=22
+  # Opacit??, 0 ?? 255 (Entier)
+  #freetype-opacity=255
+  # Couleur par d??faut du texte (Entier)
+! freetype-color=8421376
+  # Taille (Entier)
+  #freetype-rel-fontsize=16
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 02:50:08 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 02:50:08 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj.user,1.1.1.1,1.2 MainForm.cs,1.9,1.10 Program.cs,1.5,1.6
+Message-ID: <200604160050.k3G0o7t29710@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv15954/FreeXplorer
+
+Modified Files:
+	FreeXplorer.csproj.user MainForm.cs Program.cs 
+Log Message:
+N'affiche plus la bulle d'aide en cas de lancement automatique au d?marrage
+
+Index: FreeXplorer.csproj.user
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.csproj.user,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+*** FreeXplorer.csproj.user	3 Aug 2005 18:54:25 -0000	1.1.1.1
+--- FreeXplorer.csproj.user	16 Apr 2006 00:50:31 -0000	1.2
+***************
+*** 16,18 ****
+--- 16,24 ----
+      <ProjectView>ProjectFiles</ProjectView>
+    </PropertyGroup>
++   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
++     <StartArguments>-autostart</StartArguments>
++   </PropertyGroup>
++   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
++     <StartArguments>-autostart</StartArguments>
++   </PropertyGroup>
+  </Project>
+
+Index: MainForm.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.cs,v
+retrieving revision 1.9
+retrieving revision 1.10
+diff -C2 -d -r1.9 -r1.10
+*** MainForm.cs	14 Apr 2006 22:44:46 -0000	1.9
+--- MainForm.cs	16 Apr 2006 00:50:31 -0000	1.10
+***************
+*** 84,88 ****
+          {
+              MainForm_SizeChanged(null, e);
+!             if (WindowState == FormWindowState.Minimized)
+                  TrayIcon.ShowBalloonTip(5);
+          }
+--- 84,88 ----
+          {
+              MainForm_SizeChanged(null, e);
+!             if ((WindowState == FormWindowState.Minimized) && !Program.autostart)
+                  TrayIcon.ShowBalloonTip(5);
+          }
+
+Index: Program.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Program.cs,v
+retrieving revision 1.5
+retrieving revision 1.6
+diff -C2 -d -r1.5 -r1.6
+*** Program.cs	14 Apr 2006 22:18:47 -0000	1.5
+--- Program.cs	16 Apr 2006 00:50:31 -0000	1.6
+***************
+*** 25,28 ****
+--- 25,29 ----
+      {
+          public static string appVersionText;
++         public static bool autostart = false;
+          
+          /// <summary>
+***************
+*** 36,39 ****
+--- 37,45 ----
+              Version appVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version;
+              appVersionText = appVersion.ToString(appVersion.Build == 0 ? 2 : 3);
++             foreach (string arg in Environment.GetCommandLineArgs())
++             {
++                 if (String.Compare(arg, "-autostart", true) == 0)
++                     autostart = true;
++             }
+              MainForm mainForm;
+              try
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 02:50:08 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 02:50:08 +0200
+Subject: [Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.12,1.13 Setup.nsi,1.12,1.13
+Message-ID: <200604160050.k3G0o8t29714@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv15954
+
+Modified Files:
+	Lisez-Moi.html Setup.nsi 
+Log Message:
+N'affiche plus la bulle d'aide en cas de lancement automatique au d?marrage
+
+Index: Lisez-Moi.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/Lisez-Moi.html,v
+retrieving revision 1.12
+retrieving revision 1.13
+diff -C2 -d -r1.12 -r1.13
+*** Lisez-Moi.html	21 Sep 2005 23:34:29 -0000	1.12
+--- Lisez-Moi.html	16 Apr 2006 00:50:32 -0000	1.13
+***************
+*** 34,37 ****
+--- 34,43 ----
+  <li>Acc?s ? des dizaines de sites Pocket PC
+  <li>Quelques nouvelles WebTV
++ <li>Possibilit? de mettre une icone diff?rente pour chaque type de fichier multimedia
++ <li>Retrait de fichiers inutiles de l'installeur
++ <li>Diff?renciation des touches play/pause d?e ? une ?volution du firmware
++ <li>Am?lioration du support des touches dans les modes LIRC et MediaPlayer
++ <li>Arrangement de la fen?tre avec le Framework.NET 2.0 final
++ <li>N'affiche plus la bulle d'aide en cas de lancement automatique au d?marrage
+  </ul>
+  
+
+Index: Setup.nsi
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/Setup.nsi,v
+retrieving revision 1.12
+retrieving revision 1.13
+diff -C2 -d -r1.12 -r1.13
+*** Setup.nsi	13 Apr 2006 22:26:05 -0000	1.12
+--- Setup.nsi	16 Apr 2006 00:50:32 -0000	1.13
+***************
+*** 1,548 ****
+! ; FreeXplorer - Interface type Freeplayer de pilotage du PC et de VLC depuis une Freebox
+! ; Copyright (C) 2005-2006 Olivier Marcoux (freexplorer at free.fr / http://freexplorer.free.fr)
+! ; 
+! ; Ce programme est libre, vous pouvez le redistribuer et/ou le modifier selon les 
+! ; termes de la Licence Publique G?n?rale GNU publi?e par la Free Software 
+! ; Foundation (version 2 ou bien toute autre version ult?rieure choisie par vous).
+! ; 
+! ; Ce programme est distribu? car potentiellement utile, mais SANS AUCUNE GARANTIE, 
+! ; ni explicite ni implicite, y compris les garanties de commercialisation ou d'adaptation 
+! ; dans un but sp?cifique. Reportez-vous ? la Licence Publique G?n?rale GNU pour 
+[...1067 lines suppressed...]
+! 	Delete "$INSTDIR\FreeXplorer.lnk"
+! 	Delete "$INSTDIR\Lisez-Moi.html"
+! 	Delete "$INSTDIR\Uninstall.exe"
+! 	;Remove program directory (only if directory is empty)
+! 	RMDir "$INSTDIR"
+! 	;Remove manufacturer directory (only if directory is empty)
+! 	Push "$INSTDIR"
+! 	Call un.GetParent
+! 	Pop $R0
+! 	RMDir "$R0"
+! 
+! 	;Remove shortcuts
+! 	Delete "$SMPROGRAMS\${PRODUCT} ${VERSION}.lnk"
+! 
+! 	;Remove registration
+! 	DeleteRegKey HKLM "${UNINSTALLKEY}"
+! 
+! 	DeleteRegKey /ifempty HKLM "Software\${MFG}\${PRODUCT}"
+! 	DeleteRegKey /ifempty HKLM "Software\${MFG}"
+! SectionEnd
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 03:07:22 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 03:07:22 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer FreeXplorer.csproj,1.6,1.7
+Message-ID: <200604160107.k3G17Mt30173@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv19878/FreeXplorer
+
+Modified Files:
+	FreeXplorer.csproj 
+Log Message:
+La touche # sert ? masquer l'affichage dans les modes LIRC et MediaPlayer
+La touche Rec sert ? passer le PC en mode veille dans les modes LIRC et MediaPlayer
+
+
+Index: FreeXplorer.csproj
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/FreeXplorer.csproj,v
+retrieving revision 1.6
+retrieving revision 1.7
+diff -C2 -d -r1.6 -r1.7
+*** FreeXplorer.csproj	14 Apr 2006 22:44:46 -0000	1.6
+--- FreeXplorer.csproj	16 Apr 2006 01:07:46 -0000	1.7
+***************
+*** 70,73 ****
+--- 70,74 ----
+      <EmbeddedResource Include="MainForm.resx">
+        <DependentUpon>MainForm.cs</DependentUpon>
++       <SubType>Designer</SubType>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Properties\Resources.resx">
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 03:07:22 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 03:07:22 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin .cvsignore,1.2,1.3
+Message-ID: <200604160107.k3G17Mt30177@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin
+In directory sheep:/tmp/cvs-serv19878/FreeXplorer/bin
+
+Modified Files:
+	.cvsignore 
+Log Message:
+La touche # sert ? masquer l'affichage dans les modes LIRC et MediaPlayer
+La touche Rec sert ? passer le PC en mode veille dans les modes LIRC et MediaPlayer
+
+
+Index: .cvsignore
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/.cvsignore,v
+retrieving revision 1.2
+retrieving revision 1.3
+diff -C2 -d -r1.2 -r1.3
+*** .cvsignore	11 Sep 2005 02:34:12 -0000	1.2
+--- .cvsignore	16 Apr 2006 01:07:46 -0000	1.3
+***************
+*** 1,2 ****
+--- 1,3 ----
++ FreeXplorer.publish
+  *.pdb
+  *.exe
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 03:07:22 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 03:07:22 +0200
+Subject: [Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.13,1.14
+Message-ID: <200604160107.k3G17Mt30171@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv19878
+
+Modified Files:
+	Lisez-Moi.html 
+Log Message:
+La touche # sert ? masquer l'affichage dans les modes LIRC et MediaPlayer
+La touche Rec sert ? passer le PC en mode veille dans les modes LIRC et MediaPlayer
+
+
+Index: Lisez-Moi.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/Lisez-Moi.html,v
+retrieving revision 1.13
+retrieving revision 1.14
+diff -C2 -d -r1.13 -r1.14
+*** Lisez-Moi.html	16 Apr 2006 00:50:32 -0000	1.13
+--- Lisez-Moi.html	16 Apr 2006 01:07:39 -0000	1.14
+***************
+*** 38,41 ****
+--- 38,43 ----
+  <li>Diff?renciation des touches play/pause d?e ? une ?volution du firmware
+  <li>Am?lioration du support des touches dans les modes LIRC et MediaPlayer
++ <li>La touche # sert ? masquer l'affichage dans les modes LIRC et MediaPlayer
++ <li>La touche Rec sert ? passer le PC en mode veille dans les modes LIRC et MediaPlayer
+  <li>Arrangement de la fen?tre avec le Framework.NET 2.0 final
+  <li>N'affiche plus la bulle d'aide en cas de lancement automatique au d?marrage
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 03:07:23 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 03:07:23 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages lirc_blank.arg,NONE,1.1 lirc_blank.html,NONE,1.1 mediacenter_blank.html,NONE,1.1 lirc.html,1.3,1.4 mediacenter.html,1.3,1.4
+Message-ID: <200604160107.k3G17Nt30184@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv19878/FreeXplorer/bin/pages
+
+Modified Files:
+	lirc.html mediacenter.html 
+Added Files:
+	lirc_blank.arg lirc_blank.html mediacenter_blank.html 
+Log Message:
+La touche # sert ? masquer l'affichage dans les modes LIRC et MediaPlayer
+La touche Rec sert ? passer le PC en mode veille dans les modes LIRC et MediaPlayer
+
+
+--- NEW FILE: lirc_blank.arg ---
+$lirc
+key
+
+--- NEW FILE: lirc_blank.html ---
+(This appears to be a binary file; contents omitted.)
+
+--- NEW FILE: mediacenter_blank.html ---
+<!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+<html>
+<head>
+	<meta name="home_page" content="settings.html">
+	<meta name="love_page"      content="mediacenter_blank.html?action=appcommand&cmd=6">
+	<meta name="love2_page"     content="mediacenter_blank.html?action=appcommand&cmd=16">
+	<meta name="mail_page"      content="mediacenter_blank.html?action=appcommand&cmd=15">
+	<meta name="mail2_page"     content="mediacenter_blank.html?action=appcommand&cmd=7">
+	<meta name="nochannel_page" content="mediacenter_blank.html?action=sendkeys&keys=%d">
+	<meta name="channel_page"   content="mediacenter_blank.html?action=sendkeys&keys=%d">
+	<meta name="prog_select_timeout" content="300">
+	<meta name="prog_expand_timeout" content="300">
+	<link rel="help"       href=   "mediacenter_blank.html?action=appcommand&cmd=27">
+	<link rel="guide"      href=   "mediacenter_blank.html?action=appcommand&cmd=18">
+	<link rel="yellow"     href=   "mediacenter_blank.html?action=appcommand&cmd=1">
+	<link rel="info"       href=   "mediacenter_blank.html?action=appcommand&cmd=17">
+	<link rel="options"    href=   "mediacenter_blank.html?action=appcommand&cmd=5">
+	<link rel="red"        href=   "mediacenter_blank.html?action=appcommand&cmd=12">
+	<link rel="green"      href=   "mediacenter_blank.html?action=appcommand&cmd=11">
+	<link rel="blue"       href=   "mediacenter_blank.html?action=appcommand&cmd=2">
+	<link rel="left"       href=   "mediacenter_blank.html?action=appcommand&cmd=9">
+	<link rel="right"      href=   "mediacenter_blank.html?action=appcommand&cmd=10">
+	<link rel="up"         href=   "mediacenter_blank.html?action=appcommand&cmd=49&cmd=51">
+	<link rel="down"       href=   "mediacenter_blank.html?action=appcommand&cmd=50&cmd=52">
+	<link rel="pause"      href=   "mediacenter_blank.html?action=appcommand&cmd=14">
+	<link rel="play"       href=   "mediacenter_blank.html?action=appcommand&cmd=14">
+	<link rel="stop"       href=   "mediacenter_blank.html?action=appcommand&cmd=13">
+	<link rel="star"       href=   "mediacenter_blank.html?action=sendkeys&keys=*">
+	<link rel="sharp"      href=   "mediacenter.html">
+
+	<!-- Fonction sympa pour eteindre le PC ? la fin d'un film tout en restant dans le mode MediaCenter
+		Je la verrai bien sur l'appui-long de la touche '?' mais la balise meta correspondante n'est pas encore document?e
+		donc pour l'instant je la met sur 'rec', touche nouvellement document?e -->
+	<link rel="rec"        href=   "mediacenter_blank.html?afterAction=suspend">
+
+</head>
+<body text="#FFFFFF3F">
+	<a href="mediacenter_blank.html?action=sendkeys&keys={ENTER}"></a>
+</body>
+</html>
+
+Index: lirc.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/lirc.html,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** lirc.html	14 Apr 2006 21:59:53 -0000	1.3
+--- lirc.html	16 Apr 2006 01:07:47 -0000	1.4
+***************
+*** 1,87 ****
+! ???<!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="lirc.html?action=lirc&key=love">
+! 	<meta name="love2_page"     content="lirc.html?action=lirc&key=love2">
+! 	<meta name="mail_page"      content="lirc.html?action=lirc&key=mail">
+! 	<meta name="mail2_page"     content="lirc.html?action=lirc&key=mail2">
+! 	<meta name="nochannel_page" content="lirc.html?action=lirc&key=%d">
+! 	<meta name="channel_page"   content="lirc.html?action=lirc&key=#%d">
+! 	<meta name="prog_select_timeout" content="300">
+! 	<meta name="prog_expand_timeout" content="300">
+! 	<link rel="help"       href=   "lirc.html?action=lirc&key=help">
+! 	<link rel="guide"      href=   "lirc.html?action=lirc&key=guide">
+! 	<link rel="yellow"     href=   "lirc.html?action=lirc&key=yellow">
+! 	<link rel="info"       href=   "lirc.html?action=lirc&key=info">
+! 	<link rel="options"    href=   "lirc.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc.html?action=lirc&key=red"-->
+! 	<link rel="green"      href=   "lirc.html?action=lirc&key=green"-->
+! 	<link rel="blue"       href=   "lirc.html?action=lirc&key=blue"-->
+! 	<link rel="left"       href=   "lirc.html?action=lirc&key=left">
+! 	<link rel="right"      href=   "lirc.html?action=lirc&key=right">
+! 	<link rel="up"         href=   "lirc.html?action=lirc&key=up">
+! 	<link rel="down"       href=   "lirc.html?action=lirc&key=down">
+! 	<link rel="pause"      href=   "lirc.html?action=lirc&key=ppause">
+! 	<link rel="play"       href=   "lirc.html?action=lirc&key=ppause">
+! 	<link rel="stop"       href=   "lirc.html?action=lirc&key=stop">
+! 	<link rel="star"       href=   "lirc.html?action=lirc&key=*">
+! 	<link rel="sharp"      href=   "lirc.html?action=lirc&key=#">
+! 
+! 	<!-- Fonction sympa pour eteindre le PC ?? la fin d'un film tout en restant dans le mode LIRC
+! 		Je la verrai bien sur l'appui-long de la touche '?' mais la balise meta correspondante n'est pas encore document??e
+! 		donc pour l'instant je la met sur 'rec', touche nouvellement document??e -->
+! 	<link rel="rec"        href=   "lirc.html?afterAction=suspend">
+! 
+! 	<meta name=refresh	content="10;url=lirc.html?key={2}">
+! </head>
+! <body text="#FFFFFF3F">
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td bgcolor="#00000028" align=center>
+! 		<a href="lirc.html?action=lirc&key=ok"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t??l??commande des applications compatibles LIRC<br>
+! 		telles que Media Player Classic ou autres<br>
+! 		</font>
+! 		<font size=+2 color="#FF80803F">
+! 		{1} client(s) connect??(s) - Dernier code ??mis: {2}
+! 		<hr>
+! 		</font><font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g??n??r??s par l'appui sur la t??l??commande:<br>
+! 		(?? configurer dans le logiciel client LIRC)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=25%>love</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>love2</td></tr>
+! 		<tr><td>Lettre</td><td>mail</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>mail2</td></tr>
+! 		<tr><td>Options</td><td>options</td></tr>
+! 		<tr><td>?</td><td>help</td></tr>
+! 		<tr><td>Info</td><td>info</td></tr>
+! 		<tr><td>Guide</td><td>guide</td></tr>
+! 		<tr><td>Stop</td><td>stop</td></tr>
+! 		<tr><td>Pause/Play</td><td>ppause</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>up</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>down</td></tr>
+! 		<tr><td>OK</td><td>ok</td></tr>
+! 		<tr><td><font family="Symbol">S #</font>-</td><td>left</td></tr>
+! 		<tr><td><font family="Symbol">T #</font>+</td><td>right</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>red</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>green</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>yellow</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>blue</td></tr>
+! 		<tr><td>Chiffres, *, #</td><td>&lt;le chiffre&gt;, *, #</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+--- 1,87 ----
+! ???<!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="lirc.html?action=lirc&key=love">
+! 	<meta name="love2_page"     content="lirc.html?action=lirc&key=love2">
+! 	<meta name="mail_page"      content="lirc.html?action=lirc&key=mail">
+! 	<meta name="mail2_page"     content="lirc.html?action=lirc&key=mail2">
+! 	<meta name="nochannel_page" content="lirc.html?action=lirc&key=%d">
+! 	<meta name="channel_page"   content="lirc.html?action=lirc&key=#%d">
+! 	<meta name="prog_select_timeout" content="300">
+! 	<meta name="prog_expand_timeout" content="300">
+! 	<link rel="help"       href=   "lirc.html?action=lirc&key=help">
+! 	<link rel="guide"      href=   "lirc.html?action=lirc&key=guide">
+! 	<link rel="yellow"     href=   "lirc.html?action=lirc&key=yellow">
+! 	<link rel="info"       href=   "lirc.html?action=lirc&key=info">
+! 	<link rel="options"    href=   "lirc.html?action=lirc&key=options">
+! 	<link rel="red"        href=   "lirc.html?action=lirc&key=red"-->
+! 	<link rel="green"      href=   "lirc.html?action=lirc&key=green"-->
+! 	<link rel="blue"       href=   "lirc.html?action=lirc&key=blue"-->
+! 	<link rel="left"       href=   "lirc.html?action=lirc&key=left">
+! 	<link rel="right"      href=   "lirc.html?action=lirc&key=right">
+! 	<link rel="up"         href=   "lirc.html?action=lirc&key=up">
+! 	<link rel="down"       href=   "lirc.html?action=lirc&key=down">
+! 	<link rel="pause"      href=   "lirc.html?action=lirc&key=ppause">
+! 	<link rel="play"       href=   "lirc.html?action=lirc&key=ppause">
+! 	<link rel="stop"       href=   "lirc.html?action=lirc&key=stop">
+! 	<link rel="star"       href=   "lirc.html?action=lirc&key=*">
+! 	<link rel="sharp"      href=   "lirc_blank.html">
+! 
+! 	<!-- Fonction sympa pour eteindre le PC ?? la fin d'un film tout en restant dans le mode LIRC
+! 		Je la verrai bien sur l'appui-long de la touche '?' mais la balise meta correspondante n'est pas encore document??e
+! 		donc pour l'instant je la met sur 'rec', touche nouvellement document??e -->
+! 	<link rel="rec"        href=   "lirc.html?afterAction=suspend">
+! 
+! 	<meta name=refresh	content="10;url=lirc.html?key={2}">
+! </head>
+! <body text="#FFFFFF3F">
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td bgcolor="#00000028" align=center>
+! 		<a href="lirc.html?action=lirc&key=ok"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t??l??commande des applications compatibles LIRC<br>
+! 		telles que Media Player Classic ou autres<br>
+! 		</font>
+! 		<font size=+2 color="#FF80803F">
+! 		{1} client(s) connect??(s) - Dernier code ??mis: {2}
+! 		<hr>
+! 		</font><font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g??n??r??s par l'appui sur la t??l??commande:<br>
+! 		(?? configurer dans le logiciel client LIRC)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=25%>love</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>love2</td></tr>
+! 		<tr><td>Lettre</td><td>mail</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>mail2</td></tr>
+! 		<tr><td>Options</td><td>options</td></tr>
+! 		<tr><td>?</td><td>help</td></tr>
+! 		<tr><td>Info</td><td>info</td></tr>
+! 		<tr><td>Guide</td><td>guide</td></tr>
+! 		<tr><td>Stop</td><td>stop</td></tr>
+! 		<tr><td>Pause/Play</td><td>ppause</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>up</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>down</td></tr>
+! 		<tr><td>OK</td><td>ok</td></tr>
+! 		<tr><td><font family="Symbol">S #</font>-</td><td>left</td></tr>
+! 		<tr><td><font family="Symbol">T #</font>+</td><td>right</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>red</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>green</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>yellow</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>blue</td></tr>
+! 		<tr><td>Chiffres, *, #</td><td>&lt;le chiffre&gt;, *, #</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+
+Index: mediacenter.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/mediacenter.html,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -C2 -d -r1.3 -r1.4
+*** mediacenter.html	14 Apr 2006 21:59:53 -0000	1.3
+--- mediacenter.html	16 Apr 2006 01:07:47 -0000	1.4
+***************
+*** 1,78 ****
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="mediacenter.html?action=appcommand&cmd=6">
+! 	<meta name="love2_page"     content="mediacenter.html?action=appcommand&cmd=16">
+! 	<meta name="mail_page"      content="mediacenter.html?action=appcommand&cmd=15">
+! 	<meta name="mail2_page"     content="mediacenter.html?action=appcommand&cmd=7">
+! 	<meta name="nochannel_page" content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="channel_page"   content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="prog_select_timeout" content="300">
+! 	<meta name="prog_expand_timeout" content="300">
+! 	<link rel="help"       href=   "mediacenter.html?action=appcommand&cmd=27">
+! 	<link rel="guide"      href=   "mediacenter.html?action=appcommand&cmd=18">
+! 	<link rel="yellow"     href=   "mediacenter.html?action=appcommand&cmd=1">
+! 	<link rel="info"       href=   "mediacenter.html?action=appcommand&cmd=17">
+! 	<link rel="options"    href=   "mediacenter.html?action=appcommand&cmd=5">
+! 	<link rel="red"        href=   "mediacenter.html?action=appcommand&cmd=12">
+! 	<link rel="green"      href=   "mediacenter.html?action=appcommand&cmd=11">
+! 	<link rel="blue"       href=   "mediacenter.html?action=appcommand&cmd=2">
+! 	<link rel="left"       href=   "mediacenter.html?action=appcommand&cmd=9">
+! 	<link rel="right"      href=   "mediacenter.html?action=appcommand&cmd=10">
+! 	<link rel="up"         href=   "mediacenter.html?action=appcommand&cmd=49&cmd=51">
+! 	<link rel="down"       href=   "mediacenter.html?action=appcommand&cmd=50&cmd=52">
+! 	<link rel="pause"      href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="play"       href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="stop"       href=   "mediacenter.html?action=appcommand&cmd=13">
+! 	<link rel="star"       href=   "mediacenter.html?action=sendkeys&keys=*">
+! 	<link rel="sharp"      href=   "mediacenter.html?action=sendkeys&keys=#">
+! </head>
+! <body text="#FFFFFF3F">
+! <box height=5 border=0>
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000028" align=center>
+! 		<a href="mediacenter.html?action=sendkeys&keys={ENTER}"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t?l?commande des applications compatibles Media Center<br>
+! 		ou compatibles avec les claviers Multimedia
+! 		</font>
+! 		<hr>
+! 		<font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g?n?r?s par l'appui sur la t?l?commande:<br>
+! 		(eventuellement ? configurer dans le logiciel vis?)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=40%>BROWSER_FAVORITES</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>MEDIA_SELECT</td></tr>
+! 		<tr><td>Lettre</td><td>LAUNCH_MAIL</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>BROWSER_HOME</td></tr>
+! 		<tr><td>Options</td><td>BROWSER_SEARCH</td></tr>
+! 		<tr><td>?</td><td>APPCOMMAND_HELP</td></tr>
+! 		<tr><td>Info</td><td>LAUNCH_APP1</td></tr>
+! 		<tr><td>Guide</td><td>LAUNCH_APP2</td></tr>
+! 		<tr><td>Stop</td><td>MEDIA_STOP</td></tr>
+! 		<tr><td>Pause/Play</td><td>MEDIA_PLAY_PAUSE</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>MEDIA_FASTFORWARD et &nbsp;MEDIA_CHANNEL_UP</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>MEDIA_REWIND et &nbsp;MEDIA_CHANNEL_DOWN</td></tr>
+! 		<tr><td>Chiffres, *, #, OK</td><td><i>Tape le chiffre, *, # ou Entr?e</i></td></tr>
+! 		<tr><td><font family="Symbol">S #</font>-</td><td>VOLUME_DOWN</td></tr>
+! 		<tr><td><font family="Symbol">T #</font>+</td><td>VOLUME_UP</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>MEDIA_PREVIOUSTRACK</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>MEDIA_NEXTTRACK</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>BROWSER_BACKWARD</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>BROWSER_FORWARD</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+--- 1,84 ----
+! <!DOCTYPE HTML PUBLIC "-//Freebox//DTD HTML 3.2//EN">
+! <html>
+! <head>
+! 	<meta name="home_page" content="settings.html">
+! 	<meta name="love_page"      content="mediacenter.html?action=appcommand&cmd=6">
+! 	<meta name="love2_page"     content="mediacenter.html?action=appcommand&cmd=16">
+! 	<meta name="mail_page"      content="mediacenter.html?action=appcommand&cmd=15">
+! 	<meta name="mail2_page"     content="mediacenter.html?action=appcommand&cmd=7">
+! 	<meta name="nochannel_page" content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="channel_page"   content="mediacenter.html?action=sendkeys&keys=%d">
+! 	<meta name="prog_select_timeout" content="300">
+! 	<meta name="prog_expand_timeout" content="300">
+! 	<link rel="help"       href=   "mediacenter.html?action=appcommand&cmd=27">
+! 	<link rel="guide"      href=   "mediacenter.html?action=appcommand&cmd=18">
+! 	<link rel="yellow"     href=   "mediacenter.html?action=appcommand&cmd=1">
+! 	<link rel="info"       href=   "mediacenter.html?action=appcommand&cmd=17">
+! 	<link rel="options"    href=   "mediacenter.html?action=appcommand&cmd=5">
+! 	<link rel="red"        href=   "mediacenter.html?action=appcommand&cmd=12">
+! 	<link rel="green"      href=   "mediacenter.html?action=appcommand&cmd=11">
+! 	<link rel="blue"       href=   "mediacenter.html?action=appcommand&cmd=2">
+! 	<link rel="left"       href=   "mediacenter.html?action=appcommand&cmd=9">
+! 	<link rel="right"      href=   "mediacenter.html?action=appcommand&cmd=10">
+! 	<link rel="up"         href=   "mediacenter.html?action=appcommand&cmd=49&cmd=51">
+! 	<link rel="down"       href=   "mediacenter.html?action=appcommand&cmd=50&cmd=52">
+! 	<link rel="pause"      href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="play"       href=   "mediacenter.html?action=appcommand&cmd=14">
+! 	<link rel="stop"       href=   "mediacenter.html?action=appcommand&cmd=13">
+! 	<link rel="star"       href=   "mediacenter.html?action=sendkeys&keys=*">
+! 	<link rel="sharp"      href=   "mediacenter_blank.html">
+! 
+! 	<!-- Fonction sympa pour eteindre le PC ? la fin d'un film tout en restant dans le mode MediaCenter
+! 		Je la verrai bien sur l'appui-long de la touche '?' mais la balise meta correspondante n'est pas encore document?e
+! 		donc pour l'instant je la met sur 'rec', touche nouvellement document?e -->
+! 	<link rel="rec"        href=   "mediacenter.html?afterAction=suspend">
+! 
+! </head>
+! <body text="#FFFFFF3F">
+! <box height=5 border=0>
+! <table>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000028" align=center>
+! 		<a href="mediacenter.html?action=sendkeys&keys={ENTER}"></a>
+! 		<font size=+2 color="#C0FFFF3F">
+! 		Ce mode permet de controler par la t?l?commande des applications compatibles Media Center<br>
+! 		ou compatibles avec les claviers Multimedia
+! 		</font>
+! 		<hr>
+! 		<font size=+1 color="#FFFFC03F">
+! 		Table des codes touches g?n?r?s par l'appui sur la t?l?commande:<br>
+! 		(eventuellement ? configurer dans le logiciel vis?)
+! 		</font>
+! 	</td>
+! 	<td width=4%></td>
+! </tr>
+! <tr>
+! 	<td width=4%></td>
+! 	<td width=92% bgcolor="#00000030" height=480 valign=top>
+! 	<table cellspacing=0 cellpadding="0" align=center>
+! 		<tr><td width=30%>Coeur</td><td width=40%>BROWSER_FAVORITES</td></tr>
+! 		<tr><td>Coeur <i>(appui long)</i></td><td>MEDIA_SELECT</td></tr>
+! 		<tr><td>Lettre</td><td>LAUNCH_MAIL</td></tr>
+! 		<tr><td>Lettre <i>(appui long)</i></td><td>BROWSER_HOME</td></tr>
+! 		<tr><td>Options</td><td>BROWSER_SEARCH</td></tr>
+! 		<tr><td>?</td><td>APPCOMMAND_HELP</td></tr>
+! 		<tr><td>Info</td><td>LAUNCH_APP1</td></tr>
+! 		<tr><td>Guide</td><td>LAUNCH_APP2</td></tr>
+! 		<tr><td>Stop</td><td>MEDIA_STOP</td></tr>
+! 		<tr><td>Pause/Play</td><td>MEDIA_PLAY_PAUSE</td></tr>
+! 		<tr><td><font family="Symbol">V</font> P+</td><td>MEDIA_FASTFORWARD et &nbsp;MEDIA_CHANNEL_UP</td></tr>
+! 		<tr><td><font family="Symbol">U</font> P-</td><td>MEDIA_REWIND et &nbsp;MEDIA_CHANNEL_DOWN</td></tr>
+! 		<tr><td>Chiffres, *, #, OK</td><td><i>Tape le chiffre, *, # ou Entr?e</i></td></tr>
+! 		<tr><td><font family="Symbol">S #</font>-</td><td>VOLUME_DOWN</td></tr>
+! 		<tr><td><font family="Symbol">T #</font>+</td><td>VOLUME_UP</td></tr>
+! 		<tr><td><font color=#FF00003F>Rouge</font></td><td>MEDIA_PREVIOUSTRACK</td></tr>
+! 		<tr><td><font color=#00FF003F>Vert</font></td><td>MEDIA_NEXTTRACK</td></tr>
+! 		<tr><td><font color=#FFFF003F>Jaune</font></td><td>BROWSER_BACKWARD</td></tr>
+! 		<tr><td><font color=#3F3FFF3F>Bleu</font></td><td>BROWSER_FORWARD</td></tr>
+! 	</table>
+! 	</td>
+! </tr>
+! </table>
+! </body>
+! </html>
+
+
+
+From nobody at sheep.berlios.de  Sun Apr 16 03:07:23 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Sun, 16 Apr 2006 03:07:23 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/Properties app.manifest,NONE,1.1
+Message-ID: <200604160107.k3G17Nt30183@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/Properties
+In directory sheep:/tmp/cvs-serv19878/FreeXplorer/Properties
+
+Added Files:
+	app.manifest 
+Log Message:
+La touche # sert ? masquer l'affichage dans les modes LIRC et MediaPlayer
+La touche Rec sert ? passer le PC en mode veille dans les modes LIRC et MediaPlayer
+
+
+--- NEW FILE: app.manifest ---
+<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v2">
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet class="System.Security.PermissionSet" version="1" Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+    </security>
+  </trustInfo>
+</asmv1:assembly>
+
+
+From freexplorer at free.fr  Sun Apr 16 03:43:55 2006
+From: freexplorer at free.fr (Wizou)
+Date: Sun, 16 Apr 2006 03:43:55 +0200
+Subject: [Freexplorer-cvs] nettoyage CVS
+Message-ID: <4441A15B.4050502@free.fr>
+
+j'ai nettoy? et retir? du repository CVS ma livraison foireuse du 12 
+janvier (avec les fichiers au mauvais endroit et dans les Attic)
+
+
+
+From nobody at sheep.berlios.de  Mon Apr 17 17:22:34 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Mon, 17 Apr 2006 17:22:34 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer MainForm.Designer.cs,1.4,1.5
+Message-ID: <200604171522.k3HFMYt20523@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv27665/FreeXplorer
+
+Modified Files:
+	MainForm.Designer.cs 
+Log Message:
+sout-ffmpeg-strict-rc=1 car sinon VLC encode les s?quences agit?s (typiquement pluie ou surface de l'eau) ? des d?bits de folie sans respecter le d?bit max impos?
+et par d?faut, d?bit max = 8000 car ? partir de l?, la Freebox n'arrive parfois pas ? suivre
+
+
+Index: MainForm.Designer.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/MainForm.Designer.cs,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** MainForm.Designer.cs	14 Apr 2006 22:18:47 -0000	1.4
+--- MainForm.Designer.cs	17 Apr 2006 15:22:58 -0000	1.5
+***************
+*** 426,430 ****
+              this.TranscodeVB.Size = new System.Drawing.Size(86, 20);
+              this.TranscodeVB.TabIndex = 15;
+!             this.TranscodeVB.Text = "8500";
+              // 
+              // label14
+--- 426,430 ----
+              this.TranscodeVB.Size = new System.Drawing.Size(86, 20);
+              this.TranscodeVB.TabIndex = 15;
+!             this.TranscodeVB.Text = "8000";
+              // 
+              // label14
+
+
+
+From nobody at sheep.berlios.de  Mon Apr 17 17:22:34 2006
+From: nobody at sheep.berlios.de (wizou)
+Date: Mon, 17 Apr 2006 17:22:34 +0200
+Subject: [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin vlcrcV2,1.4,1.5
+Message-ID: <200604171522.k3HFMYt20524@bat.berlios.de>
+
+Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin
+In directory sheep:/tmp/cvs-serv27665/FreeXplorer/bin
+
+Modified Files:
+	vlcrcV2 
+Log Message:
+sout-ffmpeg-strict-rc=1 car sinon VLC encode les s?quences agit?s (typiquement pluie ou surface de l'eau) ? des d?bits de folie sans respecter le d?bit max impos?
+et par d?faut, d?bit max = 8000 car ? partir de l?, la Freebox n'arrive parfois pas ? suivre
+
+
+Index: vlcrcV2
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/vlcrcV2,v
+retrieving revision 1.4
+retrieving revision 1.5
+diff -C2 -d -r1.4 -r1.5
+*** vlcrcV2	16 Apr 2006 00:06:21 -0000	1.4
+--- vlcrcV2	17 Apr 2006 15:22:58 -0000	1.5
+***************
+*** 466,470 ****
+  #sout-ffmpeg-pre-me=0
+  # Active le contr??le strict du d??bit (Bool??en)
+! #sout-ffmpeg-strict-rc=0
+  # Taille du buffer de contr??le de d??bit (Entier)
+  #sout-ffmpeg-rc-buffer-size=1835008
+--- 466,470 ----
+  #sout-ffmpeg-pre-me=0
+  # Active le contr??le strict du d??bit (Bool??en)
+! sout-ffmpeg-strict-rc=1
+  # Taille du buffer de contr??le de d??bit (Entier)
+  #sout-ffmpeg-rc-buffer-size=1835008
+
+
+

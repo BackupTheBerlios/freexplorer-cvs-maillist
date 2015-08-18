@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer VLC.cs,1.9,1.10
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-May/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20VLC.cs%2C1.9%2C1.10&In-Reply-To=%3C200605161721.k4GHLgZ23202%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000029.html">
+   
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer VLC.cs,1.9,1.10</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer%20VLC.cs%2C1.9%2C1.10&In-Reply-To=%3C200605161721.k4GHLgZ23202%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer VLC.cs,1.9,1.10">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Tue May 16 19:21:42 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000029.html">[Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.16,1.17
+</A></li>
+        
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer
+In directory sheep:/tmp/cvs-serv17471/FreeXplorer
+
+Modified Files:
+	VLC.cs 
+Log Message:
+Enl&#232;ve un probleme de &quot;r&#233;ponse inattendue&quot; apr&#232;s une pause de lecture
+
+Index: VLC.cs
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/VLC.cs,v
+retrieving revision 1.9
+retrieving revision 1.10
+diff -C2 -d -r1.9 -r1.10
+*** VLC.cs	17 Sep 2005 13:35:06 -0000	1.9
+--- VLC.cs	16 May 2006 17:26:00 -0000	1.10
+***************
+*** 308,312 ****
+              do
+                  line = ReadLine();
+!             while (line.StartsWith(&quot;status change: &quot;));
+              if (line != command + &quot;: returned 0 (no error)&quot;)
+                  throw new VLCException(&quot;La commande RC a renvoy&#233;e une erreur&quot;);
+--- 308,312 ----
+              do
+                  line = ReadLine();
+!             while (line.StartsWith(&quot;status change: &quot;) || (line==&quot;press menu select or pause to continue&quot;));
+              if (line != command + &quot;: returned 0 (no error)&quot;)
+                  throw new VLCException(&quot;La commande RC a renvoy&#233;e une erreur&quot;);
+***************
+*** 351,354 ****
+--- 351,356 ----
+              WriteLine(&quot;chapter&quot;);
+              string line = ReadLine();
++             if (line == &quot;press menu select or pause to continue&quot;)
++                 line = ReadLine();
+              if (line == &quot;chapter: returned 0 (no error)&quot;)
+              {
+***************
+*** 370,373 ****
+--- 372,377 ----
+              WriteLine(&quot;title&quot;);
+              string line = ReadLine();
++             if (line == &quot;press menu select or pause to continue&quot;)
++                 line = ReadLine();
+              if (line == &quot;title: returned 0 (no error)&quot;)
+              {
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000029.html">[Freexplorer-cvs] FreeXplorer Lisez-Moi.html,1.16,1.17
+</A></li>
+	
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#30">[ date ]</a>
+              <a href="thread.html#30">[ thread ]</a>
+              <a href="subject.html#30">[ subject ]</a>
+              <a href="author.html#30">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>

@@ -1,0 +1,229 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+ <HEAD>
+   <TITLE> [Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages play.html,1.1.1.1,1.2 playing.html,1.1.1.1,1.2
+   </TITLE>
+   <LINK REL="Index" HREF="http://lists.berlios.de/pipermail/freexplorer-cvs/2006-April/index.html" >
+   <LINK REL="made" HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin/pages%20play.html%2C1.1.1.1%2C1.2%20playing.html%2C1.1.1.1%2C1.2&In-Reply-To=%3C200604132350.k3DNo7t17255%40bat.berlios.de%3E">
+   <META NAME="robots" CONTENT="index,nofollow">
+   <style type="text/css">
+       pre {
+           white-space: pre-wrap;       /* css-2.1, curent FF, Opera, Safari */
+           }
+   </style>
+   <META http-equiv="Content-Type" content="text/html; charset=us-ascii">
+   <LINK REL="Previous"  HREF="000002.html">
+   <LINK REL="Next"  HREF="000004.html">
+ </HEAD>
+ <BODY BGCOLOR="#ffffff">
+   <H1>[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages play.html,1.1.1.1,1.2 playing.html,1.1.1.1,1.2</H1>
+    <B>wizou</B> 
+    <A HREF="mailto:freexplorer-cvs%40lists.berlios.de?Subject=Re%3A%20%5BFreexplorer-cvs%5D%20FreeXplorer/FreeXplorer/bin/pages%20play.html%2C1.1.1.1%2C1.2%20playing.html%2C1.1.1.1%2C1.2&In-Reply-To=%3C200604132350.k3DNo7t17255%40bat.berlios.de%3E"
+       TITLE="[Freexplorer-cvs] FreeXplorer/FreeXplorer/bin/pages play.html,1.1.1.1,1.2 playing.html,1.1.1.1,1.2">nobody at sheep.berlios.de
+       </A><BR>
+    <I>Fri Apr 14 01:50:07 CEST 2006</I>
+    <P><UL>
+        <LI>Previous message: <A HREF="000002.html">[Freexplorer-cvs] FreeXplorer Setup.nsi,1.11,1.12
+</A></li>
+        <LI>Next message: <A HREF="000004.html">[Freexplorer-cvs] FreeXplorer InetLoad.dll,NONE,1.1 InetLoad_Readme.txt,NONE,1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+    <HR>  
+<!--beginarticle-->
+<PRE>Update of /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages
+In directory sheep:/tmp/cvs-serv24565
+
+Modified Files:
+	play.html playing.html 
+Log Message:
+Diff&#233;renciation touches play/pause d&#251; &#224; une evol du firmware
+
+Index: play.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/play.html,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+*** play.html	3 Aug 2005 18:54:27 -0000	1.1.1.1
+--- play.html	13 Apr 2006 23:50:21 -0000	1.2
+***************
+*** 1,45 ****
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot;	content=&quot;home.html&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;	href=   &quot;help.html&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;	href=   &quot;$explore&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;	href=   &quot;back&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;	href=   &quot;sound_bug.html&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;	href=   &quot;controls.html&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;	href=   &quot;seek.html?action=rewind&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;		href=   &quot;seek.html?action=forward&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;		href=   &quot;seekpl.html?action=plprev&amp;param=Fichier+pr&#233;c&#233;dent&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;	href=   &quot;seekpl.html?action=plnext&amp;param=Fichier+suivant&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;	href=   &quot;seek.html?action=pause&amp;_action=Lecture/Pause&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;	href=   &quot;$explore?action=stop&quot;&gt;
+! 	&lt;meta name=disappear	content=&quot;2&quot;&gt;
+! 	&lt;flags volume_key=true&gt;
+! 	&lt;meta name=refresh content=&quot;4;url=playing.html&quot;&gt;
+! &lt;/head&gt;
+! &lt;body&gt;
+! &lt;table&gt;
+! &lt;tr&gt;&lt;td height=460&gt;&nbsp;&lt;/td&gt;&lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td  bgcolor=&quot;#00000028&quot; align=left&gt;
+! 		&lt;font size=+1&gt;
+! 		{1}&lt;br&gt;
+! 		Utilisez les touches&nbsp;
+! 			&lt;font size=-1&gt;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P-&quot;&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;A/Y&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;Z&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P+&quot;&gt;&nbsp;
+! 			&lt;/font&gt;
+! 		pour controler la lecture
+! 		{2}
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+--- 1,46 ----
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot;	content=&quot;home.html&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;	href=   &quot;help.html&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;	href=   &quot;$explore&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;	href=   &quot;back&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;	href=   &quot;sound_bug.html&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;	href=   &quot;controls.html&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;	href=   &quot;seek.html?action=rewind&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;		href=   &quot;seek.html?action=forward&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;		href=   &quot;seekpl.html?action=plprev&amp;param=Fichier+pr&#233;c&#233;dent&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;	href=   &quot;seekpl.html?action=plnext&amp;param=Fichier+suivant&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;	href=   &quot;seek.html?action=pause&amp;_action=Pause&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;	href=   &quot;seek.html?action=pause&amp;_action=Lecture&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;	href=   &quot;$explore?action=stop&quot;&gt;
+! 	&lt;meta name=disappear	content=&quot;2&quot;&gt;
+! 	&lt;flags volume_key=true&gt;
+! 	&lt;meta name=refresh content=&quot;4;url=playing.html&quot;&gt;
+! &lt;/head&gt;
+! &lt;body&gt;
+! &lt;table&gt;
+! &lt;tr&gt;&lt;td height=460&gt;&nbsp;&lt;/td&gt;&lt;/tr&gt;
+! &lt;tr&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! 	&lt;td  bgcolor=&quot;#00000028&quot; align=left&gt;
+! 		&lt;font size=+1&gt;
+! 		{1}&lt;br&gt;
+! 		Utilisez les touches&nbsp;
+! 			&lt;font size=-1&gt;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P-&quot;&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;A/Y&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;font family=&quot;Symbol&quot;&gt;&lt;box border=2 width=28 height=18 align=center text=&quot;Z&quot;&gt;&lt;/font&gt;&nbsp;
+! 			&lt;box border=2 width=28 height=18 align=center text=&quot;P+&quot;&gt;&nbsp;
+! 			&lt;/font&gt;
+! 		pour controler la lecture
+! 		{2}
+! 		&lt;/font&gt;
+! 	&lt;/td&gt;
+! 	&lt;td width=4%&gt;&lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/table&gt;
+! &lt;/td&gt;
+! &lt;/tr&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+
+Index: playing.html
+===================================================================
+RCS file: /cvsroot/freexplorer/FreeXplorer/FreeXplorer/bin/pages/playing.html,v
+retrieving revision 1.1.1.1
+retrieving revision 1.2
+diff -C2 -d -r1.1.1.1 -r1.2
+*** playing.html	3 Aug 2005 18:54:27 -0000	1.1.1.1
+--- playing.html	13 Apr 2006 23:50:21 -0000	1.2
+***************
+*** 1,22 ****
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot; content=&quot;home.html&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;	href=   &quot;help.html&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;	href=   &quot;$explore&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;	href=   &quot;back&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;	href=   &quot;sound_bug.html&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;	href=   &quot;controls.html&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;	href=   &quot;seek.html?action=rewind&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;		href=   &quot;seek.html?action=forward&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;		href=   &quot;seekpl.html?action=plprev&amp;param=Fichier+pr&#233;c&#233;dent&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;	href=   &quot;seekpl.html?action=plnext&amp;param=Fichier+suivant&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;	href=   &quot;seek.html?action=pause&amp;_action=Lecture/Pause&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;	href=   &quot;$explore?action=stop&quot;&gt;
+! 	&lt;meta name=disappear	content=&quot;0&quot;&gt;
+! 	&lt;flags volume_key=true&gt;
+! 
+! &lt;/head&gt;
+! &lt;body&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+--- 1,23 ----
+! &lt;!DOCTYPE HTML PUBLIC &quot;-//Freebox//DTD HTML 3.2//EN&quot;&gt;
+! &lt;html&gt;
+! &lt;head&gt;
+! 	&lt;meta name=&quot;home_page&quot; content=&quot;home.html&quot;&gt;
+! 	&lt;link rel=&quot;help&quot;	href=   &quot;help.html&quot;&gt;
+! 	&lt;link rel=&quot;guide&quot;	href=   &quot;$explore&quot;&gt;
+! 	&lt;link rel=&quot;yellow&quot;	href=   &quot;back&quot;&gt;
+! 	&lt;link rel=&quot;blue&quot;	href=   &quot;sound_bug.html&quot;&gt;
+! 	&lt;link rel=&quot;info&quot;	href=   &quot;controls.html&quot;&gt;
+! 	&lt;link rel=&quot;down&quot;	href=   &quot;seek.html?action=rewind&quot;&gt;
+! 	&lt;link rel=&quot;up&quot;		href=   &quot;seek.html?action=forward&quot;&gt;
+! 	&lt;link rel=&quot;red&quot;		href=   &quot;seekpl.html?action=plprev&amp;param=Fichier+pr&#233;c&#233;dent&quot;&gt;
+! 	&lt;link rel=&quot;green&quot;	href=   &quot;seekpl.html?action=plnext&amp;param=Fichier+suivant&quot;&gt;
+! 	&lt;link rel=&quot;pause&quot;	href=   &quot;seek.html?action=pause&amp;_action=Pause&quot;&gt;
+! 	&lt;link rel=&quot;play&quot;	href=   &quot;seek.html?action=pause&amp;_action=Lecture&quot;&gt;
+! 	&lt;link rel=&quot;stop&quot;	href=   &quot;$explore?action=stop&quot;&gt;
+! 	&lt;meta name=disappear	content=&quot;0&quot;&gt;
+! 	&lt;flags volume_key=true&gt;
+! 
+! &lt;/head&gt;
+! &lt;body&gt;
+! &lt;/body&gt;
+! &lt;/html&gt;
+
+
+</PRE>
+
+<!--endarticle-->
+    <HR>
+    <P><UL>
+        <!--threads-->
+	<LI>Previous message: <A HREF="000002.html">[Freexplorer-cvs] FreeXplorer Setup.nsi,1.11,1.12
+</A></li>
+	<LI>Next message: <A HREF="000004.html">[Freexplorer-cvs] FreeXplorer InetLoad.dll,NONE,1.1 InetLoad_Readme.txt,NONE,1.1
+</A></li>
+         <LI> <B>Messages sorted by:</B> 
+              <a href="date.html#3">[ date ]</a>
+              <a href="thread.html#3">[ thread ]</a>
+              <a href="subject.html#3">[ subject ]</a>
+              <a href="author.html#3">[ author ]</a>
+         </LI>
+       </UL>
+
+<hr>
+<a href="https://lists.berlios.de/mailman/listinfo/freexplorer-cvs">More information about the Freexplorer-cvs
+mailing list</a><br>
+</body></html>
